@@ -949,14 +949,14 @@
     aboutQuote.innerHTML = "We don’t simply provide capital.<br>We provide the complete team.";
     page.appendChild(aboutQuote);
 
-    // About video — original Figma 810x900, 50% off right edge, top+bottom fades only, no left crop
+    // About video — natural size, no crop, ~50% off right edge
     var aboutVid = document.createElement("video");
     aboutVid.autoplay = true;
     aboutVid.muted = true;
     aboutVid.loop = true;
     aboutVid.playsInline = true;
     aboutVid.src = "videos/about.mp4";
-    aboutVid.style.cssText = "position:absolute;left:1107px;top:1366px;width:810px;height:900px;object-fit:cover;z-index:2;pointer-events:none;-webkit-mask-image:linear-gradient(180deg,transparent 0%,black 27%,black 62%,transparent 100%);mask-image:linear-gradient(180deg,transparent 0%,black 27%,black 62%,transparent 100%)";
+    aboutVid.style.cssText = "position:absolute;left:1134px;top:1366px;width:756px;height:auto;z-index:2;pointer-events:none;-webkit-mask-image:linear-gradient(180deg,transparent 0%,black 27%,black 62%,transparent 100%);mask-image:linear-gradient(180deg,transparent 0%,black 27%,black 62%,transparent 100%)";
     page.appendChild(aboutVid);
 
     // 8-logo partner row — single line, centered
