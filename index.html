@@ -961,7 +961,13 @@
     aboutVid.setAttribute('playsinline','');
     aboutVid.style.cssText = "position:absolute;left:720px;top:1366px;width:1300px;height:auto;z-index:2;pointer-events:none;-webkit-mask-image:linear-gradient(to right,transparent 0%,black 4%,black 100%),linear-gradient(180deg,transparent 0%,black 33%,black 76%,transparent 100%);-webkit-mask-composite:destination-in;mask-image:linear-gradient(to right,transparent 0%,black 4%,black 100%),linear-gradient(180deg,transparent 0%,black 33%,black 76%,transparent 100%);mask-composite:intersect";
     aboutVid.src = "videos/about.mp4";
-    aboutVid.addEventListener('ended', function(){ this.currentTime = 0; this.play(); });
+    aboutVid.addEventListener('ended', function(){ this.currentTime = 0; this.play().catch(function(){}); });
+    aboutVid.addEventListener('timeupdate', function(){
+      if(this.duration && this.currentTime >= this.duration - 0.15){
+        this.currentTime = 0;
+        this.play().catch(function(){});
+      }
+    });
     page.appendChild(aboutVid);
 
     // 8-logo partner row — single line, centered
