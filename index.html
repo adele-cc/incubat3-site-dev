@@ -949,15 +949,22 @@
     aboutQuote.innerHTML = "We don’t simply provide capital.<br>We provide the complete team.";
     page.appendChild(aboutQuote);
 
-    // Colorful glass video — flipped vertically per Figma, fade top + bottom
+    // About video — landscape, bigger, fades: left edge + top (to title bottom) + bottom (from last para)
+    var aboutVidWrap = document.createElement("div");
+    aboutVidWrap.style.cssText = "position:absolute;left:720px;top:1366px;width:840px;height:700px;overflow:hidden;z-index:2;pointer-events:none;"+
+      "-webkit-mask-image:linear-gradient(to right,transparent 0%,black 7%,black 100%),linear-gradient(to bottom,transparent 0%,black 35%,black 80%,transparent 100%);"+
+      "-webkit-mask-composite:destination-in;"+
+      "mask-image:linear-gradient(to right,transparent 0%,black 7%,black 100%),linear-gradient(to bottom,transparent 0%,black 35%,black 80%,transparent 100%);"+
+      "mask-composite:intersect";
     var aboutVid = document.createElement("video");
     aboutVid.autoplay = true;
     aboutVid.muted = true;
     aboutVid.loop = true;
     aboutVid.playsInline = true;
     aboutVid.src = "videos/about.mp4";
-    aboutVid.style.cssText = "position:absolute;left:750px;top:1366px;width:810px;height:456px;object-fit:cover;z-index:2;-webkit-mask-image:linear-gradient(180deg,transparent 0%,black 15%,black 85%,transparent 100%);mask-image:linear-gradient(180deg,transparent 0%,black 15%,black 85%,transparent 100%);pointer-events:none";
-    page.appendChild(aboutVid);
+    aboutVid.style.cssText = "width:100%;height:100%;object-fit:cover";
+    aboutVidWrap.appendChild(aboutVid);
+    page.appendChild(aboutVidWrap);
 
     // 8-logo partner row — single line, centered
     var partnerLogos = [
