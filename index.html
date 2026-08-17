@@ -485,7 +485,7 @@
   <img data-layer="ICM@4x 1" class="Icm4x1" style="width: 103px; height: 31px; left: 1011px; top: 1899px; position: absolute" src="images/icm_4x_1_14.png" />
   <img data-layer="Asset 1@4x 1" class="Asset14x1" style="width: 174px; height: 29px; left: 318px; top: 1900px; position: absolute" src="images/asset_1_4x_1_15.png" />
   <img data-layer="Group 595 1" class="Group5951" style="width: 122px; height: 46px; left: 1249px; top: 1889px; position: absolute" src="images/group_595_1_16.png" />
-    <div data-layer="Feature Description" class="FeatureDescription" style="width: 586px; left: 142px; top: 1660px; position: absolute; color: white; font-size: 16px; font-family: Poppins; font-weight: 400; line-height: 1.7; word-wrap: break-word">Incubat3 invests in and partners with underfunded Web3 companies that have demonstrated real potential but lack the capital, operational infrastructure or resources to reach a successful product &amp; token launch.<br/><br/>Powered by the Incubat3 partner network (CodeCraft Group, Ethereal Labs, DVerse and many more), we provide the people, expertise and execution required to take companies from limited runway to successful market entry.<br/><br/>From product development and engineering to fundraising, tokenomics, marketing, exchange strategy, operations and go-to-market execution, we become an extension of the founding team, aligned around one objective: building a successful, sustainable Web3 business.
+    <div data-layer="Feature Description" class="FeatureDescription" style="width: 586px; left: 35px; top: 1660px; position: absolute; color: white; font-size: 16px; font-family: Poppins; font-weight: 400; line-height: 1.7; word-wrap: break-word">Incubat3 invests in and partners with underfunded Web3 companies that have demonstrated real potential but lack the capital, operational infrastructure or resources to reach a successful product &amp; token launch.<br/><br/>Powered by the Incubat3 partner network (CodeCraft Group, Ethereal Labs, DVerse and many more), we provide the people, expertise and execution required to take companies from limited runway to successful market entry.<br/><br/>From product development and engineering to fundraising, tokenomics, marketing, exchange strategy, operations and go-to-market execution, we become an extension of the founding team, aligned around one objective: building a successful, sustainable Web3 business.
   </div>
   <div data-layer="Hero Title" class="HeroTitle" style="left: 142px; top: 1512px; position: absolute; color: white; font-size: 96px; font-family: PP Formula; font-weight: 400; word-wrap: break-word">Incubat3</div>
   <div data-layer="Layer_1" class="Layer1" style="width: 90px; height: 79px; left: 35px; top: 1528px; position: absolute; overflow: hidden">
@@ -920,62 +920,37 @@
        ABOUT SECTION OVERHAUL
        ========================================= */
 
-    // Reposition description already updated in HTML; hide old partner logos
+    // Hide old partner logos only
     ["CcFullLogoWhite1","Inferno4x1","Icm4x1","Asset14x1","Group5951"].forEach(function(cls){
       page.querySelectorAll("."+cls).forEach(function(el){ el.style.display="none"; });
     });
 
-    // Hide old 3D visual and its replacement
-    page.querySelectorAll('img[data-layer="hf_20260123_093008_25c1d8a7-7819-42e3-a1dc-9b017614ab15 1"]').forEach(function(el){ el.style.display='none'; });
-    page.querySelectorAll('img[src="images/incubat3-section.png"]').forEach(function(el){ el.style.display='none'; });
+    // New quote div — centered, separate from the next section heading
+    var aboutQuote = document.createElement("div");
+    aboutQuote.style.cssText = "position:absolute;left:0;top:2320px;width:1512px;text-align:center;color:white;font-size:48px;font-family:'PP Formula',sans-serif;font-weight:400;line-height:1.2;z-index:4;pointer-events:none";
+    aboutQuote.innerHTML = "We don’t simply provide capital.<br>We provide the complete team.";
+    page.appendChild(aboutQuote);
 
-    // Hide Screenshot blur in about area and gradient rectangle
-    page.querySelectorAll('img[data-layer="Screenshot 2026-01-05 at 17.16.24 1"]').forEach(function(el){ el.style.display='none'; });
-    page.querySelectorAll(".Rectangle48").forEach(function(el){
-      var t = parseFloat(el.style.top);
-      if(t > 2000 && t < 2700) el.style.display="none";
-    });
-
-    // Replace "The Web3 Superapp" with new quote
-    page.querySelectorAll(".HeroSubtitle").forEach(function(el){
-      if(el.textContent.trim()==="The Web3 Superapp"){
-        el.innerHTML = "We don’t simply provide capital.<br>We provide the complete team.";
-        el.style.fontSize = "48px";
-        el.style.lineHeight = "1.2";
-        el.style.width = "848px";
-        el.style.height = "auto";
-        el.style.top = "2320px";
-        el.style.left = "56px";
-        el.style.textAlign = "left";
-      }
-    });
-
-    // Hide old superapp CTA buttons (top ~2980 → moved to 2650 by earlier code)
-    page.querySelectorAll(".Button").forEach(function(btn){
-      var t = parseFloat(btn.style.top);
-      if(t >= 2650 && t <= 2651) btn.style.display="none";
-    });
-
-    // Colorful glass video — right side, exact Figma position
+    // Colorful glass video — flipped vertically per Figma, fade top + bottom
     var aboutVid = document.createElement("video");
     aboutVid.autoplay = true;
     aboutVid.muted = true;
     aboutVid.loop = true;
     aboutVid.playsInline = true;
     aboutVid.src = "videos/about.mp4";
-    aboutVid.style.cssText = "position:absolute;left:729px;top:1366px;width:810px;height:900px;object-fit:cover;z-index:2;-webkit-mask-image:linear-gradient(180deg,black 0%,black 60%,transparent 100%);mask-image:linear-gradient(180deg,black 0%,black 60%,transparent 100%);pointer-events:none";
+    aboutVid.style.cssText = "position:absolute;left:729px;top:1366px;width:810px;height:900px;object-fit:cover;z-index:2;transform:scaleY(-1);-webkit-mask-image:linear-gradient(180deg,transparent 0%,black 12%,black 88%,transparent 100%);mask-image:linear-gradient(180deg,transparent 0%,black 12%,black 88%,transparent 100%);pointer-events:none";
     page.appendChild(aboutVid);
 
-    // 8-logo partner row with per-logo sizing and blend modes from Figma
+    // 8-logo partner row — single line, centered
     var partnerLogos = [
-      { src:"images/logo-dverse.png",      h:24  },
-      { src:"images/logo-infernolabs.png", h:43  },
-      { src:"images/logo-ethereal.png",    h:27,  blend:"screen" },
-      { src:"images/logo-codecraft.png",   h:39  },
-      { src:"images/logo-nucleus.jpg",     h:72,  blend:"screen" },
-      { src:"images/logo-icm3.png",        h:38  },
-      { src:"images/logo-arc.png",         h:47  },
-      { src:"images/logo-welcome3.png",    h:67  }
+      { src:"images/logo-dverse.png",      h:24, blend:"screen" },
+      { src:"images/logo-infernolabs.png", h:43, blend:"screen" },
+      { src:"images/logo-ethereal.png",    h:27, blend:"screen" },
+      { src:"images/logo-codecraft.png",   h:39, blend:"screen" },
+      { src:"images/logo-nucleus.jpg",     h:72, blend:"screen", flt:"contrast(200%) brightness(3)" },
+      { src:"images/logo-icm3.png",        h:38, blend:"screen", flt:"grayscale(1) brightness(100)" },
+      { src:"images/logo-arc.png",         h:47, blend:"screen" },
+      { src:"images/logo-welcome3.png",    h:67, blend:"screen" }
     ];
     var aboutLogoRow = document.createElement("div");
     aboutLogoRow.style.cssText = "position:absolute;left:0;top:2510px;width:1512px;display:flex;align-items:center;justify-content:center;gap:48px;z-index:3;padding:0 56px;box-sizing:border-box";
@@ -985,7 +960,8 @@
       img.style.height = logo.h + "px";
       img.style.width = "auto";
       img.style.objectFit = "contain";
-      if(logo.blend) img.style.mixBlendMode = logo.blend;
+      img.style.mixBlendMode = logo.blend;
+      if(logo.flt) img.style.filter = logo.flt;
       aboutLogoRow.appendChild(img);
     });
     page.appendChild(aboutLogoRow);
