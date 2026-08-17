@@ -929,32 +929,32 @@
     page.querySelectorAll('img[src="images/incubat3-bg.png"]').forEach(function(el){ el.style.display="none"; });
 
     // Move superapp elements below the logo row
-    page.querySelectorAll('img[src="images/incubat3-section.png"]').forEach(function(el){ el.style.top="2680px"; });
+    page.querySelectorAll('img[src="images/incubat3-section.png"]').forEach(function(el){ el.style.top="2530px"; });
     page.querySelectorAll(".Rectangle48").forEach(function(el){
       var t = parseFloat(el.style.top);
-      if(t > 2000 && t < 2700){ el.style.top="2750px"; }
+      if(t > 2000 && t < 2700){ el.style.top="2600px"; }
     });
-    page.querySelectorAll('img[data-layer="Screenshot 2026-01-05 at 17.16.24 1"]').forEach(function(el){ el.style.top="2820px"; });
+    page.querySelectorAll('img[data-layer="Screenshot 2026-01-05 at 17.16.24 1"]').forEach(function(el){ el.style.top="2670px"; });
     page.querySelectorAll(".HeroSubtitle").forEach(function(el){
-      if(el.textContent.trim()==="The Web3 Superapp"){ el.style.top="3120px"; }
+      if(el.textContent.trim()==="The Web3 Superapp"){ el.style.top="2970px"; }
     });
     page.querySelectorAll(".Button").forEach(function(btn){
       var t = parseFloat(btn.style.top);
-      if(t >= 2650 && t <= 2651){ btn.style.top="3300px"; }
+      if(t >= 2650 && t <= 2651){ btn.style.top="3150px"; }
     });
 
     // New quote div — centered, separate from the next section heading
     var aboutQuote = document.createElement("div");
-    aboutQuote.style.cssText = "position:absolute;left:0;top:2320px;width:1512px;text-align:center;color:white;font-size:48px;font-family:'PP Formula',sans-serif;font-weight:400;line-height:1.2;z-index:4;pointer-events:none";
+    aboutQuote.style.cssText = "position:absolute;left:0;top:2170px;width:1512px;text-align:center;color:white;font-size:48px;font-family:'PP Formula',sans-serif;font-weight:400;line-height:1.2;z-index:4;pointer-events:none";
     aboutQuote.innerHTML = "We don’t simply provide capital.<br>We provide the complete team.";
     page.appendChild(aboutQuote);
 
     // About video — landscape, bigger, fades: left edge + top (to title bottom) + bottom (from last para)
     var aboutVidWrap = document.createElement("div");
-    aboutVidWrap.style.cssText = "position:absolute;left:720px;top:1366px;width:840px;height:700px;overflow:hidden;z-index:2;pointer-events:none;"+
-      "-webkit-mask-image:linear-gradient(to right,transparent 0%,black 7%,black 100%),linear-gradient(to bottom,transparent 0%,black 35%,black 80%,transparent 100%);"+
+    aboutVidWrap.style.cssText = "position:absolute;left:820px;top:1366px;width:1000px;height:650px;overflow:hidden;z-index:2;pointer-events:none;"+
+      "-webkit-mask-image:linear-gradient(to right,transparent 0%,black 7%,black 100%),linear-gradient(to bottom,transparent 0%,black 37%,black 87%,transparent 100%);"+
       "-webkit-mask-composite:destination-in;"+
-      "mask-image:linear-gradient(to right,transparent 0%,black 7%,black 100%),linear-gradient(to bottom,transparent 0%,black 35%,black 80%,transparent 100%);"+
+      "mask-image:linear-gradient(to right,transparent 0%,black 7%,black 100%),linear-gradient(to bottom,transparent 0%,black 37%,black 87%,transparent 100%);"+
       "mask-composite:intersect";
     var aboutVid = document.createElement("video");
     aboutVid.autoplay = true;
@@ -978,7 +978,7 @@
       { src:"images/logo-welcome3.png",    h:67, blend:"screen" }
     ];
     var aboutLogoRow = document.createElement("div");
-    aboutLogoRow.style.cssText = "position:absolute;left:0;top:2510px;width:1512px;display:flex;align-items:center;justify-content:center;column-gap:48px;row-gap:16px;flex-wrap:wrap;z-index:3;padding:0 56px;box-sizing:border-box";
+    aboutLogoRow.style.cssText = "position:absolute;left:0;top:2360px;width:1512px;display:flex;align-items:center;justify-content:center;column-gap:48px;row-gap:16px;flex-wrap:wrap;z-index:3;padding:0 56px;box-sizing:border-box";
     partnerLogos.forEach(function(logo, i){
       if(i === 5){
         var br = document.createElement("span");
@@ -1037,10 +1037,10 @@
        CONSISTENT SECTION SPACING (600px between each)
        Build=2850, Raise=3450, Launch=4050, Trade=4650, Reward=5250
        ========================================= */
-    var raiseTop = 4000;
-    var launchTop = 4750;
-    var tradeTop = 5700;
-    var rewardTop = 6500;
+    var raiseTop = 3850;
+    var launchTop = 4600;
+    var tradeTop = 5550;
+    var rewardTop = 6350;
 
     /* --- RAISE (original title at 3752) --- */
     if(raiseSection){
@@ -1068,7 +1068,7 @@
     /* --- ROTATING CIRCLES VIDEO (Build -> Raise) --- */
     var circlesVid = document.createElement('div');
     circlesVid.className = 'injected-video';
-    circlesVid.style.cssText = 'width:1600px;height:1200px;left:-44px;top:3750px;position:absolute;overflow:hidden;z-index:0;-webkit-mask-image:linear-gradient(180deg, transparent 0%, black 55%, black 75%, transparent 100%);mask-image:linear-gradient(180deg, transparent 0%, black 55%, black 75%, transparent 100%)';
+    circlesVid.style.cssText = 'width:1600px;height:1200px;left:-44px;top:3600px;position:absolute;overflow:hidden;z-index:0;-webkit-mask-image:linear-gradient(180deg, transparent 0%, black 55%, black 75%, transparent 100%);mask-image:linear-gradient(180deg, transparent 0%, black 55%, black 75%, transparent 100%)';
     circlesVid.innerHTML = '<video autoplay muted loop playsinline style="width:100%;height:100%;object-fit:cover;mix-blend-mode:screen;filter:blur(18px);transform:scale(1.1)"><source src="videos/rotating-circles.mp4" type="video/mp4"></video>';
     page.insertBefore(circlesVid, page.firstChild);
 
@@ -1359,10 +1359,10 @@
     var sectionTops = {
       hero: 0,
       build: 2850,
-      raise: 3450,
-      launch: 4200,
-      trade: 5150,
-      reward: 5950
+      raise: 3300,
+      launch: 4050,
+      trade: 5000,
+      reward: 5800
     };
     var sectionOrder = ['hero','build','raise','launch','trade','reward'];
 
