@@ -926,11 +926,11 @@
     });
 
     // Hide old 3D visual and its replacement
-    page.querySelectorAll("img[data-layer="hf_20260123_093008_25c1d8a7-7819-42e3-a1dc-9b017614ab15 1"]").forEach(function(el){ el.style.display="none"; });
-    page.querySelectorAll("img[src="images/incubat3-section.png"]").forEach(function(el){ el.style.display="none"; });
+    page.querySelectorAll('img[data-layer="hf_20260123_093008_25c1d8a7-7819-42e3-a1dc-9b017614ab15 1"]').forEach(function(el){ el.style.display='none'; });
+    page.querySelectorAll('img[src="images/incubat3-section.png"]').forEach(function(el){ el.style.display='none'; });
 
     // Hide Screenshot blur in about area and gradient rectangle
-    page.querySelectorAll("img[data-layer="Screenshot 2026-01-05 at 17.16.24 1"]").forEach(function(el){ el.style.display="none"; });
+    page.querySelectorAll('img[data-layer="Screenshot 2026-01-05 at 17.16.24 1"]').forEach(function(el){ el.style.display='none'; });
     page.querySelectorAll(".Rectangle48").forEach(function(el){
       var t = parseFloat(el.style.top);
       if(t > 2000 && t < 2700) el.style.display="none";
