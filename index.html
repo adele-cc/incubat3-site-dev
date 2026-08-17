@@ -956,7 +956,7 @@
     aboutVid.loop = true;
     aboutVid.playsInline = true;
     aboutVid.src = "videos/about.mp4";
-    aboutVid.style.cssText = "position:absolute;left:600px;top:1366px;width:810px;height:900px;object-fit:cover;z-index:2;-webkit-mask-image:linear-gradient(180deg,transparent 0%,black 22%,black 78%,transparent 100%);mask-image:linear-gradient(180deg,transparent 0%,black 22%,black 78%,transparent 100%);pointer-events:none";
+    aboutVid.style.cssText = "position:absolute;left:750px;top:1366px;width:810px;height:900px;object-fit:cover;z-index:2;-webkit-mask-image:linear-gradient(180deg,transparent 0%,black 22%,black 78%,transparent 100%);mask-image:linear-gradient(180deg,transparent 0%,black 22%,black 78%,transparent 100%);pointer-events:none";
     page.appendChild(aboutVid);
 
     // 8-logo partner row — single line, centered
@@ -971,7 +971,7 @@
       { src:"images/logo-welcome3.png",    h:67, blend:"screen" }
     ];
     var aboutLogoRow = document.createElement("div");
-    aboutLogoRow.style.cssText = "position:absolute;left:0;top:2510px;width:1512px;display:flex;align-items:center;justify-content:center;gap:48px;flex-wrap:wrap;z-index:3;padding:0 56px;box-sizing:border-box";
+    aboutLogoRow.style.cssText = "position:absolute;left:0;top:2510px;width:1512px;display:flex;align-items:center;justify-content:center;column-gap:48px;row-gap:16px;flex-wrap:wrap;z-index:3;padding:0 56px;box-sizing:border-box";
     partnerLogos.forEach(function(logo, i){
       if(i === 5){
         var br = document.createElement("span");
