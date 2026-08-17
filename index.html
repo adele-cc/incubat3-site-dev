@@ -1,947 +1,56 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Incubat3 — Your All-in-One Launch Partner</title>
-  <meta name="description" content="The Web3 superapp for building, launching, and scaling token networks end-to-end.">
-  <meta property="og:title" content="Incubat3 — Your All-in-One Launch Partner">
-  <meta property="og:description" content="The Web3 superapp for building, launching, and scaling token networks end-to-end.">
-  <meta property="og:type" content="website">
-  <meta property="og:url" content="https://incubat3.com">
-  <meta property="og:image" content="https://incubat3.com/images/hero_18.png">
-  <link rel="icon" type="image/svg+xml" href="favicon.svg">
-  <link rel="apple-touch-icon" href="images/incubat3.png">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
-  <style>
-    /* --- Font --- */
-    @font-face{font-family:'PP Formula';src:url('assets/PPFormula-Light.otf') format('opentype');font-weight:400;font-style:normal;font-display:swap}
-
-    /* --- Reset --- */
-    *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
-    html{scroll-behavior:smooth;-webkit-font-smoothing:antialiased}
-    body{background:#000;color:#fff;overflow-x:hidden}
-
-    /* --- Loader --- */
-    .loader{position:fixed;inset:0;z-index:9999;background:#000;display:flex;align-items:center;justify-content:center;transition:opacity .6s ease,visibility .6s ease}
-    .loader video{width:100%;height:100%;object-fit:cover}
-    video::-webkit-media-controls-start-playback-button{display:none!important;-webkit-appearance:none}
-    video::-webkit-media-controls{display:none!important}
-    .loader-mobile-logo{display:none}
-    .loader-tap{display:none;position:absolute;z-index:2;color:#fff;font-family:Poppins,sans-serif;font-size:14px;letter-spacing:2px;text-transform:uppercase;opacity:0.6;bottom:25%;cursor:pointer}
-    .loader--done{opacity:0;visibility:hidden;pointer-events:none}
-
-    /* --- Site wrapper --- */
-    .site-wrap{display:flex;justify-content:center;opacity:0;transition:opacity .5s ease;position:relative;overflow:hidden}
-    .site-wrap--visible{opacity:1}
-
-    /* --- Injected video / replaced image elements --- */
-    .injected-video{pointer-events:none}
-    .injected-video video{width:100%;height:100%;object-fit:cover}
-
-    /* Hide static hero image (replaced by video) */
-    img[data-layer="HERO"]{opacity:0!important}
-
-    /* --- Hide embedded scroller (we add a fixed one) --- */
-    [data-layer="Rectangle 20"],
-    [data-layer="Rectangle 21"],
-    [data-layer="Rectangle 22"],
-    [data-layer="Rectangle 23"],
-    [data-layer="Rectangle 24"],
-    [data-layer="Rectangle 25"],
-    [data-layer="INCUBAT3_"],
-    [data-layer="OWNERSHIP_"],
-    [data-layer="INVESTMENT_"],
-    [data-layer="EARNINGS_"],
-    [data-layer="Path 60"],
-    [data-layer="Path 61"],
-    [data-layer="Path 62"],
-    [data-layer="Path 63"],
-    [data-layer="Path 64"]{display:none!important}
-
-    /* --- Fixed scroller --- */
-    .scroller{position:fixed;right:calc(50vw - 724px);top:50%;transform:translateY(-50%);display:flex;flex-direction:column;align-items:center;z-index:100;transition:opacity .3s}
-    .scroller__item{display:flex;align-items:center;justify-content:center;writing-mode:vertical-rl;text-orientation:mixed;width:32px;height:82px;padding:0;border-radius:16px;border:1px solid #fff;font-family:'PP Formula','Poppins',sans-serif;font-size:10px;font-weight:400;color:#fff;transition:all .3s;cursor:pointer;text-decoration:none}
-    .scroller__item:hover{background:rgba(255,255,255,.06)}
-    .scroller__item:last-child{height:90px}
-    .scroller__item--active{height:108px;background:#00f;border-color:#00f}
-    .scroller__line{width:1px;height:71px;background:transparent}
-
-    /* --- Fix Raise section --- */
-    .Raise{gap:24px!important;height:auto!important;overflow:visible!important}
-    .Raise [data-layer="Path 42"],
-    .Raise [data-layer="Path 43"],
-    .Raise [data-layer="Path 44"],
-    .Raise [data-layer="Path 45"]{display:none!important}
-
-    /* --- Fix text overflow / alignment --- */
-    .I3HomePage .HeroSubtitle,
-    .I3HomePage .HeroTitle,
-    .I3HomePage .FeatureDescription{overflow:visible!important}
-    .I3HomePage .FeatureDescription{font-weight:300!important}
-
-    /* Fix Launch section heading wrapping */
-    .Frame196{overflow:visible!important}
-    .Frame196 .Frame183{overflow:visible!important;height:auto!important}
-    .Frame196 .HeroTitle{height:auto!important}
-    .Frame196 .HeroSubtitle{height:auto!important}
-
-    /* --- Fix button layout --- */
-    .Button{overflow:visible!important;position:relative;justify-content:flex-start!important;min-width:fit-content;cursor:pointer}
-    .ButtonBackground{display:none!important}
-    .Vector168{position:absolute;right:20px;top:50%;transform:translateY(-50%);pointer-events:none}
-    .Button[data-property-1="Variant2"]{padding-right:53px!important}
-    .Button[data-property-1="Default"]{padding-right:53px!important}
-
-    /* --- Coming Soon tooltip on buttons (not scroller) --- */
-    .I3HomePage .Button::after{content:'Coming Soon';position:absolute;bottom:calc(100% + 12px);left:50%;transform:translateX(-50%) translateY(4px);background:rgba(255,255,255,.08);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);border:1px solid rgba(255,255,255,.15);color:rgba(255,255,255,.85);font-family:Poppins,sans-serif;font-size:11px;font-weight:400;letter-spacing:.5px;padding:8px 18px;border-radius:20px;white-space:nowrap;opacity:0;pointer-events:none;transition:opacity .35s ease,transform .35s ease;z-index:10}
-    .I3HomePage .Button:hover::after{opacity:1;transform:translateX(-50%) translateY(0)}
-
-    /* --- Raise section buttons side-by-side --- */
-    .Raise .raise-buttons{display:flex!important;flex-direction:row!important;gap:16px!important;align-items:center;margin-top:32px}
-    .Raise .raise-buttons .Button{width:198px!important;flex-shrink:0}
-    /* --- Raise icon + title row --- */
-    .raise-title-row{display:flex!important;flex-direction:row!important;align-items:center!important;gap:16px}
-
-    /* --- Responsive --- */
-    @media(max-width:1560px){
-      .I3HomePage{transform:scale(calc(100vw / 1512));transform-origin:top center}
-      .site-wrap{min-height:calc(10650px * (100vw / 1512))}
-    }
-    @media(max-width:992px){
-      .scroller{display:none}
-    }
-
-    /* === MOBILE === */
-    @media(max-width:768px){
-      .I3HomePage{width:100%!important;height:auto!important;transform:none!important;overflow:visible!important}
-      .site-wrap{min-height:auto!important;overflow:visible!important}
-      .I3HomePage>.desktop-only{display:none!important}
-
-      /* Mobile sections */
-      .mobile-section{position:relative;width:100%;padding:60px 20px;display:flex;flex-direction:column;gap:24px;box-sizing:border-box}
-      .mobile-section--hero{min-height:100vh;min-height:100dvh;justify-content:flex-start;padding-top:16px;padding-bottom:40px;overflow:hidden}
-      .mobile-section--hero .hero-bg{position:absolute;top:0;left:0;width:100%;height:100%;z-index:0;overflow:hidden}
-      .mobile-section--hero .hero-bg::before{content:'';position:absolute;inset:-10px;background:url(images/hero.jpg) center/cover no-repeat;filter:blur(8px);z-index:0}
-      .mobile-section--hero .hero-bg video{width:100%;height:100%;object-fit:cover;filter:blur(8px);opacity:0;transition:opacity .3s}
-      .mobile-section--hero .hero-bg video.playing{opacity:1}
-      .mobile-section--hero .hero-bg::after{content:'';position:absolute;inset:0;z-index:2;background:
-        linear-gradient(180deg,rgba(0,0,0,0.6) 0%,transparent 30%,transparent 60%,rgba(0,0,0,0.8) 100%),
-        radial-gradient(ellipse at center,transparent 30%,rgba(0,0,0,0.7) 100%),
-        linear-gradient(180deg,rgba(20,10,40,0.35) 0%,rgba(10,5,30,0.35) 100%)
-      }
-      .mobile-section--hero .hero-glow{position:absolute;top:25%;left:50%;transform:translate(-50%,-50%);width:300px;height:300px;background:radial-gradient(circle,rgba(255,255,255,0.06) 0%,transparent 70%);z-index:1;pointer-events:none}
-      .mobile-section--hero .hero-inner{position:relative;z-index:2;display:flex;flex-direction:column;justify-content:flex-start;gap:24px;width:100%;height:auto}
-      .mobile-section--hero .hero-frame{position:absolute;bottom:0;right:-20px;width:70%;height:60%;z-index:1;pointer-events:none;opacity:0.15}
-
-      .mobile-section--superapp{text-align:center;align-items:center;padding-top:20px;overflow:hidden;position:relative;background:#000}
-      .mobile-section--superapp>*{position:relative;z-index:1}
-      .mobile-section--superapp .partner-logos{display:flex;flex-direction:column;align-items:center;gap:16px;padding:10px 0}
-      .mobile-section--superapp .partner-logos .logo-row{display:flex;justify-content:center;align-items:center;gap:24px}
-      .mobile-section--superapp .partner-logos img{height:18px;width:auto;object-fit:contain}
-      .mobile-section--superapp .superapp-screenshot{width:100%;border-radius:8px;-webkit-mask-image:linear-gradient(180deg,black 0%,black 60%,transparent 100%);mask-image:linear-gradient(180deg,black 0%,black 60%,transparent 100%)}
-      .mobile-section--superapp .superapp-buttons{display:flex;flex-direction:row;gap:12px;align-items:center;justify-content:center;width:100%}
-      .mobile-section--superapp .superapp-buttons .m-btn{flex:1;max-width:180px}
-
-      .mobile-section--feature{padding-top:50px;padding-bottom:50px;overflow:hidden;position:relative}
-      .mobile-section--feature .section-fade-top{position:absolute;top:0;left:0;right:0;height:50px;z-index:1;pointer-events:none}
-      .mobile-section--feature .section-fade-bottom{position:absolute;bottom:0;left:0;right:0;height:80px;z-index:1;pointer-events:none}
-      .mobile-section--feature .section-icon-title{display:flex;align-items:flex-end;gap:10px}
-      .mobile-section--feature .section-icon-title .m-title{line-height:1}
-      .mobile-section--feature .section-icon-title img{height:34px;width:auto;flex-shrink:0;margin-bottom:8px}
-      .mobile-section--feature .section-icon-title svg{height:34px;width:auto;flex-shrink:0;margin-bottom:8px}
-      .mobile-section--feature .section-bg{position:absolute;inset:0;z-index:0;overflow:hidden;pointer-events:none}
-      .mobile-section--feature .section-bg video,.mobile-section--feature .section-bg img{width:100%;height:100%;object-fit:cover;filter:blur(18px);mix-blend-mode:screen;transform:scale(1.2)}
-      .mobile-section--feature>*{position:relative;z-index:2}
-      .mobile-section--feature .section-buttons{display:flex;flex-direction:column;gap:12px;margin-top:8px}
-
-      .mobile-section--arc{text-align:center;align-items:center;gap:40px;position:relative}
-      .mobile-section--arc .arc-fade-top{position:absolute;top:0;left:0;right:0;height:80px;background:linear-gradient(180deg,#000,transparent);z-index:2;pointer-events:none}
-      .mobile-section--arc .arc-video-wrap{width:calc(100% + 40px);margin:-60px -20px 0;max-height:360px;overflow:hidden;background:url(images/arc-poster.jpg) center/cover no-repeat}
-      .mobile-section--arc .arc-video{width:100%;height:100%;object-fit:cover;opacity:0;transition:opacity .3s}
-      .mobile-section--arc .arc-video.playing{opacity:1}
-      .mobile-section--arc .arc-card{display:flex;flex-direction:column;gap:12px;align-items:center;text-align:center}
-      .mobile-section--arc .arc-card img{width:200px;height:200px;object-fit:contain}
-
-      .mobile-section--footer{padding-top:40px;padding-bottom:40px;gap:32px}
-      .mobile-section--footer .footer-nav{display:grid;grid-template-columns:1fr 1fr;gap:32px 24px}
-      .mobile-section--footer .footer-nav-col{display:flex;flex-direction:column;gap:8px}
-      .mobile-section--footer .footer-nav-header{font-size:10px;font-family:Poppins;font-weight:500;text-transform:uppercase;letter-spacing:.4px;color:white;opacity:.6}
-      .mobile-section--footer .footer-nav-link{font-size:14px;font-family:Poppins;font-weight:400;color:white;line-height:1.6}
-      .mobile-section--footer .footer-social{display:flex;flex-direction:row;gap:20px;border-top:1px solid rgba(255,255,255,.2);padding-top:16px}
-      .mobile-section--footer .footer-social a,.mobile-section--footer .footer-social span{font-size:12px;font-family:Poppins;font-weight:500;color:white;text-decoration:none}
-      .mobile-section--footer .footer-copyright{font-size:10px;font-family:Poppins;font-weight:500;color:white;opacity:.5;text-align:center}
-      .mobile-section--footer .footer-bg{position:absolute;inset:0;z-index:0;overflow:hidden;pointer-events:none}
-      .mobile-section--footer .footer-bg video{width:100%;height:100%;object-fit:cover;filter:blur(18px);opacity:.4}
-      .mobile-section--footer>*{position:relative;z-index:1}
-
-      /* Mobile typography */
-      .m-title{font-size:40px;font-family:'PP Formula',sans-serif;font-weight:400;color:white;line-height:1.15}
-      .m-tagline{font-size:28px;font-family:'PP Formula',sans-serif;font-weight:400;color:white;line-height:1.3}
-      .m-body{font-size:15px;font-family:Poppins,sans-serif;font-weight:300;color:white;line-height:1.7;opacity:.85}
-      .m-heading{font-size:28px;font-family:'PP Formula',sans-serif;font-weight:400;color:white;line-height:1.3}
-      .m-subheading{font-size:22px;font-family:'PP Formula',sans-serif;font-weight:400;color:white;line-height:1.3}
-
-      /* Mobile buttons */
-      .m-btn{height:48px;padding:0 48px 0 16px;border-radius:20px;display:inline-flex;align-items:center;gap:10px;cursor:pointer;position:relative;font-size:15px;font-family:Poppins,sans-serif;font-weight:400;color:white;text-decoration:none;white-space:nowrap;border:none;background:transparent}
-      .m-btn--primary{background:#0000FF}
-      .m-btn--outline{border:1px solid #fff}
-      .m-btn .m-btn-arrow{position:absolute;right:16px;top:50%;transform:translateY(-50%)}
-
-      /* Mobile nav */
-      .mobile-nav-toggle{position:fixed;top:16px;right:16px;z-index:200;width:44px;height:44px;background:rgba(0,0,0,.6);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);border:1px solid rgba(255,255,255,.15);border-radius:12px;cursor:pointer;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:5px;padding:0;-webkit-tap-highlight-color:transparent}
-      .mobile-nav-toggle span{display:block;width:20px;height:2px;background:#fff;transition:all .3s;border-radius:1px}
-      .mobile-nav-toggle--open span:nth-child(1){transform:rotate(45deg) translate(5px,5px)}
-      .mobile-nav-toggle--open span:nth-child(2){opacity:0}
-      .mobile-nav-toggle--open span:nth-child(3){transform:rotate(-45deg) translate(5px,-5px)}
-      .mobile-nav-drawer{position:fixed;top:0;right:-280px;width:280px;height:100vh;height:100dvh;background:rgba(0,0,0,.95);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);z-index:190;transition:right .3s ease;padding:80px 32px 32px;display:flex;flex-direction:column;gap:0}
-      .mobile-nav-drawer--open{right:0}
-      .mobile-nav-drawer a{color:#fff;font-family:'PP Formula',sans-serif;font-size:18px;text-decoration:none;padding:16px 0;border-bottom:1px solid rgba(255,255,255,.08);-webkit-tap-highlight-color:transparent}
-      .mobile-nav-drawer a:active{color:#00f}
-      .mobile-nav-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:180}
-      .mobile-nav-overlay--visible{display:block}
-
-      /* Coming Soon - tap on mobile */
-      .m-btn .coming-soon-tip{position:absolute;bottom:calc(100% + 10px);left:50%;transform:translateX(-50%) translateY(4px);background:rgba(255,255,255,.08);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);border:1px solid rgba(255,255,255,.15);color:rgba(255,255,255,.85);font-family:Poppins,sans-serif;font-size:11px;font-weight:400;letter-spacing:.5px;padding:8px 18px;border-radius:20px;white-space:nowrap;opacity:0;pointer-events:none;transition:opacity .35s ease,transform .35s ease;z-index:10}
-      .m-btn .coming-soon-tip--visible{opacity:1;transform:translateX(-50%) translateY(0)}
-    }
-    @media(min-width:769px){
-      .mobile-nav-toggle,.mobile-nav-drawer,.mobile-nav-overlay,.mobile-section{display:none!important}
-    }
-  </style>
-</head>
-<body>
-  <!-- LOADER -->
-  <div id="loader" class="loader">
-    <video id="loader-video" autoplay muted playsinline preload="auto">
-      <source src="Loader.mp4" type="video/mp4">
-    </video>
-    <svg class="loader-mobile-logo" width="80" height="70" viewBox="0 0 90 79" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M83.4648 39.9858L89.9028 53.141L89.8236 75.2975L86.4665 78.7246C86.4665 78.7246 34.6142 78.7807 8.68807 78.8241C6.54801 78.8266 2.27045 79.0026 2.27045 79.0026L0 76.8045C0 76.8045 0.0971591 63.861 0.107386 57.3892C0.12017 48.8622 0.0690341 31.8081 0.0690341 31.8081L2.85852 28.8654L24.4253 28.8119L27.0767 31.4026L26.9616 53.7861L29.8662 56.8103L60.6043 56.5401L62.8977 53.7912L60.5301 51.1112L36.9051 50.9404L33.8881 47.8957L33.6835 31.9152L36.6827 28.8144L59.85 28.6742L62.8108 25.6755L59.7324 22.6053L35.642 22.6002L32.983 20.012L32.9446 2.425L35.3122 0.053549L87.6222 0L89.9974 2.323L89.9054 29.0465L83.4648 39.9858Z" fill="white"/><path d="M13.5588 22.3044C9.73892 22.3044 2.10426 22.3223 2.10426 22.3223L0.0485795 20.3512L0 2.10371L1.9304 0.0280494L25.2997 0L27.1074 1.94306L27.0767 20.42L25.0133 22.3554C25.0133 22.3554 17.3761 22.335 13.5562 22.335V22.3044H13.5588Z" fill="white"/></svg>
-    <div class="loader-tap" id="loader-tap">Tap to Enter</div>
-  </div>
-
-  <!-- FIXED SCROLLER -->
-  <nav class="scroller" aria-label="Section navigation">
-    <a href="#" class="scroller__item scroller__item--active" data-section="hero"><span>INCUBAT3</span></a>
-    <span class="scroller__line"></span>
-    <a href="#" class="scroller__item" data-section="mission"><span>MISSION</span></a>
-    <span class="scroller__line"></span>
-    <a href="#" class="scroller__item" data-section="edge"><span>EDGE</span></a>
-    <span class="scroller__line"></span>
-    <a href="#" class="scroller__item" data-section="analyze"><span>ANALYZE</span></a>
-    <span class="scroller__line"></span>
-    <a href="#" class="scroller__item" data-section="build"><span>BUILD</span></a>
-    <span class="scroller__line"></span>
-    <a href="#" class="scroller__item" data-section="launch"><span>LAUNCH</span></a>
-  </nav>
-
-  <!-- SITE CONTENT -->
-  <div id="site" class="site-wrap">
-<div data-layer="I3 - home Page" class="I3HomePage" style="width: 1512px; height: 10712px; position: relative; background: black; overflow: hidden">
-  <img data-layer="rotating-glass-ring-with-iridescent-reflections-on-2025-12-09-08-36-24-utc 1" class="RotatingGlassRingWithIridescentReflectionsOn20251209083624Utc1" style="width: 1485px; height: 1413px; left: 12px; top: 9256px; position: absolute; box-shadow: 64px 64px 64px; filter: blur(32px)" src="images/rotating-glass-ring-with-iridescent-reflections-on-2025-12-09-08-36-24-utc_1_01.png" />
-  <div data-layer="Layer_1" class="Layer1" style="width: 1462px; height: 1287.82px; left: 12px; top: 9404px; position: absolute; overflow: hidden">
-    <div data-svg-wrapper data-layer="Vector" class="Vector" style="left: 4.39px; top: 4.48px; position: absolute">
-      <svg width="1454" height="1280" viewBox="0 0 1454 1280" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <path d="M1348.11 647.746L1452.06 860.702L1450.76 1219.36L1396.55 1274.83C1396.55 1274.83 559.421 1275.77 140.836 1276.44C106.29 1276.49 37.1983 1279.31 37.1983 1279.31L0.501587 1243.74C0.501587 1243.74 2.06982 1034.23 2.20424 929.477C2.42828 791.434 1.57695 515.394 1.57695 515.394L46.6078 467.766L394.756 466.915L437.547 508.852L435.71 871.186L482.578 920.158L978.813 915.767L1015.82 871.276L977.603 827.905L596.208 825.127L547.503 775.842L544.187 517.141L592.623 466.915L966.67 464.63L1014.48 416.107L964.788 366.419L575.865 366.329L532.94 324.437L532.313 39.7488L570.623 1.39609L1415.14 0.5L1453.5 38.091L1452.02 470.679L1348.02 647.746H1348.11Z" stroke="white" stroke-opacity="0.33" stroke-miterlimit="10"/>
-      </svg>
-    </div>
-    <div data-svg-wrapper data-layer="Vector" class="Vector" style="left: 4.53px; top: 5.87px; position: absolute">
-      <svg width="439" height="363" viewBox="0 0 439 363" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <path d="M219.426 361.535C157.772 361.535 34.4641 361.848 34.4641 361.848L1.30706 329.948L0.500538 34.5514L31.686 0.948045L409.004 0.5L438.173 31.9528L437.68 331.023L404.389 362.341C404.389 362.341 281.081 362.028 219.426 362.028V361.535Z" stroke="white" stroke-opacity="0.33" stroke-miterlimit="10"/>
-      </svg>
-    </div>
-    <div data-layer="Footer Questions" class="FooterQuestions" style="width: 566px; height: 79px; left: 874px; top: 130px; position: absolute; color: white; font-size: 40px; font-family: PP Formula; font-weight: 400; line-height: 48px; word-wrap: break-word">Get in touch.</div>
-    <div data-layer="Join Section" class="JoinSection" style="width: 303.03px; height: 44px; padding-left: 20px; padding-right: 20px; padding-top: 10px; padding-bottom: 10px; left: 874px; top: 201px; position: absolute; border-radius: 20px; outline: 1px white solid; outline-offset: -1px; justify-content: flex-start; align-items: center; display: inline-flex">
-      <div data-layer="Button Text" class="ButtonText" style="color: white; font-size: 16px; font-family: Poppins; font-weight: 400; word-wrap: break-word">Enter Your Email here          </div>
-    </div>
-    <div data-layer="Footer Section" class="FooterSection" style="width: 189px; height: 44px; padding-top: 4px; left: 874px; top: 272px; position: absolute; flex-direction: column; justify-content: flex-start; align-items: flex-start; gap: 24px; display: inline-flex">
-      <div data-layer="Footer List" class="FooterList" style="align-self: stretch; flex-direction: column; justify-content: flex-start; align-items: flex-start; gap: 4px; display: flex">
-        <div data-layer="Footer Link" class="FooterLink" style="align-self: stretch; color: white; font-size: 14px; font-family: Poppins; font-weight: 400; line-height: 19.60px; word-wrap: break-word">contact@Incubat3.com</div>
-      </div>
-    </div>
-    <div data-layer="Hero Title" class="HeroTitle" style="left: 174px; top: 114px; position: absolute; color: white; font-size: 96px; font-family: PP Formula; font-weight: 400; word-wrap: break-word">Incubat3</div>
-    <div data-layer="Layer_1" class="Layer1" style="width: 90px; height: 79px; left: 67px; top: 130px; position: absolute; overflow: hidden">
-      <div data-svg-wrapper data-layer="Vector" class="Vector" style="left: 0px; top: 0px; position: absolute">
-        <svg width="90" height="79" viewBox="0 0 90 79" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <path d="M83.4648 39.9858L89.9028 53.141L89.8236 75.2975L86.4665 78.7246C86.4665 78.7246 34.6142 78.7807 8.68807 78.8241C6.54801 78.8266 2.27045 79.0026 2.27045 79.0026L0 76.8045C0 76.8045 0.0971591 63.861 0.107386 57.3892C0.12017 48.8622 0.0690341 31.8081 0.0690341 31.8081L2.85852 28.8654L24.4253 28.8119L27.0767 31.4026L26.9616 53.7861L29.8662 56.8103L60.6043 56.5401L62.8977 53.7912L60.5301 51.1112L36.9051 50.9404L33.8881 47.8957L33.6835 31.9152L36.6827 28.8144L59.85 28.6742L62.8108 25.6755L59.7324 22.6053L35.642 22.6002L32.983 20.012L32.9446 2.425L35.3122 0.053549L87.6222 0L89.9974 2.323L89.9054 29.0465L83.4648 39.9858Z" fill="white"/>
-        </svg>
-      </div>
-      <div data-svg-wrapper data-layer="Vector" class="Vector" style="left: 0px; top: 0.09px; position: absolute">
-        <svg width="28" height="23" viewBox="0 0 28 23" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <path d="M13.5588 22.3044C9.73892 22.3044 2.10426 22.3223 2.10426 22.3223L0.0485795 20.3512L0 2.10371L1.9304 0.0280494L25.2997 0L27.1074 1.94306L27.0767 20.42L25.0133 22.3554C25.0133 22.3554 17.3761 22.335 13.5562 22.335V22.3044H13.5588Z" fill="white"/>
-        </svg>
-      </div>
-    </div>
-  </div>
-  <div data-layer="Footer Container" class="FooterContainer" style="width: 835.97px; height: 130px; left: 155.54px; top: 10384px; position: absolute; justify-content: space-between; align-items: center; display: inline-flex">
-    <div data-layer="Footer Navigation" class="FooterNavigation" style="width: 848px; justify-content: flex-start; align-items: flex-start; gap: 48px; display: flex">
-      <div data-layer="Footer Section" class="FooterSection" style="flex: 1 1 0; flex-direction: column; justify-content: flex-start; align-items: flex-start; gap: 24px; display: inline-flex">
-        <div data-layer="Footer Header" class="FooterHeader" style="align-self: stretch; color: white; font-size: 10px; font-family: Poppins; font-weight: 500; text-transform: uppercase; line-height: 14px; letter-spacing: 0.40px; word-wrap: break-word">Navigation</div>
-        <div data-layer="Footer List" class="FooterList" style="align-self: stretch; flex-direction: column; justify-content: flex-start; align-items: flex-start; gap: 4px; display: flex">
-          <div data-layer="Footer Link" class="FooterLink" style="align-self: stretch; color: white; font-size: 14px; font-family: Poppins; font-weight: 400; line-height: 19.60px; word-wrap: break-word">About</div>
-          <div data-layer="Footer Link" class="FooterLink" style="align-self: stretch; color: white; font-size: 14px; font-family: Poppins; font-weight: 400; line-height: 19.60px; word-wrap: break-word">Features</div>
-          <div data-layer="Footer Link" class="FooterLink" style="align-self: stretch; color: white; font-size: 14px; font-family: Poppins; font-weight: 400; line-height: 19.60px; word-wrap: break-word">Teams</div>
-          <div data-layer="Footer Link" class="FooterLink" style="align-self: stretch; color: white; font-size: 14px; font-family: Poppins; font-weight: 400; line-height: 19.60px; word-wrap: break-word">Service</div>
-        </div>
-      </div>
-      <div data-layer="Footer Section" class="FooterSection" style="flex: 1 1 0; flex-direction: column; justify-content: flex-start; align-items: flex-start; gap: 24px; display: inline-flex">
-        <div data-layer="Footer Header" class="FooterHeader" style="align-self: stretch; color: white; font-size: 10px; font-family: Poppins; font-weight: 500; text-transform: uppercase; line-height: 14px; letter-spacing: 0.40px; word-wrap: break-word">Support</div>
-        <div data-layer="Footer List" class="FooterList" style="align-self: stretch; flex-direction: column; justify-content: flex-start; align-items: flex-start; gap: 4px; display: flex">
-          <div data-layer="Footer Link" class="FooterLink" style="align-self: stretch; color: white; font-size: 14px; font-family: Poppins; font-weight: 400; line-height: 19.60px; word-wrap: break-word">Documentation</div>
-          <div data-layer="Footer Link" class="FooterLink" style="align-self: stretch; color: white; font-size: 14px; font-family: Poppins; font-weight: 400; line-height: 19.60px; word-wrap: break-word">Consultation</div>
-        </div>
-      </div>
-      <div data-layer="Footer Section" class="FooterSection" style="flex: 1 1 0; flex-direction: column; justify-content: flex-start; align-items: flex-start; gap: 24px; display: inline-flex">
-        <div data-layer="Footer Header" class="FooterHeader" style="align-self: stretch; color: white; font-size: 10px; font-family: Poppins; font-weight: 500; text-transform: uppercase; line-height: 14px; letter-spacing: 0.40px; word-wrap: break-word">Legal</div>
-        <div data-layer="Footer List" class="FooterList" style="align-self: stretch; flex-direction: column; justify-content: flex-start; align-items: flex-start; gap: 4px; display: flex">
-          <div data-layer="Footer Link" class="FooterLink" style="align-self: stretch; color: white; font-size: 14px; font-family: Poppins; font-weight: 400; line-height: 19.60px; word-wrap: break-word">Privacy</div>
-          <div data-layer="Footer Link" class="FooterLink" style="align-self: stretch; color: white; font-size: 14px; font-family: Poppins; font-weight: 400; line-height: 19.60px; word-wrap: break-word">Term</div>
-          <div data-layer="Footer Link" class="FooterLink" style="align-self: stretch; color: white; font-size: 14px; font-family: Poppins; font-weight: 400; line-height: 19.60px; word-wrap: break-word">Partner</div>
-        </div>
-      </div>
-      <div data-layer="Footer Section" class="FooterSection" style="flex: 1 1 0; flex-direction: column; justify-content: flex-start; align-items: flex-start; gap: 24px; display: inline-flex">
-        <div data-layer="Footer Header" class="FooterHeader" style="align-self: stretch; color: white; font-size: 10px; font-family: Poppins; font-weight: 500; text-transform: uppercase; line-height: 14px; letter-spacing: 0.40px; word-wrap: break-word">Info</div>
-        <div data-layer="Footer List" class="FooterList" style="align-self: stretch; flex-direction: column; justify-content: flex-start; align-items: flex-start; gap: 4px; display: flex">
-          <div data-layer="Footer Link" class="FooterLink" style="align-self: stretch; color: white; font-size: 14px; font-family: Poppins; font-weight: 400; line-height: 19.60px; word-wrap: break-word">About us</div>
-          <div data-layer="Footer Link" class="FooterLink" style="align-self: stretch; color: white; font-size: 14px; font-family: Poppins; font-weight: 400; line-height: 19.60px; word-wrap: break-word">Blog</div>
-          <div data-layer="Footer Link" class="FooterLink" style="align-self: stretch; color: white; font-size: 14px; font-family: Poppins; font-weight: 400; line-height: 19.60px; word-wrap: break-word">Contacts</div>
-        </div>
-      </div>
-    </div>
-  </div>
-  <div data-layer="Bottom Section" class="BottomSection" style="width: 1251px; left: 128px; top: 10559px; position: absolute; flex-direction: column; justify-content: flex-start; align-items: center; gap: 48px; display: inline-flex">
-    <div data-layer="Social Media Links" class="SocialMediaLinks" style="width: 1224px; justify-content: flex-start; align-items: center; gap: 48px; display: inline-flex">
-      <div data-layer="Social Media Item" class="SocialMediaItem" style="flex: 1 1 0; flex-direction: column; justify-content: flex-start; align-items: flex-start; gap: 30px; display: inline-flex">
-        <div data-layer="Border" class="Border" style="align-self: stretch; height: 1px; opacity: 0.20; background: white"></div>
-        <a href="https://x.com/I3_Official" target="_blank" rel="noopener noreferrer" data-layer="Social Media Link" class="SocialMediaLink" style="justify-content: flex-start; align-items: flex-start; gap: 216px; display: inline-flex; color: inherit; text-decoration: none">
-          <div data-layer="Social Media Text" class="SocialMediaText" style="color: white; font-size: 12px; font-family: Poppins; font-weight: 500; line-height: 16.80px; word-wrap: break-word">X (Twitter)</div>
-        </a>
-      </div>
-      <div data-layer="Social Media Item" class="SocialMediaItem" style="flex: 1 1 0; flex-direction: column; justify-content: flex-start; align-items: flex-start; gap: 30px; display: inline-flex">
-        <div data-layer="Border" class="Border" style="align-self: stretch; height: 1px; opacity: 0.20; background: white"></div>
-        <a href="https://t.me/PIQARIO" target="_blank" rel="noopener noreferrer" data-layer="Social Media Link" class="SocialMediaLink" style="justify-content: flex-start; align-items: flex-start; gap: 215px; display: inline-flex; color: inherit; text-decoration: none">
-          <div data-layer="Social Media Text" class="SocialMediaText" style="color: white; font-size: 12px; font-family: Poppins; font-weight: 500; line-height: 16.80px; word-wrap: break-word">Telegram</div>
-        </a>
-      </div>
-    </div>
-    <div data-layer="Bottom Section" class="BottomSection" style="justify-content: flex-start; align-items: flex-end; gap: 1119px; display: inline-flex">
-      <div data-layer="Footer Text" class="FooterText" style="justify-content: flex-end; display: flex; flex-direction: column; color: white; font-size: 10px; font-family: Poppins; font-weight: 500; line-height: 14px; word-wrap: break-word">© 2026 — Copyright Incubat3</div>
-    </div>
-  </div>
-  <div data-layer="Hero Subtitle" class="HeroSubtitle" style="width: 1228px; height: 363px; left: 156px; top: 8967px; position: absolute; text-align: center; color: white; font-size: 96px; font-family: PP Formula; font-weight: 400; line-height: 115px; word-wrap: break-word">Blueprinted execution. End-to-end outcomes. The Web3 superapp.<br/>
-  </div>
-  <img data-layer="hf_20260209_134720_aedf89f9-bd47-46d4-81f9-082db010cf20 1" class="Hf20260209134720Aedf89f9Bd4746d481f9082db010cf201" style="width: 1285px; height: 1285px; left: 112px; top: 6791px; position: absolute; box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25)" src="images/hf_20260209_134720_aedf89f9-bd47-46d4-81f9-082db010cf20_1_02.png" />
-  <div data-layer="Rectangle 48" class="Rectangle48" style="width: 1322px; height: 676px; left: 101px; top: 7358px; position: absolute; background: linear-gradient(180deg, rgba(0, 0, 0, 0) 0%, black 100%)"></div>
-  <div data-layer="Hero Subtitle" class="HeroSubtitle" style="width: 1322px; height: 263px; left: 94px; top: 7739px; position: absolute; text-align: center; color: white; font-size: 96px; font-family: PP Formula; font-weight: 400; word-wrap: break-word">Powered by AI & Reputation Analysis</div>
-  <div data-layer="Feature Description" class="FeatureDescription" style="width: 402.14px; height: 125.70px; left: 574px; top: 8695.93px; position: absolute; color: white; font-size: 16px; font-family: Poppins; font-weight: 400; word-wrap: break-word">ARC is the intelligence layer powering execution. ARC provides configurable access to on-chain systems, DeFi primitives, and privacy-preserving AI - enabling adaptive decision-making across the Incubat3 system.</div>
-  <div data-layer="Hero Subtitle" class="HeroSubtitle" style="width: 403px; height: 30.98px; left: 574px; top: 8565.22px; position: absolute; color: white; font-size: 32px; font-family: PP Formula; font-weight: 400; line-height: 35.20px; word-wrap: break-word">Arc: The Decentralised AI Operating System.</div>
-  <img data-layer="Screenshot 2026-01-07 at 11.06.16 1" class="Screenshot20260107At1106161" style="width: 414px; height: 503px; left: 555px; top: 8116px; position: absolute; mix-blend-mode: screen" src="images/screenshot_2026-01-07_at_11_06_16_1_03.png" />
-  <div data-layer="Feature Description" class="FeatureDescription" style="width: 383.83px; height: 119.97px; left: 1074px; top: 8695.93px; position: absolute; color: white; font-size: 16px; font-family: Poppins; font-weight: 400; word-wrap: break-word">Nucleus interprets behaviour across on-chain and social systems, translating activity into actionable signal. It provides the reputation and context layer that informs access, incentives, and long-term alignment across networks built on Incubat3.</div>
-  <div data-layer="Hero Subtitle" class="HeroSubtitle" style="width: 391.18px; height: 59.14px; left: 1074.82px; top: 8559.77px; position: absolute; color: white; font-size: 32px; font-family: PP Formula; font-weight: 400; line-height: 35.20px; word-wrap: break-word">Nucleus: Reputation and signal intelligence.</div>
-  <img data-layer="hf_20260120_132328_fbc69f5d-8f4d-4676-8f2c-764aea814279 1" class="Hf20260120132328Fbc69f5d8f4d46768f2c764aea8142791" style="width: 383px; height: 383px; left: 1075px; top: 8152px; position: absolute" src="images/hf_20260120_132328_fbc69f5d-8f4d-4676-8f2c-764aea814279_1_04.png" />
-  <div data-layer="Feature Description" class="FeatureDescription" style="width: 416.11px; height: 130.07px; left: 76.89px; top: 8695.93px; position: absolute; color: white; font-size: 16px; font-family: Poppins; font-weight: 400; word-wrap: break-word">Incubat3 unifies the full lifecycle of a token network into one execution layer. What is fragmented across agencies, launchpads, tools, and platforms is mapped, coordinated, and run as a single system.</div>
-  <div data-layer="Hero Subtitle" class="HeroSubtitle" style="width: 417px; height: 64.12px; left: 76px; top: 8557.87px; position: absolute; color: white; font-size: 32px; font-family: PP Formula; font-weight: 400; line-height: 35.20px; word-wrap: break-word">Build. Raise. Launch. Trade. Reward.<br/></div>
-  <img data-layer="hf_20260123_093008_25c1d8a7-7819-42e3-a1dc-9b017614ab15 1" class="Hf2026012309300825c1d8a7781942e3A1dc9b017614ab151" style="width: 426px; height: 426px; left: 59px; top: 8109px; position: absolute" src="images/hf_20260123_093008_25c1d8a7-7819-42e3-a1dc-9b017614ab15_1_05.png" />
-  <img data-layer="hf_20260120_132655_7066c7fe-f1a6-4eef-a54b-93884b82e48d 1" class="Hf202601201326557066c7feF1a64eefA54b93884b82e48d1" style="width: 1414px; height: 1018px; left: 26px; top: 5403px; position: absolute; box-shadow: 64px 64px 64px; filter: blur(32px)" src="images/hf_20260120_132655_7066c7fe-f1a6-4eef-a54b-93884b82e48d_1_06.png" />
-  <div data-layer="Rectangle 48" class="Rectangle48" style="width: 1525px; height: 612px; left: -13px; top: 5885px; position: absolute; background: linear-gradient(180deg, rgba(0, 0, 0, 0) 0%, black 100%)"></div>
-  <div data-layer="Hero Subtitle" class="HeroSubtitle" style="width: 1448px; height: 394px; left: 39.06px; top: 5651px; position: absolute; color: white; font-size: 72px; font-family: PP Formula; font-weight: 400; word-wrap: break-word">Markets are unpredictable, but behaviour can be strategically designed.<br/>
-  </div>
-  <div data-layer="Button" data-property-1="Default" class="Button" style="width: 198px; height: 50px; padding-left: 16px; left: 30px; top: 6067.24px; position: absolute; background: #0000FF; border-radius: 20px; justify-content: center; align-items: center; gap: 10px; display: inline-flex">
-    <div data-layer="Button Text" class="ButtonText" style="color: white; font-size: 16px; font-family: Poppins; font-weight: 400; word-wrap: break-word">For Founders</div>
-    <div data-layer="Button Background" class="ButtonBackground" style="width: 53px; height: 53px; border-radius: 20px"></div>
-    <div data-svg-wrapper data-layer="Vector 168" class="Vector168">
-      <svg width="13" height="13" viewBox="0 0 13 13" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <path d="M0.5 0.500017L12.5 0.5M12.5 0.5L12.5 12.5M12.5 0.5L0.500017 12.5" stroke="white" stroke-linecap="round" stroke-linejoin="round"/>
-      </svg>
-    </div>
-  </div>
-  <div data-layer="Button" data-property-1="Variant2" class="Button" style="height: 50.42px; padding-left: 20px; left: 266.70px; top: 6067px; position: absolute; border-radius: 20px; outline: 1px white solid; outline-offset: -1px; justify-content: center; align-items: center; gap: 10px; display: inline-flex">
-    <div data-layer="Button Text" class="ButtonText" style="color: white; font-size: 16px; font-family: Poppins; font-weight: 400; word-wrap: break-word">For Traders </div>
-    <div data-layer="Button Background" class="ButtonBackground" style="width: 53px; height: 53px; border-radius: 20px"></div>
-    <div data-svg-wrapper data-layer="Vector 168" class="Vector168">
-      <svg width="13" height="13" viewBox="0 0 13 13" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <path d="M0.5 0.500017L12.5 0.5M12.5 0.5L12.5 12.5M12.5 0.5L0.500017 12.5" stroke="white" stroke-linecap="round" stroke-linejoin="round"/>
-      </svg>
-    </div>
-  </div>
-  <div data-layer="Hero Title" class="HeroTitle" style="left: 148.06px; top: 5454px; position: absolute; color: white; font-size: 96px; font-family: PP Formula; font-weight: 400; word-wrap: break-word">Trade</div>
-  <div data-layer="Feature Description" class="FeatureDescription" style="width: 593px; left: 766px; top: 5979px; position: absolute; color: white; font-size: 16px; font-family: Poppins; font-weight: 400; word-wrap: break-word">After launch, trading behaviour defines both network health and investor quality. Short-term speculation may move price, but it also determines who earns future access and upside. Incubat3 treats trading as a signal layer, using market behaviour to inform reputation, incentives, and allocation across future launches - rewarding discipline and alignment on both sides of the market.<br/>
-  </div>
-  <div data-svg-wrapper data-layer="Path 38" class="Path38" style="left: 22.94px; top: 5457.86px; position: absolute">
-    <svg width="43" height="43" viewBox="0 0 43 43" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <path d="M42.8885 40.6657V8.06867C42.8884 7.47927 42.6543 6.91403 42.2375 6.49728L36.3912 0.65102C35.9747 0.234326 35.4097 0.000150786 34.8205 0H2.22241C1.63302 8.78447e-05 1.06779 0.234263 0.651027 0.651027C0.234263 1.06779 8.78447e-05 1.63302 0 2.22241L0 34.8205C-1.79293e-06 35.1124 0.0574897 35.4014 0.169192 35.6711C0.280894 35.9408 0.44462 36.1858 0.65102 36.3922L6.49728 42.2381C6.70361 42.4445 6.94859 42.6083 7.21821 42.72C7.48784 42.8317 7.77683 42.8891 8.06867 42.8891H40.6657C41.2551 42.889 41.8204 42.6549 42.2371 42.2381C42.6539 41.8214 42.8881 41.2561 42.8881 40.6667" fill="white"/>
-    </svg>
-  </div>
-  <div data-svg-wrapper data-layer="Path 39" class="Path39" style="left: 71.19px; top: 5452.50px; position: absolute">
-    <svg width="43" height="43" viewBox="0 0 43 43" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <path d="M42.8885 40.6657V8.06867C42.8884 7.47927 42.6543 6.91403 42.2375 6.49728L36.3912 0.65102C35.9747 0.234326 35.4097 0.000150786 34.8205 0L2.22241 0C1.63302 8.78447e-05 1.06779 0.234263 0.651029 0.651027C0.234265 1.06779 8.78447e-05 1.63302 0 2.22241V34.8205C-1.79293e-06 35.1124 0.0574905 35.4014 0.169193 35.6711C0.280895 35.9408 0.444618 36.1858 0.651019 36.3922L6.49728 42.2381C6.70361 42.4445 6.94859 42.6083 7.21821 42.72C7.48784 42.8317 7.77683 42.8891 8.06868 42.8891H40.6657C41.2551 42.889 41.8204 42.6549 42.2371 42.2381C42.6539 41.8214 42.8881 41.2561 42.8881 40.6667" fill="white"/>
-    </svg>
-  </div>
-  <div data-svg-wrapper data-layer="Path 40" class="Path40" style="left: 28.30px; top: 5506.11px; position: absolute">
-    <svg width="43" height="43" viewBox="0 0 43 43" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <path d="M42.8885 40.6657V8.06868C42.8884 7.47927 42.6543 6.91402 42.2375 6.49728L36.3912 0.651019C35.9747 0.234325 35.4097 0.000150786 34.8205 0H2.22241C1.63302 8.78447e-05 1.06779 0.234265 0.651027 0.651029C0.234263 1.06779 8.78447e-05 1.63302 0 2.22241V34.8205C-1.79293e-06 35.1124 0.0574899 35.4014 0.169192 35.6711C0.280894 35.9408 0.44462 36.1858 0.65102 36.3922L6.49728 42.2381C6.70361 42.4445 6.94859 42.6083 7.21821 42.72C7.48783 42.8317 7.77683 42.8892 8.06867 42.8891H40.6657C41.2551 42.8891 41.8204 42.6549 42.2371 42.2381C42.6539 41.8214 42.8881 41.2561 42.8881 40.6667" fill="white"/>
-    </svg>
-  </div>
-  <div data-svg-wrapper data-layer="Path 41" class="Path41" style="left: 76.55px; top: 5500.75px; position: absolute">
-    <svg width="43" height="43" viewBox="0 0 43 43" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <path d="M42.8885 40.6657V8.06868C42.8884 7.47927 42.6543 6.91402 42.2375 6.49728L36.3912 0.651019C35.9747 0.234325 35.4097 0.000150786 34.8205 0H2.22241C1.63302 8.78447e-05 1.06779 0.234265 0.651029 0.651029C0.234265 1.06779 8.78447e-05 1.63302 0 2.22241V34.8205C-1.79293e-06 35.1124 0.0574905 35.4014 0.169193 35.6711C0.280895 35.9408 0.444618 36.1858 0.651019 36.3922L6.49728 42.2381C6.70361 42.4445 6.94859 42.6083 7.21821 42.72C7.48784 42.8317 7.77683 42.8892 8.06868 42.8891H40.6657C41.2551 42.8891 41.8204 42.6549 42.2371 42.2381C42.6539 41.8214 42.8881 41.2561 42.8881 40.6667" fill="white"/>
-    </svg>
-  </div>
-  <img data-layer="rotating-glass-ring-with-iridescent-reflections-on-2025-12-09-08-36-24-utc 1" class="RotatingGlassRingWithIridescentReflectionsOn20251209083624Utc1" style="width: 1620px; height: 912px; left: -58px; top: 6071px; position: absolute; mix-blend-mode: screen; box-shadow: 64px 64px 64px; filter: blur(32px)" src="images/rotating-glass-ring-with-iridescent-reflections-on-2025-12-09-08-36-24-utc_1_07.png" />
-  <div data-layer="Hero Title" class="HeroTitle" style="left: 158.82px; top: 6318.16px; position: absolute; color: white; font-size: 96px; font-family: PP Formula; font-weight: 400; word-wrap: break-word">Reward</div>
-  <div data-svg-wrapper data-layer="Path 38" class="Path38" style="left: 37px; top: 6330px; position: absolute">
-    <svg width="94" height="91" viewBox="0 0 94 91" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <mask id="path-1-inside-1_2159_123" fill="white">
-    <path d="M94 86.2825V17.1197C93.9999 15.8691 93.4866 14.6698 92.5731 13.7856L79.7597 1.3813C78.8468 0.497182 77.6084 0.00031993 76.3171 0H4.87093C3.57914 0.000186384 2.34031 0.497047 1.42688 1.38132C0.51344 2.26559 0.000192532 3.46486 0 4.7154L0 73.8803C-3.92961e-06 74.4996 0.126002 75.1129 0.370823 75.6851C0.615644 76.2573 0.974487 76.7772 1.42686 77.2151L14.2403 89.6187C14.6925 90.0566 15.2294 90.404 15.8204 90.6411C16.4113 90.8781 17.0447 91 17.6844 91H89.1283C90.4201 90.9998 91.659 90.503 92.5724 89.6187C93.4858 88.7344 93.9991 87.5351 93.9993 86.2846"/>
-    </mask>
-    <path d="M94 17.1197H106V17.1187L94 17.1197ZM92.5731 13.7856L84.2266 22.4074L84.2271 22.4079L92.5731 13.7856ZM79.7597 1.3813L71.4116 10.0016L71.4132 10.0031L79.7597 1.3813ZM76.3171 0L76.3201 -12H76.3171V0ZM4.87093 0V-12H4.8692L4.87093 0ZM0 4.7154L-12 4.71356V4.7154H0ZM0 73.8803L12 73.8804V73.8803H0ZM1.42686 77.2151L-6.91969 85.8369L-6.91941 85.8372L1.42686 77.2151ZM14.2403 89.6187L22.5884 80.9984L22.5866 80.9967L14.2403 89.6187ZM17.6844 91V79H17.6839L17.6844 91ZM89.1283 91V103H89.1301L89.1283 91ZM94 86.2825H106V17.1197H94H82V86.2825H94ZM94 17.1197L106 17.1187C106 12.5577 104.124 8.26554 100.919 5.16331L92.5731 13.7856L84.2271 22.4079C82.8492 21.0741 82.0002 19.1806 82 17.1207L94 17.1197ZM92.5731 13.7856L100.92 5.16379L88.1062 -7.24051L79.7597 1.3813L71.4132 10.0031L84.2266 22.4074L92.5731 13.7856ZM79.7597 1.3813L88.1078 -7.239C84.9173 -10.3287 80.6703 -11.9989 76.3201 -12L76.3171 0L76.3141 12C74.5465 11.9996 72.7762 11.3231 71.4116 10.0016L79.7597 1.3813ZM76.3171 0V-12H4.87093V0V12H76.3171V0ZM4.87093 0L4.8692 -12C0.518776 -11.9994 -3.72853 -10.3297 -6.91964 -7.24049L1.42688 1.38132L9.77339 10.0031C8.40915 11.3238 6.6395 11.9997 4.87266 12L4.87093 0ZM1.42688 1.38132L-6.91964 -7.24049C-10.124 -4.13847 -11.9993 0.153102 -12 4.71356L0 4.7154L12 4.71725C11.9997 6.77662 11.1509 8.66964 9.77339 10.0031L1.42688 1.38132ZM0 4.7154H-12V73.8803H0H12V4.7154H0ZM0 73.8803L-12 73.8802C-12 76.1305 -11.5417 78.349 -10.6617 80.4056L0.370823 75.6851L11.4034 70.9646C11.7937 71.8768 12 72.8688 12 73.8804L0 73.8803ZM0.370823 75.6851L-10.6617 80.4056C-9.78218 82.4612 -8.50396 84.3032 -6.91969 85.8369L1.42686 77.2151L9.77342 68.5933C10.4529 69.2512 11.0135 70.0533 11.4034 70.9646L0.370823 75.6851ZM1.42686 77.2151L-6.91941 85.8372L5.89402 98.2408L14.2403 89.6187L22.5866 80.9967L9.77313 68.5931L1.42686 77.2151ZM14.2403 89.6187L5.89221 98.239C7.47564 99.7724 9.33465 100.969 11.3534 101.779L15.8204 90.6411L20.2873 79.5034C21.1242 79.8391 21.9094 80.3409 22.5884 80.9984L14.2403 89.6187ZM15.8204 90.6411L11.3534 101.779C13.3717 102.588 15.522 103 17.6849 103L17.6844 91L17.6839 79C18.5674 79 19.4509 79.168 20.2873 79.5034L15.8204 90.6411ZM17.6844 91V103H89.1283V91V79H17.6844V91ZM89.1283 91L89.1301 103C93.4805 102.999 97.7278 101.33 100.919 98.2405L92.5724 89.6187L84.2259 80.9969C85.5901 79.6762 87.3598 79.0003 89.1266 79L89.1283 91ZM92.5724 89.6187L100.919 98.2405C104.123 95.1385 105.999 90.8469 105.999 86.2865L93.9993 86.2846L81.9993 86.2828C81.9996 84.2234 82.8484 82.3304 84.2259 80.9969L92.5724 89.6187Z" fill="white" mask="url(#path-1-inside-1_2159_123)"/>
-    </svg>
-  </div>
-  <div data-svg-wrapper data-layer="Path 40" class="Path40" style="left: 59px; top: 6351px; position: absolute">
-    <svg width="50" height="49" viewBox="0 0 50 49" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <path d="M50 46.4598V9.2183C49.9999 8.54492 49.7269 7.89914 49.241 7.42301L42.4254 0.743776C41.9398 0.267712 41.2811 0.00017227 40.5942 0H2.59092C1.9038 0.000100361 1.24485 0.267643 0.758977 0.743788C0.273107 1.21993 0.000102411 1.86569 0 2.53906V39.7817C-2.09022e-06 40.1152 0.0670225 40.4454 0.197247 40.7535C0.327471 41.0616 0.518344 41.3415 0.758969 41.5774L7.57462 48.2562C7.81517 48.492 8.10076 48.6791 8.41509 48.8067C8.72942 48.9343 9.06633 49 9.40658 49H47.4087C48.0958 48.9999 48.7548 48.7324 49.2406 48.2562C49.7265 47.7801 49.9995 47.1343 49.9996 46.4609" fill="white"/>
-    </svg>
-  </div>
-  <div data-layer="Hero Subtitle" class="HeroSubtitle" style="width: 842px; height: 394px; left: 643px; top: 6471px; position: absolute; color: white; font-size: 72px; font-family: PP Formula; font-weight: 400; word-wrap: break-word">Incubat3 is built to turn on-chain and social reputation into lasting advantage.<br/>
-  <br/>
-  </div>
-  <div data-layer="Button" data-property-1="Default" class="Button" style="width: 198px; height: 50px; padding-left: 16px; left: 28px; top: 6704.24px; position: absolute; background: #0000FF; border-radius: 20px; justify-content: center; align-items: center; gap: 10px; display: inline-flex">
-    <div data-layer="Button Text" class="ButtonText" style="color: white; font-size: 16px; font-family: Poppins; font-weight: 400; word-wrap: break-word">Claim Station </div>
-    <div data-layer="Button Background" class="ButtonBackground" style="width: 53px; height: 53px; border-radius: 20px"></div>
-    <div data-svg-wrapper data-layer="Vector 168" class="Vector168">
-      <svg width="13" height="13" viewBox="0 0 13 13" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <path d="M0.5 0.500017L12.5 0.5M12.5 0.5L12.5 12.5M12.5 0.5L0.500017 12.5" stroke="white" stroke-linecap="round" stroke-linejoin="round"/>
-      </svg>
-    </div>
-  </div>
-  <div data-layer="Button" data-property-1="Variant2" class="Button" style="height: 50.42px; padding-left: 20px; left: 264.69px; top: 6704px; position: absolute; border-radius: 20px; outline: 1px white solid; outline-offset: -1px; justify-content: center; align-items: center; gap: 10px; display: inline-flex">
-    <div data-layer="Button Text" class="ButtonText" style="color: white; font-size: 16px; font-family: Poppins; font-weight: 400; word-wrap: break-word">Connect Wallet</div>
-    <div data-layer="Button Background" class="ButtonBackground" style="width: 53px; height: 53px; border-radius: 20px"></div>
-    <div data-svg-wrapper data-layer="Vector 168" class="Vector168">
-      <svg width="13" height="13" viewBox="0 0 13 13" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <path d="M0.5 0.500017L12.5 0.5M12.5 0.5L12.5 12.5M12.5 0.5L0.500017 12.5" stroke="white" stroke-linecap="round" stroke-linejoin="round"/>
-      </svg>
-    </div>
-  </div>
-  <div data-layer="Feature Description" class="FeatureDescription" style="width: 593px; left: 30px; top: 6476px; position: absolute; color: white; font-size: 16px; font-family: Poppins; font-weight: 400; word-wrap: break-word">After launch, trading behaviour defines both network health and investor quality. Short-term speculation may move price, but it also determines who earns future access and upside. Incubat3 treats trading as a signal layer, using market behaviour to inform reputation, incentives, and allocation across future launches - rewarding discipline and alignment on both sides of the market.<br/>
-  </div>
-  <div data-layer="Frame 196" class="Frame196" style="width: 724px; height: 788px; left: 763px; top: 4595px; position: absolute; flex-direction: column; justify-content: flex-start; align-items: flex-start; gap: 57px; display: inline-flex">
-    <div data-layer="Frame 183" class="Frame183" style="width: 713px; height: 392px; flex-direction: column; justify-content: flex-start; align-items: flex-start; gap: 52px; display: flex">
-      <div data-layer="Hero Title" class="HeroTitle" style="width: 652px; height: 392px; color: white; font-size: 72px; font-family: PP Formula; font-weight: 400; word-wrap: break-word">You only get one 
-      launch. We don’t 
-      leave anything 
-      to chance.<br/>
-      </div>
-      <div data-layer="Hero Subtitle" class="HeroSubtitle" style="width: 609px; height: 148px; color: white; font-size: 16px; font-family: Poppins; font-weight: 300; word-wrap: break-word">A poorly executed launch can’t be undone. Incentives set at TGE shape behaviour permanently - and once volatility, misalignment, or early dumping takes hold, the damage compounds. Incubat3 treats launch as a precision execution phase, designing distribution, access, and incentives to establish discipline and alignment from the first block, so the network starts stable and compounds forward instead of spending months recovering.<br/>
-      </div>
-      <div data-layer="Button" data-property-1="Default" class="Button" style="width: 304px; height: 50px; padding-left: 16px; background: #0000FF; border-radius: 20px; justify-content: center; align-items: center; gap: 10px; display: inline-flex">
-        <div data-layer="Button Text" class="ButtonText" style="color: white; font-size: 16px; font-family: Poppins; font-weight: 400; word-wrap: break-word">Book a Consultancy Call</div>
-        <div data-layer="Button Background" class="ButtonBackground" style="width: 53px; height: 53px; border-radius: 20px"></div>
-        <div data-svg-wrapper data-layer="Vector 168" class="Vector168">
-          <svg width="13" height="13" viewBox="0 0 13 13" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <path d="M0.5 0.500017L12.5 0.5M12.5 0.5L12.5 12.5M12.5 0.5L0.500017 12.5" stroke="white" stroke-linecap="round" stroke-linejoin="round"/>
-          </svg>
-        </div>
-      </div>
-    </div>
-  </div>
-  <div data-layer="Hero Title" class="HeroTitle" style="left: 151px; top: 4481px; position: absolute; color: white; font-size: 96px; font-family: PP Formula; font-weight: 400; word-wrap: break-word">Launch</div>
-  <div data-svg-wrapper data-layer="Path 38" class="Path38" style="left: 36.75px; top: 4485.63px; position: absolute">
-    <svg width="89" height="94" viewBox="0 0 89 94" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <path d="M18.977 91.3432V57.6844C18.977 57.2401 18.7568 56.8141 18.3649 56.5L12.868 52.0939C12.4763 51.7798 11.9451 51.6033 11.3911 51.6032H2.08965C1.53547 51.6033 1.004 51.7798 0.612135 52.0939C0.220271 52.408 8.25963e-05 52.834 0 53.2782V86.9378C-1.6858e-06 87.1578 0.0540725 87.3756 0.159101 87.5789C0.264129 87.7821 0.418066 87.9668 0.612135 88.1224L6.10909 92.5283C6.30309 92.6839 6.53341 92.8073 6.78693 92.8914C7.04045 92.9756 7.31219 93.019 7.5866 93.019H16.8871C17.4413 93.0189 17.9728 92.8424 18.3646 92.5283C18.7565 92.2142 18.977 91.7874 18.977 91.3432Z" fill="white"/>
-    <path d="M42.3417 90.8526V39.0112C42.3416 38.567 42.1214 38.141 41.7295 37.8269L36.2326 33.4207C35.8409 33.1067 35.3097 32.9302 34.7557 32.9301H25.4542C24.9001 32.9301 24.3686 33.1066 23.9768 33.4207C23.5849 33.7348 23.3647 34.1608 23.3646 34.605V86.4471C23.3646 86.6671 23.4187 86.885 23.5237 87.0882C23.6287 87.2915 23.7827 87.4761 23.9768 87.6317L29.4737 92.0376C29.6677 92.1932 29.898 92.3166 30.1516 92.4008C30.4051 92.485 30.6768 92.5283 30.9512 92.5283H40.2517C40.8059 92.5282 41.3374 92.3517 41.7292 92.0376C42.1211 91.7235 42.3416 91.2968 42.3417 90.8526Z" fill="white"/>
-    <path d="M65.4262 91.3431V21.3193C65.4261 20.875 65.2059 20.449 64.814 20.1349L59.3171 15.7288C58.9254 15.4147 58.3942 15.2382 57.8402 15.2381H48.5387C47.9846 15.2382 47.4531 15.4147 47.0613 15.7288C46.6694 16.0429 46.4492 16.4689 46.4491 16.9131V86.9377C46.4491 87.1576 46.5032 87.3755 46.6082 87.5787C46.7132 87.782 46.8672 87.9667 47.0612 88.1222L52.5582 92.5282C52.7522 92.6837 52.9826 92.8071 53.2361 92.8913C53.4896 92.9755 53.7613 93.0188 54.0357 93.0188H63.3362C63.8904 93.0188 64.4219 92.8423 64.8137 92.5282C65.2056 92.2141 65.4261 91.7873 65.4262 91.3431Z" fill="white"/>
-    <path d="M88.8909 92.3243V6.08116C88.8909 5.63694 88.6707 5.21093 88.2788 4.89684L82.7818 0.490657C82.3902 0.176605 81.8589 0.000113644 81.3049 0H72.0035C71.4493 6.62064e-05 70.9178 0.176559 70.526 0.490664C70.1341 0.804769 69.9139 1.23077 69.9139 1.67498V87.9188C69.9139 88.1388 69.9679 88.3567 70.0729 88.5599C70.178 88.7632 70.3319 88.9478 70.526 89.1034L76.0229 93.5093C76.2169 93.6649 76.4473 93.7883 76.7008 93.8725C76.9543 93.9567 77.226 94 77.5005 94H86.801C87.3551 93.9999 87.8866 93.8234 88.2785 93.5093C88.6703 93.1952 88.8908 92.7685 88.8909 92.3243Z" fill="white"/>
-    </svg>
-  </div>
-  <img data-layer="hf_20260209_124932_e3c63433-3c34-4008-8644-36bc8894e5b8 1" class="Hf20260209124932E3c634333c344008864436bc8894e5b81" style="width: 743px; height: 676px; left: 3px; top: 4613px; position: absolute; mix-blend-mode: screen" src="images/hf_20260209_124932_e3c63433-3c34-4008-8644-36bc8894e5b8_1_08.png" />
-  <img data-layer="hf_20260123_093008_25c1d8a7-7819-42e3-a1dc-9b017614ab15 1" class="Hf2026012309300825c1d8a7781942e3A1dc9b017614ab151" style="width: 1431px; height: 806px; left: 72px; top: 2025px; position: absolute" src="images/hf_20260123_093008_25c1d8a7-7819-42e3-a1dc-9b017614ab15_1_09.png" />
-  <div data-layer="Rectangle 48" class="Rectangle48" style="width: 1552px; height: 938px; left: -40px; top: 2286px; position: absolute; background: linear-gradient(180deg, rgba(0, 0, 0, 0) 0%, black 100%)"></div>
-  <img data-layer="Screenshot 2026-01-05 at 17.16.24 1" class="Screenshot20260105At1716241" style="width: 1477px; height: 846px; left: 9px; top: 2516px; position: absolute; box-shadow: 128px 128px 128px; border-radius: 471px; filter: blur(64px)" src="images/screenshot_2026-01-05_at_17_16_24_1_10.png" />
-  <div data-layer="Hero Subtitle" class="HeroSubtitle" style="width: 1078px; height: 248px; left: 197px; top: 2831px; position: absolute; text-align: center; color: white; font-size: 72px; font-family: PP Formula; font-weight: 400; word-wrap: break-word">The Web3 Superapp</div>
-  <div data-layer="Button" data-property-1="Default" class="Button" style="width: 198px; height: 50px; padding-left: 16px; left: 501.81px; top: 2980.36px; position: absolute; background: #0000FF; border-radius: 20px; justify-content: center; align-items: center; gap: 10px; display: inline-flex">
-    <div data-layer="Button Text" class="ButtonText" style="color: white; font-size: 16px; font-family: Poppins; font-weight: 400; word-wrap: break-word">Let’s Build</div>
-    <div data-layer="Button Background" class="ButtonBackground" style="width: 53px; height: 53px; border-radius: 20px"></div>
-    <div data-svg-wrapper data-layer="Vector 168" class="Vector168">
-      <svg width="13" height="13" viewBox="0 0 13 13" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <path d="M0.5 0.500017L12.5 0.5M12.5 0.5L12.5 12.5M12.5 0.5L0.500017 12.5" stroke="white" stroke-linecap="round" stroke-linejoin="round"/>
-      </svg>
-    </div>
-  </div>
-  <div data-layer="Button" data-property-1="Variant2" class="Button" style="height: 50.42px; padding-left: 20px; left: 738.50px; top: 2980.12px; position: absolute; border-radius: 20px; outline: 1px white solid; outline-offset: -1px; justify-content: center; align-items: center; gap: 10px; display: inline-flex">
-    <div data-layer="Button Text" class="ButtonText" style="color: white; font-size: 16px; font-family: Poppins; font-weight: 400; word-wrap: break-word">Connect Wallet</div>
-    <div data-layer="Button Background" class="ButtonBackground" style="width: 53px; height: 53px; border-radius: 20px"></div>
-    <div data-svg-wrapper data-layer="Vector 168" class="Vector168">
-      <svg width="13" height="13" viewBox="0 0 13 13" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <path d="M0.5 0.500017L12.5 0.5M12.5 0.5L12.5 12.5M12.5 0.5L0.500017 12.5" stroke="white" stroke-linecap="round" stroke-linejoin="round"/>
-      </svg>
-    </div>
-  </div>
-  <img data-layer="Screenshot 2026-01-07 at 10.44.57 2" class="Screenshot20260107At1044572" style="width: 1247px; height: 276px; left: 164.50px; top: 1602px; position: absolute; mix-blend-mode: screen; box-shadow: 128px 128px 128px; filter: blur(64px)" src="images/screenshot_2026-01-07_at_10_44_57_2_11.png" />
-  <img data-layer="CC-full-logo-white 1" class="CcFullLogoWhite1" style="width: 138px; height: 46px; left: 69px; top: 1893px; position: absolute" src="images/cc-full-logo-white_1_12.png" />
-  <img data-layer="inferno@4x 1" class="Inferno4x1" style="width: 248px; height: 51px; left: 614px; top: 1888px; position: absolute" src="images/inferno_4x_1_13.png" />
-  <img data-layer="ICM@4x 1" class="Icm4x1" style="width: 103px; height: 31px; left: 1011px; top: 1899px; position: absolute" src="images/icm_4x_1_14.png" />
-  <img data-layer="Asset 1@4x 1" class="Asset14x1" style="width: 174px; height: 29px; left: 318px; top: 1900px; position: absolute" src="images/asset_1_4x_1_15.png" />
-  <img data-layer="Group 595 1" class="Group5951" style="width: 122px; height: 46px; left: 1249px; top: 1889px; position: absolute" src="images/group_595_1_16.png" />
-    <div data-layer="Feature Description" class="FeatureDescription" style="width: 586px; left: 35px; top: 1660px; position: absolute; color: white; font-size: 16px; font-family: Poppins; font-weight: 400; line-height: 1.7; word-wrap: break-word">Incubat3 invests in and partners with underfunded Web3 companies that have demonstrated real potential but lack the capital, operational infrastructure or resources to reach a successful product &amp; token launch.<br/><br/>Powered by the Incubat3 partner network (CodeCraft Group, Ethereal Labs, DVerse and many more), we provide the people, expertise and execution required to take companies from limited runway to successful market entry.<br/><br/>From product development and engineering to fundraising, tokenomics, marketing, exchange strategy, operations and go-to-market execution, we become an extension of the founding team, aligned around one objective: building a successful, sustainable Web3 business.
-  </div>
-  <div data-layer="Hero Title" class="HeroTitle" style="left: 142px; top: 1512px; position: absolute; color: white; font-size: 96px; font-family: PP Formula; font-weight: 400; word-wrap: break-word">Incubat3</div>
-  <div data-layer="Layer_1" class="Layer1" style="width: 90px; height: 79px; left: 35px; top: 1528px; position: absolute; overflow: hidden">
-    <div data-svg-wrapper data-layer="Vector" class="Vector" style="left: 0px; top: 0px; position: absolute">
-      <svg width="90" height="79" viewBox="0 0 90 79" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <path d="M83.4648 39.9858L89.9028 53.141L89.8236 75.2975L86.4665 78.7246C86.4665 78.7246 34.6142 78.7807 8.68807 78.8241C6.54801 78.8266 2.27045 79.0026 2.27045 79.0026L0 76.8045C0 76.8045 0.0971591 63.861 0.107386 57.3892C0.12017 48.8622 0.0690341 31.8081 0.0690341 31.8081L2.85852 28.8654L24.4253 28.8119L27.0767 31.4026L26.9616 53.7861L29.8662 56.8103L60.6043 56.5401L62.8977 53.7912L60.5301 51.1112L36.9051 50.9404L33.8881 47.8957L33.6835 31.9152L36.6827 28.8144L59.85 28.6742L62.8108 25.6755L59.7324 22.6053L35.642 22.6002L32.983 20.012L32.9446 2.425L35.3122 0.053549L87.6222 0L89.9974 2.323L89.9054 29.0465L83.4648 39.9858Z" fill="white"/>
-      </svg>
-    </div>
-    <div data-svg-wrapper data-layer="Vector" class="Vector" style="left: 0px; top: 0.09px; position: absolute">
-      <svg width="28" height="23" viewBox="0 0 28 23" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <path d="M13.5588 22.3044C9.73892 22.3044 2.10426 22.3223 2.10426 22.3223L0.0485795 20.3512L0 2.10371L1.9304 0.0280494L25.2997 0L27.1074 1.94306L27.0767 20.42L25.0133 22.3554C25.0133 22.3554 17.3761 22.335 13.5562 22.335V22.3044H13.5588Z" fill="white"/>
-      </svg>
-    </div>
-  </div>
-  <img data-layer="rotating-glass-rings-with-iridescent-edges-on-blac-2025-12-09-08-36-25-utc 1" class="RotatingGlassRingsWithIridescentEdgesOnBlac20251209083625Utc1" style="width: 2330px; height: 1310px; left: -410px; top: 3360px; position: absolute; mix-blend-mode: screen; box-shadow: 64px 64px 64px; filter: blur(32px)" src="images/rotating-glass-rings-with-iridescent-edges-on-blac-2025-12-09-08-36-25-utc_1_17.png" />
-  <div data-layer="RAISE" class="Raise" style="width: 703px; height: 525px; left: 38px; top: 3752px; position: absolute; flex-direction: column; justify-content: flex-start; align-items: flex-start; gap: 94px; display: inline-flex">
-    <div data-layer="Hero Title" class="HeroTitle" style="width: 310.64px; height: 117.44px; color: white; font-size: 96px; font-family: PP Formula; font-weight: 400; word-wrap: break-word">Raise</div>
-    <div data-svg-wrapper data-layer="Path 42" class="Path42">
-      <svg width="43" height="42" viewBox="0 0 43 42" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <path d="M3.10012 0.513914L42.1739 38.2205C42.4281 38.4655 42.6012 38.7777 42.6714 39.1177C42.7416 39.4577 42.7057 39.8102 42.5683 40.1305C42.4308 40.4508 42.198 40.7245 41.8992 40.9171C41.6005 41.1096 41.2492 41.2123 40.89 41.2121H9.80661C9.56822 41.2122 9.33215 41.1669 9.11191 41.0789C8.89166 40.9909 8.69155 40.8618 8.52303 40.6991L0.531968 32.9876C0.363288 32.8249 0.229486 32.6317 0.138209 32.4191C0.0469315 32.2064 -3.24572e-05 31.9785 2.27706e-07 31.7483V1.7529C-0.000179659 1.40622 0.106227 1.06728 0.305751 0.778979C0.505275 0.490679 0.788947 0.265981 1.12086 0.133328C1.45278 0.000675856 1.81801 -0.0339683 2.17034 0.0337796C2.52267 0.101527 2.84625 0.268622 3.10012 0.513914Z" fill="white"/>
-      </svg>
-    </div>
-    <div data-svg-wrapper data-layer="Path 43" class="Path43">
-      <svg width="43" height="42" viewBox="0 0 43 42" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <path d="M3.10012 0.513914L42.1739 38.2205C42.4281 38.4655 42.6012 38.7777 42.6714 39.1177C42.7416 39.4577 42.7057 39.8102 42.5683 40.1305C42.4308 40.4508 42.198 40.7245 41.8992 40.9171C41.6005 41.1096 41.2492 41.2123 40.89 41.2121H9.80661C9.56822 41.2122 9.33216 41.1669 9.11191 41.0789C8.89166 40.9909 8.69155 40.8618 8.52303 40.6991L0.53197 32.9876C0.36329 32.8249 0.229486 32.6317 0.138209 32.4191C0.0469316 32.2064 -3.24572e-05 31.9785 2.27706e-07 31.7483V1.7529C-0.000179659 1.40622 0.106227 1.06728 0.305751 0.778977C0.505275 0.490677 0.788947 0.265981 1.12086 0.133329C1.45278 0.000676321 1.81801 -0.0339685 2.17034 0.0337794C2.52267 0.101527 2.84625 0.268622 3.10012 0.513914Z" fill="white"/>
-      </svg>
-    </div>
-    <div data-svg-wrapper data-layer="Path 44" class="Path44">
-      <svg width="43" height="42" viewBox="0 0 43 42" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <path d="M3.10012 0.513914L42.1739 38.2205C42.4281 38.4655 42.6012 38.7777 42.6714 39.1177C42.7416 39.4577 42.7057 39.8102 42.5683 40.1305C42.4308 40.4508 42.198 40.7245 41.8992 40.9171C41.6005 41.1096 41.2492 41.2123 40.89 41.2121H9.80661C9.56822 41.2122 9.33216 41.1669 9.11191 41.0789C8.89166 40.9909 8.69155 40.8618 8.52303 40.6991L0.53197 32.9876C0.36329 32.8249 0.229486 32.6317 0.138209 32.4191C0.0469316 32.2064 -3.24572e-05 31.9785 2.27706e-07 31.7483V1.7529C-0.000179659 1.40622 0.106227 1.06728 0.305751 0.778979C0.505275 0.490679 0.788947 0.265981 1.12086 0.133328C1.45278 0.000675856 1.81801 -0.0339683 2.17034 0.0337796C2.52267 0.101527 2.84625 0.268622 3.10012 0.513914Z" fill="white"/>
-      </svg>
-    </div>
-    <div data-svg-wrapper data-layer="Path 45" class="Path45">
-      <svg width="43" height="42" viewBox="0 0 43 42" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <path d="M3.10012 0.513914L42.1739 38.2205C42.4281 38.4655 42.6012 38.7777 42.6714 39.1177C42.7416 39.4577 42.7057 39.8102 42.5683 40.1305C42.4308 40.4508 42.198 40.7245 41.8992 40.9171C41.6005 41.1096 41.2492 41.2123 40.89 41.2121H9.80661C9.56822 41.2122 9.33215 41.1669 9.11191 41.0789C8.89166 40.9909 8.69155 40.8618 8.52303 40.6991L0.531968 32.9876C0.363288 32.8249 0.229486 32.6317 0.138209 32.4191C0.0469315 32.2064 -3.24572e-05 31.9785 2.27706e-07 31.7483V1.7529C-0.000179659 1.40622 0.106227 1.06728 0.305751 0.778977C0.505275 0.490677 0.788947 0.265981 1.12086 0.133329C1.45278 0.000676321 1.81801 -0.0339685 2.17034 0.0337794C2.52267 0.101527 2.84625 0.268622 3.10012 0.513914Z" fill="white"/>
-      </svg>
-    </div>
-    <div data-layer="Hero Subtitle" class="HeroSubtitle" style="width: 580px; height: 144px; color: white; font-size: 16px; font-family: Poppins; font-weight: 300; word-wrap: break-word">On Incubat3, fundraising is designed as a core GTM phase - not a standalone raise. Capital formation is executed in lockstep with distribution, narrative, and early network alignment, ensuring access is earned by participants positioned to support the ecosystem long after TGE. Allocation is informed by reputation and demonstrated intent, aligning capital with long-term contributors rather than short-term demand.<br/>
-    </div>
-    <div data-layer="Button" data-property-1="Default" class="Button" style="width: 198px; height: 50px; padding-left: 16px; background: #0000FF; border-radius: 20px; justify-content: center; align-items: center; gap: 10px; display: inline-flex">
-      <div data-layer="Button Text" class="ButtonText" style="color: white; font-size: 16px; font-family: Poppins; font-weight: 400; word-wrap: break-word">For Founders</div>
-      <div data-layer="Button Background" class="ButtonBackground" style="width: 53px; height: 53px; border-radius: 20px"></div>
-      <div data-svg-wrapper data-layer="Vector 168" class="Vector168">
-        <svg width="13" height="13" viewBox="0 0 13 13" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <path d="M0.5 0.500017L12.5 0.5M12.5 0.5L12.5 12.5M12.5 0.5L0.500017 12.5" stroke="white" stroke-linecap="round" stroke-linejoin="round"/>
-        </svg>
-      </div>
-    </div>
-    <div data-layer="Button" data-property-1="Variant2" class="Button" style="height: 50.42px; padding-left: 20px; border-radius: 20px; outline: 1px white solid; outline-offset: -1px; justify-content: center; align-items: center; gap: 10px; display: inline-flex">
-      <div data-layer="Button Text" class="ButtonText" style="color: white; font-size: 16px; font-family: Poppins; font-weight: 400; word-wrap: break-word">For Investors</div>
-      <div data-layer="Button Background" class="ButtonBackground" style="width: 53px; height: 53px; border-radius: 20px"></div>
-      <div data-svg-wrapper data-layer="Vector 168" class="Vector168">
-        <svg width="13" height="13" viewBox="0 0 13 13" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <path d="M0.5 0.500017L12.5 0.5M12.5 0.5L12.5 12.5M12.5 0.5L0.500017 12.5" stroke="white" stroke-linecap="round" stroke-linejoin="round"/>
-        </svg>
-      </div>
-    </div>
-  </div>
-  <div data-layer="Hero Title" class="HeroTitle" style="width: 857px; height: 309px; left: 623px; top: 3955px; position: absolute; text-align: right; color: white; font-size: 72px; font-family: PP Formula; font-weight: 400; word-wrap: break-word">Raising money is easy
-  Undoing a bad launch is impossible.</div>
-  <img data-layer="HERO" class="Hero" style="width: 1527.23px; height: 1416px; left: -11.95px; top: 0px; position: absolute; box-shadow: 36px 36px 36px; filter: blur(18px)" src="images/hero_18.png" />
-  <div data-layer="Rectangle 48" class="Rectangle48" style="width: 1527px; height: 575px; left: -12px; top: 890px; position: absolute; background: linear-gradient(180deg, rgba(0, 0, 0, 0) 0%, black 100%)"></div>
-  <div data-layer="Layer_1" class="Layer1" style="width: 2112.40px; height: 1305.32px; left: -301.20px; top: 46.43px; position: absolute; overflow: hidden">
-    <div data-layer="Layer_1" class="Layer1" style="width: 1451px; height: 1314px; left: 336.20px; top: 13.57px; position: absolute">
-      <div data-svg-wrapper data-layer="Vector" class="Vector" style="left: -0.15px; top: 8.68px; position: absolute">
-        <svg width="1452" height="1279" viewBox="0 0 1452 1279" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <path d="M1346.26 646.943L1450.07 859.635L1448.77 1217.85L1394.63 1273.25C1394.63 1273.25 558.654 1274.19 140.644 1274.86C106.145 1274.91 37.148 1277.72 37.148 1277.72L0.501587 1242.19C0.501587 1242.19 2.06767 1032.95 2.20191 928.325C2.42563 790.453 1.57547 514.755 1.57547 514.755L46.5445 467.187L394.215 466.337L436.947 508.222L435.113 870.106L481.916 919.017L977.47 914.631L1014.43 870.196L976.262 826.879L595.39 824.104L546.752 774.881L543.441 516.5L591.811 466.337L965.344 464.054L1013.09 415.591L963.465 365.965L575.076 365.875L532.21 324.035L531.583 39.7003L569.841 1.39519L1413.2 0.500214L1451.5 38.0446L1450.03 470.096L1346.17 646.943H1346.26Z" stroke="white" stroke-opacity="0.33" stroke-miterlimit="10"/>
-        </svg>
-      </div>
-      <div data-svg-wrapper data-layer="Vector" class="Vector" style="left: -0.15px; top: 9.68px; position: absolute">
-        <svg width="439" height="363" viewBox="0 0 439 363" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <path d="M219.234 361.491C157.634 361.491 34.4342 361.805 34.4342 361.805L1.30635 329.908L0.500534 34.5475L31.6586 0.94825L408.645 0.500259L437.788 31.9492L437.296 330.983L404.034 362.298C404.034 362.298 280.834 361.984 219.234 361.984V361.491Z" stroke="white" stroke-opacity="0.33" stroke-miterlimit="10"/>
-        </svg>
-      </div>
-      <div data-layer="Frame 3" class="Frame3" style="width: 1052.26px; height: 1210.70px; left: 67.53px; top: 52.15px; position: absolute"></div>
-    </div>
-    <div data-layer="Layer_1" class="Layer1" style="width: 1440px; height: 1257px; max-width: 1440px; max-height: 1257.47px; padding-top: 22px; padding-bottom: 22px; left: 335.71px; top: 31px; position: absolute; flex-direction: column; justify-content: center; align-items: center; gap: 10px; display: inline-flex">
-      <div data-layer="Frame 3" class="Frame3" style="width: 1440px; height: 1213.47px; position: relative">
-        <div data-layer="Frame 1" class="Frame1" style="width: 1155.49px; height: 878.32px; left: 66px; top: 27.23px; position: absolute">
-          <div data-svg-wrapper data-layer="Layer_1" class="Layer1" style="left: 0.49px; top: -0.43px; position: absolute">
-            <svg width="50" height="44" viewBox="0 0 50 44" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <g clip-path="url(#clip0_2159_195)">
-            <path d="M46.3693 22.144L49.946 29.4293L49.902 41.6996L48.0369 43.5975C48.0369 43.5975 19.2301 43.6286 4.8267 43.6526C3.63778 43.654 1.26136 43.7514 1.26136 43.7514L0 42.5341C0 42.5341 0.0539773 35.366 0.0596591 31.782C0.0667614 27.0597 0.0383523 17.6152 0.0383523 17.6152L1.58807 15.9856L13.5696 15.956L15.0426 17.3907L14.9787 29.7866L16.5923 31.4614L33.669 31.3117L34.9432 29.7894L33.6278 28.3053L20.5028 28.2106L18.8267 26.5245L18.7131 17.6745L20.3793 15.9574L33.25 15.8797L34.8949 14.219L33.1847 12.5188L19.8011 12.5159L18.3239 11.0826L18.3026 1.34296L19.6179 0.0296553L48.679 0L49.9986 1.28647L49.9474 16.0859L46.3693 22.144Z" fill="white"/>
-            <path d="M7.53409 12.4001C5.41193 12.4001 1.17045 12.41 1.17045 12.41L0.0284077 11.3184L0.00141907 1.21305L1.07386 0.0635531L14.0568 0.0480194L15.0611 1.12408L15.044 11.3566L13.8977 12.4284C13.8977 12.4284 9.65483 12.4171 7.53267 12.4171V12.4001H7.53409Z" fill="white"/>
-            </g>
-            <defs>
-            <clipPath id="clip0_2159_195">
-            <rect width="50" height="43.75" fill="white"/>
-            </clipPath>
-            </defs>
-            </svg>
-          </div>
-          <div data-layer="Hero Subtitle" class="HeroSubtitle" style="width: 871.67px; height: 789px; left: 1px; top: 180px; position: absolute; color: white; font-size: 96px; font-family: PP Formula; font-weight: 400; line-height: 115px; word-wrap: break-word">Incubat3<br/><span style="font-size:48px;line-height:1.2">The Web3 Turnaround Ecosystem</span></div>
-          <div data-layer="Hero Subtitle" class="HeroSubtitle" style="width: 506px; height: 32px; left: 0.49px; top: 1002.57px; position: absolute; color: white; font-size: 16px; font-family: Poppins; font-weight: 300; word-wrap: break-word">Partnering with high-potential Web3<br/>companies when they need it most.</div>
-        </div>
-        <div data-svg-wrapper data-layer="Rectangle 20" class="Rectangle20" style="left: 1285.75px; top: 26.81px; position: absolute">
-          <svg width="33" height="108" viewBox="0 0 33 108" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <path d="M32.1723 91.4899L32.1723 16.0861C32.1723 7.20201 24.9703 0 16.0861 0C7.20201 0 0 7.20203 0 16.0862L0 91.4899C0 100.374 7.20201 107.576 16.0861 107.576C24.9703 107.576 32.1723 100.374 32.1723 91.4899Z" fill="#0000FF"/>
-          </svg>
-        </div>
-        <div data-svg-wrapper data-layer="Rectangle 21" class="Rectangle21" style="left: 1285.49px; top: 222.38px; position: absolute">
-          <svg width="32" height="82" viewBox="0 0 32 82" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <path d="M16 0.5C24.5604 0.5 31.5 7.43959 31.5 16L31.5 66C31.5 74.5604 24.5604 81.5 16 81.5C7.43959 81.5 0.5 74.5604 0.5 66L0.5 16C0.5 7.43959 7.43959 0.5 16 0.5Z" stroke="white"/>
-          </svg>
-        </div>
-        <div data-svg-wrapper data-layer="Rectangle 22" class="Rectangle22" style="left: 1285.49px; top: 390.38px; position: absolute">
-          <svg width="32" height="82" viewBox="0 0 32 82" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <path d="M16 0.5C24.5604 0.5 31.5 7.43959 31.5 16L31.5 66C31.5 74.5604 24.5604 81.5 16 81.5C7.43959 81.5 0.5 74.5604 0.5 66L0.5 16C0.5 7.43959 7.43959 0.5 16 0.5Z" stroke="white"/>
-          </svg>
-        </div>
-        <div data-svg-wrapper data-layer="Rectangle 23" class="Rectangle23" style="left: 1285.49px; top: 567.38px; position: absolute">
-          <svg width="32" height="82" viewBox="0 0 32 82" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <path d="M16 0.5C24.5604 0.5 31.5 7.43959 31.5 16L31.5 66C31.5 74.5604 24.5604 81.5 16 81.5C7.43959 81.5 0.5 74.5604 0.5 66L0.5 16C0.5 7.43959 7.43959 0.5 16 0.5Z" stroke="white"/>
-          </svg>
-        </div>
-        <div data-svg-wrapper data-layer="Rectangle 24" class="Rectangle24" style="left: 1285.49px; top: 744.38px; position: absolute">
-          <svg width="32" height="82" viewBox="0 0 32 82" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <path d="M16 0.5C24.5604 0.5 31.5 7.43959 31.5 16L31.5 66C31.5 74.5604 24.5604 81.5 16 81.5C7.43959 81.5 0.5 74.5604 0.5 66L0.5 16C0.5 7.43959 7.43959 0.5 16 0.5Z" stroke="white"/>
-          </svg>
-        </div>
-        <div data-svg-wrapper data-layer="Rectangle 25" class="Rectangle25" style="left: 1285.49px; top: 916.38px; position: absolute">
-          <svg width="32" height="90" viewBox="0 0 32 90" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <path d="M16 0.5C24.5604 0.5 31.5 7.43959 31.5 16L31.5 74C31.5 82.5604 24.5604 89.5 16 89.5C7.43959 89.5 0.5 82.5604 0.5 74L0.5 16L0.504883 15.5996C0.717246 7.22424 7.57345 0.5 16 0.5Z" stroke="white"/>
-          </svg>
-        </div>
-        <div data-layer="OWNERSHIP_" class="Ownership" style="width: 46.40px; height: 16.09px; left: 1308.88px; top: 241.96px; position: absolute; transform: rotate(90deg); transform-origin: top left; color: white; font-size: 12px; font-family: PP Formula; font-weight: 400; word-wrap: break-word">BUILD</div>
-        <div data-layer="INCUBAT3_" class="Incubat3" style="width: 64.96px; height: 16.09px; left: 1308.88px; top: 46.69px; position: absolute; transform: rotate(90deg); transform-origin: top left; color: white; font-size: 12px; font-family: PP Formula; font-weight: 400; word-wrap: break-word">INCUBAT3</div>
-        <div data-layer="INVESTMENT_" class="Investment" style="width: 37.12px; height: 16.09px; left: 1308.88px; top: 411.87px; position: absolute; transform: rotate(90deg); transform-origin: top left; color: white; font-size: 12px; font-family: PP Formula; font-weight: 400; word-wrap: break-word">RAISE</div>
-        <div data-layer="EARNINGS_" class="Earnings" style="width: 55.68px; height: 16.09px; left: 1308.88px; top: 580.77px; position: absolute; transform: rotate(90deg); transform-origin: top left; color: white; font-size: 12px; font-family: PP Formula; font-weight: 400; word-wrap: break-word">LAUNCH</div>
-        <div data-layer="EARNINGS_" class="Earnings" style="width: 55.68px; height: 16.09px; left: 1308.88px; top: 762.75px; position: absolute; transform: rotate(90deg); transform-origin: top left; color: white; font-size: 12px; font-family: PP Formula; font-weight: 400; word-wrap: break-word">TRADE</div>
-        <div data-layer="EARNINGS_" class="Earnings" style="width: 55.68px; height: 16.09px; left: 1308.88px; top: 930.91px; position: absolute; transform: rotate(90deg); transform-origin: top left; color: white; font-size: 12px; font-family: PP Formula; font-weight: 400; word-wrap: break-word">REWARD</div>
-        <div data-svg-wrapper data-layer="Path 60" class="Path60" style="left: 1301.84px; top: 146.45px; position: absolute">
-          <svg width="1" height="71" viewBox="0 0 1 71" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <path d="M0.5 0L0.5 70.5388" stroke="white"/>
-          </svg>
-        </div>
-        <div data-svg-wrapper data-layer="Path 61" class="Path61" style="left: 1301.84px; top: 312.34px; position: absolute">
-          <svg width="1" height="71" viewBox="0 0 1 71" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <path d="M0.5 0L0.5 70.5388" stroke="white"/>
-          </svg>
-        </div>
-        <div data-svg-wrapper data-layer="Path 62" class="Path62" style="left: 1301.84px; top: 482.25px; position: absolute">
-          <svg width="1" height="71" viewBox="0 0 1 71" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <path d="M0.5 0L0.5 70.5388" stroke="white"/>
-          </svg>
-        </div>
-        <div data-svg-wrapper data-layer="Path 63" class="Path63" style="left: 1301.84px; top: 664.22px; position: absolute">
-          <svg width="1" height="71" viewBox="0 0 1 71" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <path d="M0.5 0L0.5 70.5388" stroke="white"/>
-          </svg>
-        </div>
-        <div data-svg-wrapper data-layer="Path 64" class="Path64" style="left: 1301.84px; top: 832.38px; position: absolute">
-          <svg width="1" height="71" viewBox="0 0 1 71" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <path d="M0.5 0L0.5 70.5388" stroke="white"/>
-          </svg>
-        </div>
-      </div>
-    </div>
-  </div>
-  <div data-layer="Hero Title" class="HeroTitle" style="left: 149.81px; top: 3125px; position: absolute; color: white; font-size: 96px; font-family: PP Formula; font-weight: 400; word-wrap: break-word">Build</div>
-  <div data-layer="Feature Description" class="FeatureDescription" style="width: 590px; left: 898px; top: 3280px; position: absolute; color: white; font-size: 16px; font-family: Poppins; font-weight: 300; word-wrap: break-word">Most tokens fail long before TGE - not because of lack of capital, but because the underlying structure is weak. Growth is often dealt with reactively, after launch dynamics are already set.  Incubat3 addresses this from day one. Before capital is raised or tokens are distributed, we blueprint the network itself: aligning GTM strategy, narrative, community architecture, and growth mechanics into a single, coherent system. This ensures scale is structural, predictable, and built in from the start.<br/>
-  </div>
-  <div data-layer="Button" data-property-1="Default" class="Button" style="width: 198px; height: 50px; padding-left: 16px; left: 903px; top: 3502px; position: absolute; background: #0000FF; border-radius: 20px; justify-content: center; align-items: center; gap: 10px; display: inline-flex">
-    <div data-layer="Button Text" class="ButtonText" style="color: white; font-size: 16px; font-family: Poppins; font-weight: 400; word-wrap: break-word">Apply to Build</div>
-    <div data-layer="Button Background" class="ButtonBackground" style="width: 53px; height: 53px; border-radius: 20px"></div>
-    <div data-svg-wrapper data-layer="Vector 168" class="Vector168">
-      <svg width="13" height="13" viewBox="0 0 13 13" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <path d="M0.5 0.500017L12.5 0.5M12.5 0.5L12.5 12.5M12.5 0.5L0.500017 12.5" stroke="white" stroke-linecap="round" stroke-linejoin="round"/>
-      </svg>
-    </div>
-  </div>
-  <div data-layer="Hero Title" class="HeroTitle" style="width: 707px; height: 309px; left: 38px; top: 3275px; position: absolute; color: white; font-size: 72px; font-family: PP Formula; font-weight: 400; word-wrap: break-word">We build the foundation. Scale follows by design.</div>
-  <div data-svg-wrapper data-layer="Path 38" class="Path38" style="left: 44px; top: 3144.44px; position: absolute">
-    <svg width="35" height="36" viewBox="0 0 35 36" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <path d="M34.4625 33.7124V6.68903C34.4625 6.20041 34.2743 5.73182 33.9394 5.38633L29.2417 0.539704C28.907 0.19426 28.453 0.000125004 27.9795 0H1.78579C1.31219 7.28244e-05 0.85801 0.194207 0.523125 0.53971C0.188239 0.885213 7.05865e-05 1.35379 0 1.84241L0 28.8666C-1.44068e-06 29.1086 0.0461951 29.3482 0.135952 29.5718C0.225709 29.7953 0.357268 29.9985 0.523119 30.1696L5.22081 35.0159C5.3866 35.1871 5.58345 35.3228 5.8001 35.4154C6.01676 35.508 6.24897 35.5557 6.48348 35.5556H32.6764C33.15 35.5556 33.6042 35.3614 33.9391 35.0159C34.274 34.6704 34.4622 34.2019 34.4622 33.7132" fill="white"/>
-    </svg>
-  </div>
-  <div data-svg-wrapper data-layer="Path 39" class="Path39" style="left: 82.77px; top: 3140px; position: absolute">
-    <svg width="35" height="36" viewBox="0 0 35 36" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <path d="M34.4625 33.7124V6.68903C34.4625 6.20041 34.2743 5.73182 33.9394 5.38633L29.2417 0.539704C28.907 0.19426 28.453 0.000125004 27.9795 0L1.78579 0C1.31219 7.28244e-05 0.858012 0.194207 0.523126 0.53971C0.18824 0.885213 7.05865e-05 1.35379 0 1.84241V28.8666C-1.44068e-06 29.1086 0.0461958 29.3482 0.135953 29.5718C0.22571 29.7953 0.357267 29.9985 0.523118 30.1696L5.22081 35.0159C5.3866 35.1871 5.58345 35.3228 5.8001 35.4154C6.01676 35.508 6.24897 35.5557 6.48348 35.5556H32.6764C33.15 35.5556 33.6042 35.3614 33.9391 35.0159C34.274 34.6704 34.4622 34.2019 34.4622 33.7132" fill="white"/>
-    </svg>
-  </div>
-  <div data-svg-wrapper data-layer="Path 40" class="Path40" style="left: 48.31px; top: 3184.44px; position: absolute">
-    <svg width="35" height="36" viewBox="0 0 35 36" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <path d="M34.4625 33.7124V6.68903C34.4625 6.20041 34.2743 5.73181 33.9394 5.38633L29.2417 0.539703C28.907 0.194259 28.453 0.000125004 27.9795 0H1.78579C1.31219 7.28244e-05 0.85801 0.194208 0.523125 0.539711C0.188239 0.885214 7.05865e-05 1.35379 0 1.84241V28.8666C-1.44068e-06 29.1086 0.0461953 29.3482 0.135952 29.5718C0.225709 29.7953 0.357269 29.9985 0.523119 30.1696L5.22081 35.0159C5.3866 35.1871 5.58345 35.3228 5.8001 35.4154C6.01676 35.508 6.24897 35.5557 6.48348 35.5556H32.6764C33.15 35.5556 33.6042 35.3614 33.9391 35.0159C34.274 34.6704 34.4622 34.2019 34.4622 33.7132" fill="white"/>
-    </svg>
-  </div>
-  <div data-svg-wrapper data-layer="Path 41" class="Path41" style="left: 87.08px; top: 3180px; position: absolute">
-    <svg width="35" height="36" viewBox="0 0 35 36" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <path d="M34.4625 33.7124V6.68903C34.4625 6.20041 34.2743 5.73181 33.9394 5.38633L29.2417 0.539703C28.907 0.194259 28.453 0.000125004 27.9795 0H1.78579C1.31219 7.28244e-05 0.858012 0.194208 0.523126 0.539711C0.18824 0.885214 7.05865e-05 1.35379 0 1.84241V28.8666C-1.44068e-06 29.1086 0.0461958 29.3482 0.135953 29.5718C0.22571 29.7953 0.357267 29.9985 0.523118 30.1696L5.22081 35.0159C5.3866 35.1871 5.58345 35.3228 5.8001 35.4154C6.01676 35.508 6.24897 35.5557 6.48348 35.5556H32.6764C33.15 35.5556 33.6042 35.3614 33.9391 35.0159C34.274 34.6704 34.4622 34.2019 34.4622 33.7132" fill="white"/>
-    </svg>
-  </div>
-</div>
-  </div>
-
-  <script>
-  (function(){
-    /* =========================================
-       LOADER
-       ========================================= */
-    var lv = document.getElementById('loader-video');
-    var loader = document.getElementById('loader');
-    var site = document.getElementById('site');
-    var shown = false;
-
-    function showSite(){
-      if(shown) return;
-      shown = true;
-      loader.classList.add('loader--done');
-      site.classList.add('site-wrap--visible');
-    }
-
-    if(window.innerWidth <= 768){
-      // Mobile: try loader video, show "tap to enter" if autoplay blocked
-      lv.src = 'I3_Loader_Mobile.mp4';
-      lv.muted = true;
-      lv.playsInline = true;
-      lv.setAttribute('playsinline', '');
-      lv.setAttribute('webkit-playsinline', '');
-      lv.load();
-      var loaderPlaying = false;
-      var mobileLogo = document.querySelector('.loader-mobile-logo');
-      var tapPrompt = document.getElementById('loader-tap');
-
-      function showTapPrompt(){
-        if(loaderPlaying || shown) return;
-        // Show logo + tap prompt
-        if(mobileLogo) mobileLogo.style.display = 'block';
-        if(tapPrompt) tapPrompt.style.display = 'block';
-      }
-
-      var lp = lv.play();
-      if(lp && lp.then){
-        lp.then(function(){ loaderPlaying = true; }).catch(function(){ showTapPrompt(); });
-      } else {
-        setTimeout(function(){ if(lv.paused) showTapPrompt(); }, 1000);
-      }
-
-      // On tap anywhere on loader: play video, then show site when it ends
-      loader.addEventListener('click', function(){
-        if(shown) return;
-        if(mobileLogo) mobileLogo.style.display = 'none';
-        if(tapPrompt) tapPrompt.style.display = 'none';
-        lv.play().then(function(){ loaderPlaying = true; }).catch(function(){ showSite(); });
-      });
-
-      lv.addEventListener('ended', showSite);
-      setTimeout(showSite, 10000);
-    } else {
-      lv.muted = true;
-      lv.playsInline = true;
-      var lp = lv.play();
-      if(lp && lp.then){
-        lp.then(function(){}).catch(function(){ showSite(); });
-      }
-      lv.addEventListener('ended', showSite);
-      setTimeout(showSite, 10000);
-    }
-
-    /* =========================================
-       HELPER: replace an <img> with a <video>
-       ========================================= */
-    function replaceWithVideo(img, src){
-      var vid = document.createElement('video');
-      vid.autoplay = true;
-      vid.muted = true;
-      vid.loop = true;
-      vid.playsInline = true;
-      vid.style.cssText = img.style.cssText;
-      vid.className = img.className;
-      vid.setAttribute('data-layer', img.getAttribute('data-layer') || '');
-      vid.innerHTML = '<source src="' + src + '" type="video/mp4">';
-      img.parentNode.insertBefore(vid, img);
-      img.style.display = 'none';
-    }
-
-    /* HELPER: replace an <img> with a local image file */
-    function replaceWithImage(img, src){
-      var newImg = document.createElement('img');
-      newImg.style.cssText = img.style.cssText;
-      newImg.className = img.className;
-      newImg.setAttribute('data-layer', img.getAttribute('data-layer') || '');
-      newImg.src = src;
-      img.parentNode.insertBefore(newImg, img);
-      img.style.display = 'none';
-    }
-
-    var page = document.querySelector('.I3HomePage');
-    if(!page) return;
-
-    var isMobile = window.innerWidth <= 768 || (window.innerWidth <= 1024 && 'ontouchstart' in window);
-
-    if(!isMobile){
-    /* =========================================
-       HERO VIDEO - inject into I3HomePage
-       ========================================= */
-    var heroVid = document.createElement('div');
-    heroVid.className = 'injected-video';
-    heroVid.style.cssText = 'width:1527px;height:1416px;left:-12px;top:0;position:absolute;overflow:hidden;z-index:0;-webkit-mask-image:linear-gradient(180deg, black 0%, black 60%, transparent 100%);mask-image:linear-gradient(180deg, black 0%, black 60%, transparent 100%)';
-    heroVid.innerHTML = '<video autoplay muted loop playsinline style="width:100%;height:100%;object-fit:cover;filter:blur(18px);transform:scale(1.1)"><source src="assets/hero.mp4" type="video/mp4"></video>';
-    page.insertBefore(heroVid, page.firstChild);
-
-    /* =========================================
-       FIX HERO SUBTITLE - 2 lines
-       ========================================= */
-    page.querySelectorAll('.Frame1 .HeroSubtitle').forEach(function(el){
-      if(el.textContent.indexOf('Partnering with high-potential') !== -1 && el.style.fontSize === '16px'){
-        el.innerHTML = 'Partnering with high-potential Web3<br>companies when they need it most.';
-      }
-    });
-
-    /* =========================================
-       RAISE ICON - replace broken SVGs with icon, wrap in row with title
-       ========================================= */
-    var raiseSection = document.querySelector('.Raise');
-    if(raiseSection){
-      var raiseTitle = raiseSection.querySelector('.HeroTitle');
-      if(raiseTitle){
-        var iconImg = document.createElement('img');
-        iconImg.src = 'images/group-37.png';
-        iconImg.alt = '';
-        iconImg.style.cssText = 'width:80px;height:auto;flex-shrink:0';
-        var titleRow = document.createElement('div');
-        titleRow.className = 'raise-title-row';
-        raiseSection.insertBefore(titleRow, raiseTitle);
-        titleRow.appendChild(iconImg);
-        titleRow.appendChild(raiseTitle);
-      }
-    }
-
-    /* =========================================
-       ASSET REPLACEMENTS
-       ========================================= */
-
-    /* 1. INCUBAT3 SECTION 3D visual (top ~2025, 1431x806)
-       Replace base64 with images/incubat3-section.png */
-    document.querySelectorAll('img[data-layer="hf_20260123_093008_25c1d8a7-7819-42e3-a1dc-9b017614ab15 1"]').forEach(function(img){
-      if(img.style.width.indexOf('1431') !== -1){
-        replaceWithImage(img, 'images/incubat3-section.png');
-        var replaced = img.previousElementSibling;
-        if(replaced){
-          replaced.style.top = '2000px';
-          replaced.style.width = '1200px';
-          replaced.style.height = '676px';
-          replaced.style.left = '156px';
-          replaced.style.objectFit = 'cover';
-          replaced.style.webkitMaskImage = 'linear-gradient(180deg, black 0%, black 60%, transparent 100%)';
-          replaced.style.maskImage = 'linear-gradient(180deg, black 0%, black 60%, transparent 100%)';
-        }
-      }
-    });
-
-    /* 2. LAUNCH SECTION (top ~4613)
-       Replace with videos/launch.mp4 */
-    document.querySelectorAll('img[data-layer="hf_20260209_124932_e3c63433-3c34-4008-8644-36bc8894e5b8 1"]').forEach(function(img){
-      replaceWithVideo(img, 'videos/launch.mp4');
-    });
-
-    /* 3. TRADE SECTION background (top ~5403)
-       Replace with images/trade2.png */
-    document.querySelectorAll('img[data-layer="hf_20260120_132655_7066c7fe-f1a6-4eef-a54b-93884b82e48d 1"]').forEach(function(img){
-      replaceWithImage(img, 'images/trade2.png');
-    });
-
-    /* 4. REWARD SECTION background (top ~6071)
-       rotating-glass-ring (singular): top ~6071 = Reward bg */
-    document.querySelectorAll('img.RotatingGlassRingWithIridescentReflectionsOn20251209083624Utc1').forEach(function(img){
-      var topVal = parseInt(img.style.top) || 0;
-      if(topVal > 5000 && topVal < 9000){
-        replaceWithVideo(img, 'videos/reward3.mp4');
-      }
-    });
-
-    /* 5. ARC / AI SECTION (top ~6791) */
-    document.querySelectorAll('img[data-layer="hf_20260209_134720_aedf89f9-bd47-46d4-81f9-082db010cf20 1"]').forEach(function(img){
-      replaceWithVideo(img, 'videos/arc.mp4');
-    });
-
-    /* 6. FOOTER / TAGLINE SECTION (top ~9256) */
-    document.querySelectorAll('img.RotatingGlassRingWithIridescentReflectionsOn20251209083624Utc1').forEach(function(img){
-      var topVal = parseInt(img.style.top) || 0;
-      if(topVal > 9000) replaceWithVideo(img, 'videos/footer.mp4');
-    });
-
-    /* =========================================
-       ITEM 5: HIDE GLOW above incubat3 section visual
-       ========================================= */
-    document.querySelectorAll('img[data-layer="Screenshot 2026-01-07 at 10.44.57 2"]').forEach(function(img){
-      img.style.display = 'none';
-    });
-
-    /* =========================================
-       MOVE Screenshot 17.16.24 asset higher + remove oval clip
-       ========================================= */
-    document.querySelectorAll('img[data-layer="Screenshot 2026-01-05 at 17.16.24 1"]').forEach(function(img){
-      img.style.top = '2200px';
-      img.style.borderRadius = '0';
-    });
-
-    /* =========================================
-       ADD incubat3 bg.png behind title/paragraph area
-       ========================================= */
-    var incBg = document.createElement('img');
-    incBg.src = 'images/incubat3-bg.png';
-    incBg.style.cssText = 'width:1247px;height:auto;left:133px;top:1500px;position:absolute;mix-blend-mode:screen;filter:blur(64px);pointer-events:none';
-    page.appendChild(incBg);
-
-    /* =========================================
-       MOVE "The Web3 Superapp" + CTA buttons higher
-       ========================================= */
-    page.querySelectorAll('.HeroSubtitle').forEach(function(el){
-      if(el.textContent.trim() === 'The Web3 Superapp'){
-        el.style.top = '2480px';
-      }
-    });
-    page.querySelectorAll('.Button').forEach(function(btn){
-      var t = parseFloat(btn.style.top);
-      if(t > 2979 && t < 2981){
-        btn.style.top = '2650px';
-      }
-    });
-
-    /* =========================================
-       FADE bottom of Screenshot 17.16.24 asset (like hero video)
-       ========================================= */
-    document.querySelectorAll('img[data-layer="Screenshot 2026-01-05 at 17.16.24 1"]').forEach(function(img){
-      img.style.webkitMaskImage = 'linear-gradient(180deg, black 0%, black 50%, transparent 100%)';
-      img.style.maskImage = 'linear-gradient(180deg, black 0%, black 50%, transparent 100%)';
-    });
-
     /* =========================================
        ABOUT SECTION OVERHAUL
        ========================================= */
 
-    // Hide old partner logos only
+    // Hide old partner logos
     ["CcFullLogoWhite1","Inferno4x1","Icm4x1","Asset14x1","Group5951"].forEach(function(cls){
       page.querySelectorAll("."+cls).forEach(function(el){ el.style.display="none"; });
     });
 
-    // New quote div — centered, separate from the next section heading
+    // Hide the incubat3-bg.png glow that was behind the paragraph
+    page.querySelectorAll('img[src="images/incubat3-bg.png"]').forEach(function(el){ el.style.display="none"; });
+
+    // Move superapp-section elements to appear AFTER logo row (~2650px+)
+    // incubat3-section.png replacement (placed at 2000px by earlier JS)
+    page.querySelectorAll('img[src="images/incubat3-section.png"]').forEach(function(el){
+      el.style.top = "2680px";
+    });
+    // Rectangle48 gradient in this area
+    page.querySelectorAll(".Rectangle48").forEach(function(el){
+      var t = parseFloat(el.style.top);
+      if(t > 2000 && t < 2700){ el.style.top = "2750px"; }
+    });
+    // Screenshot blur
+    page.querySelectorAll('img[data-layer="Screenshot 2026-01-05 at 17.16.24 1"]').forEach(function(el){
+      el.style.top = "2820px";
+    });
+    // "The Web3 Superapp" heading — existing JS moves it to 2480, override to 3120
+    page.querySelectorAll(".HeroSubtitle").forEach(function(el){
+      if(el.textContent.trim()==="The Web3 Superapp"){ el.style.top="3120px"; }
+    });
+    // Buttons — existing JS moves them to 2650, move to 3300
+    page.querySelectorAll(".Button").forEach(function(btn){
+      var t = parseFloat(btn.style.top);
+      if(t >= 2650 && t <= 2651){ btn.style.top="3300px"; }
+    });
+
+    // Quote div — centered
     var aboutQuote = document.createElement("div");
     aboutQuote.style.cssText = "position:absolute;left:0;top:2320px;width:1512px;text-align:center;color:white;font-size:48px;font-family:'PP Formula',sans-serif;font-weight:400;line-height:1.2;z-index:4;pointer-events:none";
     aboutQuote.innerHTML = "We don’t simply provide capital.<br>We provide the complete team.";
     page.appendChild(aboutQuote);
 
-    // Colorful glass video — flipped vertically per Figma, fade top + bottom
+    // Colorful glass video — horizontally mirrored, wide fade top + bottom
     var aboutVid = document.createElement("video");
     aboutVid.autoplay = true;
     aboutVid.muted = true;
     aboutVid.loop = true;
     aboutVid.playsInline = true;
     aboutVid.src = "videos/about.mp4";
-    aboutVid.style.cssText = "position:absolute;left:729px;top:1366px;width:810px;height:900px;object-fit:cover;z-index:2;transform:scaleY(-1);-webkit-mask-image:linear-gradient(180deg,transparent 0%,black 12%,black 88%,transparent 100%);mask-image:linear-gradient(180deg,transparent 0%,black 12%,black 88%,transparent 100%);pointer-events:none";
+    aboutVid.style.cssText = "position:absolute;left:729px;top:1366px;width:810px;height:900px;object-fit:cover;z-index:2;transform:scaleX(-1);-webkit-mask-image:linear-gradient(180deg,transparent 0%,black 22%,black 78%,transparent 100%);mask-image:linear-gradient(180deg,transparent 0%,black 22%,black 78%,transparent 100%);pointer-events:none";
     page.appendChild(aboutVid);
 
-    // 8-logo partner row — single line, centered
+    // 8-logo row — 5 on line 1, 3 on line 2, centered
     var partnerLogos = [
       { src:"images/logo-dverse.png",      h:24, blend:"screen" },
       { src:"images/logo-infernolabs.png", h:43, blend:"screen" },
@@ -953,8 +62,13 @@
       { src:"images/logo-welcome3.png",    h:67, blend:"screen" }
     ];
     var aboutLogoRow = document.createElement("div");
-    aboutLogoRow.style.cssText = "position:absolute;left:0;top:2510px;width:1512px;display:flex;align-items:center;justify-content:center;gap:48px;z-index:3;padding:0 56px;box-sizing:border-box";
-    partnerLogos.forEach(function(logo){
+    aboutLogoRow.style.cssText = "position:absolute;left:0;top:2510px;width:1512px;display:flex;align-items:center;justify-content:center;gap:48px;flex-wrap:wrap;z-index:3;padding:0 56px;box-sizing:border-box";
+    partnerLogos.forEach(function(logo, i){
+      if(i === 5){
+        var br = document.createElement("span");
+        br.style.cssText = "flex-basis:100%;height:0";
+        aboutLogoRow.appendChild(br);
+      }
       var img = document.createElement("img");
       img.src = logo.src;
       img.style.height = logo.h + "px";
@@ -969,7 +83,7 @@
     /* =========================================
        MOVE BUILD SECTION HIGHER (shift up ~275px)
        ========================================= */
-    var buildOffset = -275;
+    var buildOffset = 275;
     // Build title
     page.querySelectorAll('.HeroTitle').forEach(function(el){
       var t = parseFloat(el.style.top);
@@ -1007,10 +121,10 @@
        CONSISTENT SECTION SPACING (600px between each)
        Build=2850, Raise=3450, Launch=4050, Trade=4650, Reward=5250
        ========================================= */
-    var raiseTop = 3450;
-    var launchTop = 4200;
-    var tradeTop = 5150;
-    var rewardTop = 5950;
+    var raiseTop = 4000;
+    var launchTop = 4750;
+    var tradeTop = 5700;
+    var rewardTop = 6500;
 
     /* --- RAISE (original title at 3752) --- */
     if(raiseSection){
@@ -1038,7 +152,7 @@
     /* --- ROTATING CIRCLES VIDEO (Build -> Raise) --- */
     var circlesVid = document.createElement('div');
     circlesVid.className = 'injected-video';
-    circlesVid.style.cssText = 'width:1600px;height:1200px;left:-44px;top:3200px;position:absolute;overflow:hidden;z-index:0;-webkit-mask-image:linear-gradient(180deg, transparent 0%, black 55%, black 75%, transparent 100%);mask-image:linear-gradient(180deg, transparent 0%, black 55%, black 75%, transparent 100%)';
+    circlesVid.style.cssText = 'width:1600px;height:1200px;left:-44px;top:3750px;position:absolute;overflow:hidden;z-index:0;-webkit-mask-image:linear-gradient(180deg, transparent 0%, black 55%, black 75%, transparent 100%);mask-image:linear-gradient(180deg, transparent 0%, black 55%, black 75%, transparent 100%)';
     circlesVid.innerHTML = '<video autoplay muted loop playsinline style="width:100%;height:100%;object-fit:cover;mix-blend-mode:screen;filter:blur(18px);transform:scale(1.1)"><source src="videos/rotating-circles.mp4" type="video/mp4"></video>';
     page.insertBefore(circlesVid, page.firstChild);
 
@@ -1232,7 +346,7 @@
        arc.mp4 orig top:6791 | "Powered by AI..." orig top:7739
        Three icons area: tops 8109-8696
        ========================================= */
-    var arcOffset = -350;
+    var arcOffset = 300;
     // ARC replaced video
     page.querySelectorAll('video').forEach(function(vid){
       var src = vid.querySelector('source');
@@ -1321,18 +435,18 @@
     });
 
     /* Adjust page height after all repositioning */
-    page.style.height = '10650px';
+    page.style.height = '11800px';
 
     /* =========================================
        SCROLLER - click navigation + active state
        ========================================= */
     var sectionTops = {
       hero: 0,
-      build: 2850,
-      raise: 3450,
-      launch: 4200,
-      trade: 5150,
-      reward: 5950
+      build: 3400,
+      raise: 4000,
+      launch: 4750,
+      trade: 5700,
+      reward: 6500
     };
     var sectionOrder = ['hero','build','raise','launch','trade','reward'];
 
