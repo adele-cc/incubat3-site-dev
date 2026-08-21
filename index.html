@@ -930,7 +930,11 @@
 
     // Superapp section - shift all elements down
     var superappdelta = 250;
-    page.querySelectorAll('img[src="images/incubat3-section.png"]').forEach(function(el){ el.style.top=(2550+superappdelta)+"px"; });
+    page.querySelectorAll('img[src="images/incubat3-section.png"]').forEach(function(el){
+      el.style.top=(2550+superappdelta)+"px";
+      el.style.webkitMaskImage='linear-gradient(to bottom,black 0%,black 55%,transparent 90%)';
+      el.style.maskImage='linear-gradient(to bottom,black 0%,black 55%,transparent 90%)';
+    });
     page.querySelectorAll(".Rectangle48").forEach(function(el){
       var t = parseFloat(el.style.top);
       if(t > 2000 && t < 2700){ el.style.top=(2620+superappdelta)+"px"; }
@@ -1032,7 +1036,7 @@
 
     // Top gradient — smooth fade from black into the section (transition from above)
     var missionGradTop = document.createElement("div");
-    missionGradTop.style.cssText = "position:absolute;top:0;left:0;right:0;height:220px;background:linear-gradient(to bottom,#000 0%,rgba(0,0,0,0.7) 40%,transparent 100%);pointer-events:none;z-index:1;";
+    missionGradTop.style.cssText = "position:absolute;top:0;left:0;right:0;height:320px;background:linear-gradient(to bottom,#000 0%,rgba(0,0,0,0.85) 20%,rgba(0,0,0,0.5) 55%,transparent 100%);pointer-events:none;z-index:1;";
     missionSection.appendChild(missionGradTop);
 
     // Bottom gradient — smooth fade to black into the section below
@@ -1071,7 +1075,7 @@
 
     // Paragraph — bottom-right corner
     var missionPara = document.createElement("div");
-    missionPara.style.cssText = "position:absolute;right:101px;bottom:60px;width:565px;color:white;font-family:Poppins,sans-serif;font-size:16px;font-weight:300;line-height:1.7;z-index:2;";
+    missionPara.style.cssText = "position:absolute;right:101px;bottom:30px;width:565px;color:white;font-family:Poppins,sans-serif;font-size:16px;font-weight:300;line-height:1.7;z-index:2;";
     missionPara.innerHTML = "The Web3 industry has produced thousands of innovative companies with exceptional founders, talented teams and groundbreaking technology. Unfortunately, many never reach their full potential.<br><br>We believe that shouldn't happen. Incubat3 exists to identify great companies and scale them with world-class operational support and take them successfully to market.<br><br>Our vision is to become the world's leading Web3 turnaround ecosystem by partnering with exceptional founders, supporting investors and transforming promising companies into successful market leaders.";
     missionSection.appendChild(missionPara);
 
