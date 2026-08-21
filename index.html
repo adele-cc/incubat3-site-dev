@@ -1016,10 +1016,49 @@
     });
     page.appendChild(aboutLogoRow);
 
+
+    /* =========================================
+       MISSION SECTION
+       ========================================= */
+    var missionTop = 3650;
+    var missionSection = document.createElement("div");
+    missionSection.style.cssText = "position:absolute;left:0;top:"+missionTop+"px;width:1512px;height:729px;overflow:hidden;background:url(images/mission-bg.png) lightgray 0px 21.376px / 100% 208.822% no-repeat,#000;";
+
+    // Gradient overlay (darkens right side for paragraph legibility)
+    var missionGrad = document.createElement("div");
+    missionGrad.style.cssText = "position:absolute;top:0;right:0;bottom:0;left:0;background:linear-gradient(to right,transparent 28%,rgba(0,0,0,0.7) 52%,rgba(0,0,0,0.96) 72%);pointer-events:none;z-index:1;";
+    missionSection.appendChild(missionGrad);
+
+    // Icon + Title row
+    var missionTitleRow = document.createElement("div");
+    missionTitleRow.style.cssText = "position:absolute;left:101px;top:50px;display:flex;align-items:center;gap:18px;z-index:2;";
+    var missionIcon = document.createElement("img");
+    missionIcon.src = "images/mission-icon.svg";
+    missionIcon.style.cssText = "width:94px;height:91px;";
+    var missionTitle = document.createElement("div");
+    missionTitle.style.cssText = "color:white;font-family:'PP Formula',sans-serif;font-size:96px;font-weight:400;line-height:1;";
+    missionTitle.textContent = "Mission";
+    missionTitleRow.appendChild(missionIcon);
+    missionTitleRow.appendChild(missionTitle);
+    missionSection.appendChild(missionTitleRow);
+
+    // Subtitle
+    var missionSubtitle = document.createElement("div");
+    missionSubtitle.style.cssText = "position:absolute;left:101px;top:210px;width:700px;color:white;font-family:'PP Formula',sans-serif;font-size:48px;font-weight:400;line-height:normal;z-index:2;";
+    missionSubtitle.textContent = "Turning Potential Into Market Leadership.";
+    missionSection.appendChild(missionSubtitle);
+
+    // Paragraph
+    var missionPara = document.createElement("div");
+    missionPara.style.cssText = "position:absolute;right:101px;top:200px;width:565px;color:white;font-family:Poppins,sans-serif;font-size:16px;font-weight:300;line-height:1.7;z-index:2;";
+    missionPara.innerHTML = "The Web3 industry has produced thousands of innovative companies with exceptional founders, talented teams and groundbreaking technology. Unfortunately, many never reach their full potential.<br><br>We believe that shouldn't happen. Incubat3 exists to identify great companies and scale them with world-class operational support and take them successfully to market.<br><br>Our vision is to become the world's leading Web3 turnaround ecosystem by partnering with exceptional founders, supporting investors and transforming promising companies into successful market leaders.";
+    missionSection.appendChild(missionPara);
+
+    page.appendChild(missionSection);
     /* =========================================
        MOVE BUILD SECTION HIGHER (shift up ~275px)
        ========================================= */
-    var buildOffset = 625;
+    var buildOffset = 1325;
     // Build title
     page.querySelectorAll('.HeroTitle').forEach(function(el){
       var t = parseFloat(el.style.top);
@@ -1061,10 +1100,10 @@
        CONSISTENT SECTION SPACING (600px between each)
        Build=2850, Raise=3450, Launch=4050, Trade=4650, Reward=5250
        ========================================= */
-    var raiseTop = 4770;
-    var launchTop = 5520;
-    var tradeTop = 6470;
-    var rewardTop = 7270;
+    var raiseTop = 5470;
+    var launchTop = 6220;
+    var tradeTop = 7170;
+    var rewardTop = 7970;
 
     /* --- RAISE (original title at 3752) --- */
     if(raiseSection){
@@ -1092,7 +1131,7 @@
     /* --- ROTATING CIRCLES VIDEO (Build -> Raise) --- */
     var circlesVid = document.createElement('div');
     circlesVid.className = 'injected-video';
-    circlesVid.style.cssText = 'width:1600px;height:1200px;left:-44px;top:4520px;position:absolute;overflow:hidden;z-index:0;-webkit-mask-image:linear-gradient(180deg, transparent 0%, black 55%, black 75%, transparent 100%);mask-image:linear-gradient(180deg, transparent 0%, black 55%, black 75%, transparent 100%)';
+    circlesVid.style.cssText = 'width:1600px;height:1200px;left:-44px;top:5220px;position:absolute;overflow:hidden;z-index:0;-webkit-mask-image:linear-gradient(180deg, transparent 0%, black 55%, black 75%, transparent 100%);mask-image:linear-gradient(180deg, transparent 0%, black 55%, black 75%, transparent 100%)';
     circlesVid.innerHTML = '<video autoplay muted loop playsinline style="width:100%;height:100%;object-fit:cover;mix-blend-mode:screen;filter:blur(18px);transform:scale(1.1)"><source src="videos/rotating-circles.mp4" type="video/mp4"></video>';
     page.insertBefore(circlesVid, page.firstChild);
 
@@ -1375,18 +1414,18 @@
     });
 
     /* Adjust page height after all repositioning */
-    page.style.height = '11550px';
+    page.style.height = '12250px';
 
     /* =========================================
        SCROLLER - click navigation + active state
        ========================================= */
     var sectionTops = {
       hero: 0,
-      build: 3750,
-      raise: 4220,
-      launch: 4970,
-      trade: 5920,
-      reward: 6720
+      build: 4450,
+      raise: 4920,
+      launch: 5670,
+      trade: 6620,
+      reward: 7420
     };
     var sectionOrder = ['hero','build','raise','launch','trade','reward'];
 
