@@ -1003,7 +1003,7 @@
     /* =========================================
        MOVE BUILD SECTION HIGHER (shift up ~275px)
        ========================================= */
-    var buildOffset = 225;
+    var buildOffset = 625;
     // Build title
     page.querySelectorAll('.HeroTitle').forEach(function(el){
       var t = parseFloat(el.style.top);
@@ -1036,15 +1036,19 @@
       var t = parseFloat(el.style.top);
       if(t > 3100 && t < 3200) el.style.top = (t + buildOffset) + 'px';
     });
+    // Rotating glass rings background (belongs to Build section)
+    page.querySelectorAll('.RotatingGlassRingsWithIridescentEdgesOnBlac20251209083625Utc1').forEach(function(el){
+      el.style.top = (3360 + buildOffset) + 'px';
+    });
 
     /* =========================================
        CONSISTENT SECTION SPACING (600px between each)
        Build=2850, Raise=3450, Launch=4050, Trade=4650, Reward=5250
        ========================================= */
-    var raiseTop = 4370;
-    var launchTop = 5120;
-    var tradeTop = 6070;
-    var rewardTop = 6870;
+    var raiseTop = 4770;
+    var launchTop = 5520;
+    var tradeTop = 6470;
+    var rewardTop = 7270;
 
     /* --- RAISE (original title at 3752) --- */
     if(raiseSection){
@@ -1072,7 +1076,7 @@
     /* --- ROTATING CIRCLES VIDEO (Build -> Raise) --- */
     var circlesVid = document.createElement('div');
     circlesVid.className = 'injected-video';
-    circlesVid.style.cssText = 'width:1600px;height:1200px;left:-44px;top:4120px;position:absolute;overflow:hidden;z-index:0;-webkit-mask-image:linear-gradient(180deg, transparent 0%, black 55%, black 75%, transparent 100%);mask-image:linear-gradient(180deg, transparent 0%, black 55%, black 75%, transparent 100%)';
+    circlesVid.style.cssText = 'width:1600px;height:1200px;left:-44px;top:4520px;position:absolute;overflow:hidden;z-index:0;-webkit-mask-image:linear-gradient(180deg, transparent 0%, black 55%, black 75%, transparent 100%);mask-image:linear-gradient(180deg, transparent 0%, black 55%, black 75%, transparent 100%)';
     circlesVid.innerHTML = '<video autoplay muted loop playsinline style="width:100%;height:100%;object-fit:cover;mix-blend-mode:screen;filter:blur(18px);transform:scale(1.1)"><source src="videos/rotating-circles.mp4" type="video/mp4"></video>';
     page.insertBefore(circlesVid, page.firstChild);
 
@@ -1355,18 +1359,18 @@
     });
 
     /* Adjust page height after all repositioning */
-    page.style.height = '11150px';
+    page.style.height = '11550px';
 
     /* =========================================
        SCROLLER - click navigation + active state
        ========================================= */
     var sectionTops = {
       hero: 0,
-      build: 3350,
-      raise: 3820,
-      launch: 4570,
-      trade: 5520,
-      reward: 6320
+      build: 3750,
+      raise: 4220,
+      launch: 4970,
+      trade: 5920,
+      reward: 6720
     };
     var sectionOrder = ['hero','build','raise','launch','trade','reward'];
 
