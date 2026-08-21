@@ -1026,12 +1026,12 @@
        ========================================= */
     var missionTop = 3650;
     var missionSection = document.createElement("div");
-    missionSection.style.cssText = "position:absolute;left:0;top:"+missionTop+"px;width:1512px;height:980px;overflow:hidden;background:#000;";
+    missionSection.style.cssText = "position:absolute;left:0;top:"+missionTop+"px;width:1512px;height:1100px;overflow:hidden;background:#000;z-index:3;";
 
     // Background image — shifted down slightly, scaled to fill 900px height
     var missionBgImg = document.createElement("img");
     missionBgImg.src = "images/mission-bg.png";
-    missionBgImg.style.cssText = "position:absolute;left:0;top:30px;width:1512px;height:950px;object-fit:cover;z-index:0;pointer-events:none;";
+    missionBgImg.style.cssText = "position:absolute;left:0;top:30px;width:1512px;height:1070px;object-fit:cover;z-index:0;pointer-events:none;";
     missionSection.appendChild(missionBgImg);
 
     // Top gradient — smooth fade from black into the section (transition from above)
@@ -1080,6 +1080,12 @@
     missionSection.appendChild(missionPara);
 
     page.appendChild(missionSection);
+
+    // Pre-mission fade overlay — covers previous section bottom, fades into mission
+    var preMissionFade = document.createElement("div");
+    preMissionFade.style.cssText = "position:absolute;left:0;top:3580px;width:1512px;height:120px;background:linear-gradient(to bottom,transparent 0%,#000 100%);pointer-events:none;z-index:4;";
+    page.appendChild(preMissionFade);
+
     /* =========================================
        MOVE BUILD SECTION HIGHER (shift up ~275px)
        ========================================= */
