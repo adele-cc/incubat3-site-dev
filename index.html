@@ -928,36 +928,19 @@
     // Hide incubat3-bg.png glow behind paragraph
     page.querySelectorAll('img[src="images/incubat3-bg.png"]').forEach(function(el){ el.style.display="none"; });
 
-    // Superapp section — shift all elements down
-    var superappdelta = 250;
-    page.querySelectorAll('img[src="images/incubat3-section.png"]').forEach(function(el){ el.style.top=(2550+superappdelta)+"px"; });
+    // Move superapp elements below the logo row
+    page.querySelectorAll('img[src="images/incubat3-section.png"]').forEach(function(el){ el.style.top="2550px"; });
     page.querySelectorAll(".Rectangle48").forEach(function(el){
       var t = parseFloat(el.style.top);
-      if(t > 2000 && t < 2700){ el.style.top=(2620+superappdelta)+"px"; }
+      if(t > 2000 && t < 2700){ el.style.top="2620px"; }
     });
-    page.querySelectorAll('img[data-layer="Screenshot 2026-01-05 at 17.16.24 1"]').forEach(function(el){ el.style.top=(2690+superappdelta)+"px"; });
+    page.querySelectorAll('img[data-layer="Screenshot 2026-01-05 at 17.16.24 1"]').forEach(function(el){ el.style.top="2690px"; });
     page.querySelectorAll(".HeroSubtitle").forEach(function(el){
-      if(el.textContent.trim()==="The Web3 Superapp"){
-        el.innerHTML = "We Don't Build Startups.<br>We Scale Them.";
-        el.style.top = (2990+superappdelta)+"px";
-        el.style.width = "1078px";
-        el.style.textAlign = "center";
-      }
+      if(el.textContent.trim()==="The Web3 Superapp"){ el.style.top="2990px"; }
     });
-    // Buttons were moved to 2650 by earlier code — catch them there
     page.querySelectorAll(".Button").forEach(function(btn){
       var t = parseFloat(btn.style.top);
-      if(t >= 2649 && t <= 2651){
-        if(btn.getAttribute('data-property-1') === 'Variant2'){
-          btn.style.display = 'none';
-        } else {
-          var txt = btn.querySelector('.ButtonText');
-          if(txt) txt.textContent = 'Find Out More';
-          // Position below the copy text (copy top + 248px height + 40px gap)
-          btn.style.top = (2990+superappdelta+288)+"px";
-          btn.style.left = '657px';
-        }
-      }
+      if(t >= 2650 && t <= 2651){ btn.style.top="3170px"; }
     });
 
     // New quote div — centered, separate from the next section heading
