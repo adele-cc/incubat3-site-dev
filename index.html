@@ -1024,20 +1024,20 @@
     var missionSection = document.createElement("div");
     missionSection.style.cssText = "position:absolute;left:0;top:"+missionTop+"px;width:1512px;height:729px;overflow:hidden;background:#000;";
 
-    // Background image via <img> (more reliable than CSS background-size percentage)
+    // Background image — 1490x729 natural size, fill to 1512x729
     var missionBgImg = document.createElement("img");
     missionBgImg.src = "images/mission-bg.png";
-    missionBgImg.style.cssText = "position:absolute;left:0;top:0;width:100%;height:100%;object-fit:cover;z-index:0;pointer-events:none;";
+    missionBgImg.style.cssText = "position:absolute;left:0;top:0;width:1512px;height:729px;z-index:0;pointer-events:none;";
     missionSection.appendChild(missionBgImg);
 
-    // Top fade — blends section into black above
+    // Top fade — black at very top, transparent by 120px
     var missionGradTop = document.createElement("div");
-    missionGradTop.style.cssText = "position:absolute;top:0;left:0;right:0;height:200px;background:linear-gradient(to bottom,#000 0%,transparent 100%);pointer-events:none;z-index:1;";
+    missionGradTop.style.cssText = "position:absolute;top:0;left:0;right:0;height:120px;background:linear-gradient(to bottom,#000 0%,transparent 100%);pointer-events:none;z-index:1;";
     missionSection.appendChild(missionGradTop);
 
-    // Right-side fade — darkens right portion for paragraph legibility
+    // Right-side fade — starts at 700px from left, darkens to black by 1050px
     var missionGradRight = document.createElement("div");
-    missionGradRight.style.cssText = "position:absolute;top:0;right:0;bottom:0;width:900px;background:linear-gradient(to right,transparent 0%,rgba(0,0,0,0.85) 40%,#000 75%);pointer-events:none;z-index:1;";
+    missionGradRight.style.cssText = "position:absolute;top:0;left:700px;right:0;bottom:0;background:linear-gradient(to right,transparent 0%,rgba(0,0,0,0.8) 35%,#000 65%);pointer-events:none;z-index:1;";
     missionSection.appendChild(missionGradRight);
 
     // Icon + Title — tops aligned
@@ -1053,15 +1053,15 @@
     missionTitleRow.appendChild(missionTitle);
     missionSection.appendChild(missionTitleRow);
 
-    // Subtitle (below title, left side)
+    // Subtitle — left side, below title
     var missionSubtitle = document.createElement("div");
     missionSubtitle.style.cssText = "position:absolute;left:101px;top:185px;width:700px;color:white;font-family:'PP Formula',sans-serif;font-size:48px;font-weight:400;line-height:normal;z-index:2;";
     missionSubtitle.textContent = "Turning Potential Into Market Leadership.";
     missionSection.appendChild(missionSubtitle);
 
-    // Paragraph (right side, same top as subtitle)
+    // Paragraph — right side, lower than subtitle
     var missionPara = document.createElement("div");
-    missionPara.style.cssText = "position:absolute;right:101px;top:185px;width:565px;color:white;font-family:Poppins,sans-serif;font-size:16px;font-weight:300;line-height:1.7;z-index:2;";
+    missionPara.style.cssText = "position:absolute;right:101px;top:320px;width:565px;color:white;font-family:Poppins,sans-serif;font-size:16px;font-weight:300;line-height:1.7;z-index:2;";
     missionPara.innerHTML = "The Web3 industry has produced thousands of innovative companies with exceptional founders, talented teams and groundbreaking technology. Unfortunately, many never reach their full potential.<br><br>We believe that shouldn't happen. Incubat3 exists to identify great companies and scale them with world-class operational support and take them successfully to market.<br><br>Our vision is to become the world's leading Web3 turnaround ecosystem by partnering with exceptional founders, supporting investors and transforming promising companies into successful market leaders.";
     missionSection.appendChild(missionPara);
 
