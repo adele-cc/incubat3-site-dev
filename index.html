@@ -1022,25 +1022,30 @@
        ========================================= */
     var missionTop = 3650;
     var missionSection = document.createElement("div");
-    missionSection.style.cssText = "position:absolute;left:0;top:"+missionTop+"px;width:1512px;height:729px;overflow:hidden;background:#000;";
+    missionSection.style.cssText = "position:absolute;left:0;top:"+missionTop+"px;width:1512px;height:900px;overflow:hidden;background:#000;";
 
-    // Background image — shifted down slightly per design
+    // Background image — shifted down slightly, scaled to fill 900px height
     var missionBgImg = document.createElement("img");
     missionBgImg.src = "images/mission-bg.png";
-    missionBgImg.style.cssText = "position:absolute;left:0;top:30px;width:1512px;height:auto;z-index:0;pointer-events:none;";
+    missionBgImg.style.cssText = "position:absolute;left:0;top:30px;width:1512px;height:870px;object-fit:cover;z-index:0;pointer-events:none;";
     missionSection.appendChild(missionBgImg);
 
-    // Gradient 1: between-sections — fades from black at top into image
+    // Top gradient — smooth fade from black into the section (transition from above)
     var missionGradTop = document.createElement("div");
-    missionGradTop.style.cssText = "position:absolute;top:0;left:0;right:0;height:180px;background:linear-gradient(to bottom,#000 0%,rgba(0,0,0,0.6) 50%,transparent 100%);pointer-events:none;z-index:1;";
+    missionGradTop.style.cssText = "position:absolute;top:0;left:0;right:0;height:220px;background:linear-gradient(to bottom,#000 0%,rgba(0,0,0,0.7) 40%,transparent 100%);pointer-events:none;z-index:1;";
     missionSection.appendChild(missionGradTop);
 
-    // Gradient 2: left-side — darkens image under Mission title/subtitle for legibility
+    // Bottom gradient — smooth fade to black into the section below
+    var missionGradBottom = document.createElement("div");
+    missionGradBottom.style.cssText = "position:absolute;bottom:0;left:0;right:0;height:220px;background:linear-gradient(to top,#000 0%,rgba(0,0,0,0.7) 40%,transparent 100%);pointer-events:none;z-index:1;";
+    missionSection.appendChild(missionGradBottom);
+
+    // Left gradient — darkens image behind title/subtitle
     var missionGradLeft = document.createElement("div");
     missionGradLeft.style.cssText = "position:absolute;top:0;left:0;bottom:0;width:780px;background:linear-gradient(to right,#000 0%,rgba(0,0,0,0.75) 45%,transparent 100%);pointer-events:none;z-index:1;";
     missionSection.appendChild(missionGradLeft);
 
-    // Gradient 3: right-side — darkens image under paragraph
+    // Right gradient — darkens image behind paragraph
     var missionGradRight = document.createElement("div");
     missionGradRight.style.cssText = "position:absolute;top:0;right:0;bottom:0;width:700px;background:linear-gradient(to right,transparent 0%,rgba(0,0,0,0.7) 40%,#000 75%);pointer-events:none;z-index:1;";
     missionSection.appendChild(missionGradRight);
@@ -1064,9 +1069,9 @@
     missionSubtitle.textContent = "Turning Potential Into Market Leadership.";
     missionSection.appendChild(missionSubtitle);
 
-    // Paragraph — anchored to bottom-right corner
+    // Paragraph — bottom-right corner
     var missionPara = document.createElement("div");
-    missionPara.style.cssText = "position:absolute;right:101px;bottom:40px;width:565px;color:white;font-family:Poppins,sans-serif;font-size:16px;font-weight:300;line-height:1.7;z-index:2;";
+    missionPara.style.cssText = "position:absolute;right:101px;bottom:60px;width:565px;color:white;font-family:Poppins,sans-serif;font-size:16px;font-weight:300;line-height:1.7;z-index:2;";
     missionPara.innerHTML = "The Web3 industry has produced thousands of innovative companies with exceptional founders, talented teams and groundbreaking technology. Unfortunately, many never reach their full potential.<br><br>We believe that shouldn't happen. Incubat3 exists to identify great companies and scale them with world-class operational support and take them successfully to market.<br><br>Our vision is to become the world's leading Web3 turnaround ecosystem by partnering with exceptional founders, supporting investors and transforming promising companies into successful market leaders.";
     missionSection.appendChild(missionPara);
 
@@ -1074,7 +1079,7 @@
     /* =========================================
        MOVE BUILD SECTION HIGHER (shift up ~275px)
        ========================================= */
-    var buildOffset = 1325;
+    var buildOffset = 1825;
     // Build title
     page.querySelectorAll('.HeroTitle').forEach(function(el){
       var t = parseFloat(el.style.top);
@@ -1116,10 +1121,10 @@
        CONSISTENT SECTION SPACING (600px between each)
        Build=2850, Raise=3450, Launch=4050, Trade=4650, Reward=5250
        ========================================= */
-    var raiseTop = 5470;
-    var launchTop = 6220;
-    var tradeTop = 7170;
-    var rewardTop = 7970;
+    var raiseTop = 5970;
+    var launchTop = 6720;
+    var tradeTop = 7670;
+    var rewardTop = 8470;
 
     /* --- RAISE (original title at 3752) --- */
     if(raiseSection){
@@ -1147,7 +1152,7 @@
     /* --- ROTATING CIRCLES VIDEO (Build -> Raise) --- */
     var circlesVid = document.createElement('div');
     circlesVid.className = 'injected-video';
-    circlesVid.style.cssText = 'width:1600px;height:1200px;left:-44px;top:5220px;position:absolute;overflow:hidden;z-index:0;-webkit-mask-image:linear-gradient(180deg, transparent 0%, black 55%, black 75%, transparent 100%);mask-image:linear-gradient(180deg, transparent 0%, black 55%, black 75%, transparent 100%)';
+    circlesVid.style.cssText = 'width:1600px;height:1200px;left:-44px;top:5720px;position:absolute;overflow:hidden;z-index:0;-webkit-mask-image:linear-gradient(180deg, transparent 0%, black 55%, black 75%, transparent 100%);mask-image:linear-gradient(180deg, transparent 0%, black 55%, black 75%, transparent 100%)';
     circlesVid.innerHTML = '<video autoplay muted loop playsinline style="width:100%;height:100%;object-fit:cover;mix-blend-mode:screen;filter:blur(18px);transform:scale(1.1)"><source src="videos/rotating-circles.mp4" type="video/mp4"></video>';
     page.insertBefore(circlesVid, page.firstChild);
 
@@ -1430,18 +1435,18 @@
     });
 
     /* Adjust page height after all repositioning */
-    page.style.height = '12250px';
+    page.style.height = '13000px';
 
     /* =========================================
        SCROLLER - click navigation + active state
        ========================================= */
     var sectionTops = {
       hero: 0,
-      build: 4450,
-      raise: 4920,
-      launch: 5670,
-      trade: 6620,
-      reward: 7420
+      build: 4950,
+      raise: 5420,
+      launch: 6170,
+      trade: 7120,
+      reward: 7920
     };
     var sectionOrder = ['hero','build','raise','launch','trade','reward'];
 
