@@ -1022,21 +1022,22 @@
        ========================================= */
     var missionTop = 3650;
     var missionSection = document.createElement("div");
-    missionSection.style.cssText = "position:absolute;left:0;top:"+missionTop+"px;width:1512px;height:729px;overflow:hidden;background:url(images/mission-bg.png) lightgray 0px 21.376px / 100% 208.822% no-repeat,#000;";
+    // Fix: use separate background properties — shorthand with ,#000 is invalid CSS
+    missionSection.style.cssText = "position:absolute;left:0;top:"+missionTop+"px;width:1512px;height:729px;overflow:hidden;background-color:#000;background-image:url(images/mission-bg.png);background-position:0px 21.376px;background-size:100% 208.822%;background-repeat:no-repeat;";
 
-    // Gradient overlay (darkens right side for paragraph legibility)
+    // Gradient overlay: top fade (blends with previous section) + right-side dark for paragraph
     var missionGrad = document.createElement("div");
-    missionGrad.style.cssText = "position:absolute;top:0;right:0;bottom:0;left:0;background:linear-gradient(to right,transparent 28%,rgba(0,0,0,0.7) 52%,rgba(0,0,0,0.96) 72%);pointer-events:none;z-index:1;";
+    missionGrad.style.cssText = "position:absolute;top:0;right:0;bottom:0;left:0;background:linear-gradient(to bottom,black 0%,transparent 22%),linear-gradient(to right,transparent 28%,rgba(0,0,0,0.75) 52%,rgba(0,0,0,0.97) 72%);pointer-events:none;z-index:1;";
     missionSection.appendChild(missionGrad);
 
-    // Icon + Title row
+    // Icon + Title row — flex-start so tops align exactly
     var missionTitleRow = document.createElement("div");
-    missionTitleRow.style.cssText = "position:absolute;left:101px;top:50px;display:flex;align-items:center;gap:18px;z-index:2;";
+    missionTitleRow.style.cssText = "position:absolute;left:101px;top:50px;display:flex;align-items:flex-start;gap:18px;z-index:2;";
     var missionIcon = document.createElement("img");
     missionIcon.src = "images/mission-icon.svg";
-    missionIcon.style.cssText = "width:94px;height:91px;";
+    missionIcon.style.cssText = "width:94px;height:91px;margin-top:6px;";
     var missionTitle = document.createElement("div");
-    missionTitle.style.cssText = "color:white;font-family:'PP Formula',sans-serif;font-size:96px;font-weight:400;line-height:1;";
+    missionTitle.style.cssText = "color:white;font-family:'PP Formula',sans-serif;font-size:96px;font-weight:400;line-height:0.95;";
     missionTitle.textContent = "Mission";
     missionTitleRow.appendChild(missionIcon);
     missionTitleRow.appendChild(missionTitle);
@@ -1044,13 +1045,13 @@
 
     // Subtitle
     var missionSubtitle = document.createElement("div");
-    missionSubtitle.style.cssText = "position:absolute;left:101px;top:210px;width:700px;color:white;font-family:'PP Formula',sans-serif;font-size:48px;font-weight:400;line-height:normal;z-index:2;";
+    missionSubtitle.style.cssText = "position:absolute;left:101px;top:185px;width:700px;color:white;font-family:'PP Formula',sans-serif;font-size:48px;font-weight:400;line-height:normal;z-index:2;";
     missionSubtitle.textContent = "Turning Potential Into Market Leadership.";
     missionSection.appendChild(missionSubtitle);
 
-    // Paragraph
+    // Paragraph — vertically centered on right side
     var missionPara = document.createElement("div");
-    missionPara.style.cssText = "position:absolute;right:101px;top:200px;width:565px;color:white;font-family:Poppins,sans-serif;font-size:16px;font-weight:300;line-height:1.7;z-index:2;";
+    missionPara.style.cssText = "position:absolute;right:101px;top:250px;width:565px;color:white;font-family:Poppins,sans-serif;font-size:16px;font-weight:300;line-height:1.7;z-index:2;";
     missionPara.innerHTML = "The Web3 industry has produced thousands of innovative companies with exceptional founders, talented teams and groundbreaking technology. Unfortunately, many never reach their full potential.<br><br>We believe that shouldn't happen. Incubat3 exists to identify great companies and scale them with world-class operational support and take them successfully to market.<br><br>Our vision is to become the world's leading Web3 turnaround ecosystem by partnering with exceptional founders, supporting investors and transforming promising companies into successful market leaders.";
     missionSection.appendChild(missionPara);
 
