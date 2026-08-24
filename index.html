@@ -1183,6 +1183,92 @@
     page.appendChild(postEdgeFade);
 
     /* =========================================
+       ANALYZE SECTION
+       top: 5710 (edge 4760+950), height: 971px
+       ========================================= */
+    var analyzeTop = 5710;
+    var analyzeSection = document.createElement("div");
+    analyzeSection.style.cssText = "position:absolute;left:0;top:"+analyzeTop+"px;width:1512px;height:971px;overflow:hidden;background:#000;z-index:3;";
+
+    // Background video — full width, blurred, screen blend (creates soft glow haze)
+    var analyzeBgVid = document.createElement("video");
+    analyzeBgVid.src = "videos/analyze-rings.mp4";
+    analyzeBgVid.autoplay = true;
+    analyzeBgVid.muted = true;
+    analyzeBgVid.loop = true;
+    analyzeBgVid.playsInline = true;
+    analyzeBgVid.style.cssText = "position:absolute;left:0;top:0;width:1512px;height:971px;object-fit:cover;mix-blend-mode:screen;filter:blur(32px);z-index:0;pointer-events:none;";
+    analyzeSection.appendChild(analyzeBgVid);
+
+    // Rectangle 49 — top gradient: black -> transparent (586px)
+    var analyzeGradTop = document.createElement("div");
+    analyzeGradTop.style.cssText = "position:absolute;top:0;left:0;right:0;height:586px;background:linear-gradient(180deg,#000 0%,rgba(0,0,0,0) 100%);pointer-events:none;z-index:1;";
+    analyzeSection.appendChild(analyzeGradTop);
+
+    // Rectangle 48 — bottom gradient: transparent -> black (586px)
+    var analyzeGradBottom = document.createElement("div");
+    analyzeGradBottom.style.cssText = "position:absolute;bottom:0;left:0;right:0;height:586px;background:linear-gradient(180deg,rgba(0,0,0,0) 0%,#000 100%);pointer-events:none;z-index:1;";
+    analyzeSection.appendChild(analyzeGradBottom);
+
+    // Title row — icon + "Analyze" centered
+    var analyzeTitleRow = document.createElement("div");
+    analyzeTitleRow.style.cssText = "position:absolute;left:0;right:0;top:55px;display:flex;justify-content:center;align-items:flex-start;gap:18px;z-index:2;";
+    var analyzeIcon = document.createElement("img");
+    analyzeIcon.src = "images/analyze-icon.svg";
+    analyzeIcon.style.cssText = "width:78px;height:80px;margin-top:10px;flex-shrink:0;";
+    var analyzeTitleText = document.createElement("div");
+    analyzeTitleText.style.cssText = "color:#fff;font-family:'PP Formula',sans-serif;font-size:96px;font-weight:400;line-height:normal;";
+    analyzeTitleText.textContent = "Analyze";
+    analyzeTitleRow.appendChild(analyzeIcon);
+    analyzeTitleRow.appendChild(analyzeTitleText);
+    analyzeSection.appendChild(analyzeTitleRow);
+
+    // Hero subtitle — centered, 48px, two lines
+    var analyzeSubtitle = document.createElement("div");
+    analyzeSubtitle.style.cssText = "position:absolute;left:0;right:0;top:195px;text-align:center;color:#fff;font-family:'PP Formula',sans-serif;font-size:48px;font-weight:400;line-height:normal;z-index:2;";
+    analyzeSubtitle.innerHTML = "The right diagnosis<br>changes everything.";
+    analyzeSection.appendChild(analyzeSubtitle);
+
+    // Paragraph — centered, 973px wide, Poppins 16px light
+    var analyzePara = document.createElement("div");
+    analyzePara.style.cssText = "position:absolute;left:270px;right:270px;top:360px;text-align:center;color:#fff;font-family:Poppins,sans-serif;font-size:16px;font-weight:300;line-height:normal;z-index:2;";
+    var analyzeP1 = document.createElement("div");
+    analyzeP1.style.marginBottom = "20px";
+    analyzeP1.textContent = "Every partnership begins with a thorough assessment. We evaluate the product, technology, team, community and market opportunity to understand exactly what's needed to reach a successful launch.";
+    var analyzeP2 = document.createElement("div");
+    analyzeP2.style.marginBottom = "20px";
+    analyzeP2.textContent = "We look for companies that have already demonstrated potential - previously backed by respected investors, with working technology, an existing community and a clear market opportunity.";
+    var analyzeP3 = document.createElement("div");
+    analyzeP3.textContent = "If the foundations are there, almost anything else can be rebuilt.";
+    analyzePara.appendChild(analyzeP1);
+    analyzePara.appendChild(analyzeP2);
+    analyzePara.appendChild(analyzeP3);
+    analyzeSection.appendChild(analyzePara);
+
+    // Button — centered, 198x50px, blue #00F, border-radius 20px
+    var analyzeBtn = document.createElement("div");
+    analyzeBtn.style.cssText = "position:absolute;left:0;right:0;bottom:75px;display:flex;justify-content:center;z-index:2;";
+    var analyzeBtnInner = document.createElement("div");
+    analyzeBtnInner.style.cssText = "width:198px;height:50px;padding-left:16px;display:flex;justify-content:center;align-items:center;gap:10px;border-radius:20px;background:#00F;cursor:pointer;";
+    var analyzeBtnText = document.createElement("span");
+    analyzeBtnText.style.cssText = "color:#fff;font-family:Poppins,sans-serif;font-size:14px;font-weight:500;letter-spacing:0.02em;";
+    analyzeBtnText.textContent = "Find Out More";
+    var analyzeBtnIcon = document.createElement("img");
+    analyzeBtnIcon.src = "images/edge-btn-icon.svg";
+    analyzeBtnIcon.style.cssText = "width:34px;height:34px;";
+    analyzeBtnInner.appendChild(analyzeBtnText);
+    analyzeBtnInner.appendChild(analyzeBtnIcon);
+    analyzeBtn.appendChild(analyzeBtnInner);
+    analyzeSection.appendChild(analyzeBtn);
+
+    page.appendChild(analyzeSection);
+
+    // Post-analyze fade — smooth transition into Build section
+    var postAnalyzeFade = document.createElement("div");
+    postAnalyzeFade.style.cssText = "position:absolute;left:0;top:6481px;width:1512px;height:300px;background:linear-gradient(to bottom,transparent 0%,#000 100%);pointer-events:none;z-index:4;";
+    page.appendChild(postAnalyzeFade);
+
+    /* =========================================
        MOVE BUILD SECTION HIGHER (shift up ~275px)
        ========================================= */
     var buildOffset = 3755;
@@ -1549,13 +1635,14 @@
     var sectionTops = {
       hero: 0,
       edge: 4760,
+      analyze: 5710,
       build: 6880,
       raise: 7350,
       launch: 8100,
       trade: 9050,
       reward: 9850
     };
-    var sectionOrder = ['hero','edge','build','raise','launch','trade','reward'];
+    var sectionOrder = ['hero','edge','analyze','build','raise','launch','trade','reward'];
 
     function getScale(){
       return Math.min(1, window.innerWidth / 1512);
