@@ -1095,42 +1095,42 @@
     var edgeSection = document.createElement("div");
     edgeSection.style.cssText = "position:absolute;left:0;top:"+edgeTop+"px;width:1512px;height:950px;overflow:hidden;background:#000;z-index:3;";
 
-    // Background video — glass rings, right side
+    // Background video — glass rings, fills right side full height
     var edgeBgVid = document.createElement("video");
     edgeBgVid.src = "videos/edge-rings.mp4";
     edgeBgVid.autoplay = true;
     edgeBgVid.muted = true;
     edgeBgVid.loop = true;
     edgeBgVid.playsInline = true;
-    edgeBgVid.style.cssText = "position:absolute;right:-60px;top:25px;width:900px;height:900px;object-fit:cover;z-index:0;pointer-events:none;";
+    edgeBgVid.style.cssText = "position:absolute;right:0;top:0;width:950px;height:950px;object-fit:cover;z-index:0;pointer-events:none;";
     edgeSection.appendChild(edgeBgVid);
 
-    // Left gradient — strong black fade covering left portion of video
+    // Left gradient — solid black fading to transparent, covers ~40% of width
     var edgeGradLeft = document.createElement("div");
-    edgeGradLeft.style.cssText = "position:absolute;top:0;left:0;bottom:0;width:700px;background:linear-gradient(to right,#000 0%,rgba(0,0,0,0.85) 50%,transparent 100%);pointer-events:none;z-index:1;";
+    edgeGradLeft.style.cssText = "position:absolute;top:0;left:0;bottom:0;width:750px;background:linear-gradient(to right,#000 0%,#000 30%,rgba(0,0,0,0.9) 55%,rgba(0,0,0,0.4) 80%,transparent 100%);pointer-events:none;z-index:1;";
     edgeSection.appendChild(edgeGradLeft);
 
-    // Top gradient — fade from black at top
+    // Top gradient — black hold at very top, fades to transparent
     var edgeGradTop = document.createElement("div");
-    edgeGradTop.style.cssText = "position:absolute;top:0;left:0;right:0;height:350px;background:linear-gradient(to bottom,#000 0%,#000 10%,rgba(0,0,0,0.85) 35%,rgba(0,0,0,0.4) 70%,transparent 100%);pointer-events:none;z-index:1;";
+    edgeGradTop.style.cssText = "position:absolute;top:0;left:0;right:0;height:220px;background:linear-gradient(to bottom,#000 0%,#000 20%,rgba(0,0,0,0.6) 60%,transparent 100%);pointer-events:none;z-index:1;";
     edgeSection.appendChild(edgeGradTop);
 
     // Bottom gradient — fade to black at bottom
     var edgeGradBottom = document.createElement("div");
-    edgeGradBottom.style.cssText = "position:absolute;bottom:0;left:0;right:0;height:280px;background:linear-gradient(to top,#000 0%,rgba(0,0,0,0.7) 45%,transparent 100%);pointer-events:none;z-index:1;";
+    edgeGradBottom.style.cssText = "position:absolute;bottom:0;left:0;right:0;height:220px;background:linear-gradient(to top,#000 0%,rgba(0,0,0,0.7) 45%,transparent 100%);pointer-events:none;z-index:1;";
     edgeSection.appendChild(edgeGradBottom);
 
     // Right gradient — fade to black on right edge
     var edgeGradRight = document.createElement("div");
-    edgeGradRight.style.cssText = "position:absolute;top:0;right:0;bottom:0;width:200px;background:linear-gradient(to right,transparent 0%,rgba(0,0,0,0.6) 60%,#000 100%);pointer-events:none;z-index:1;";
+    edgeGradRight.style.cssText = "position:absolute;top:0;right:0;bottom:0;width:180px;background:linear-gradient(to right,transparent 0%,rgba(0,0,0,0.5) 60%,#000 100%);pointer-events:none;z-index:1;";
     edgeSection.appendChild(edgeGradRight);
 
-    // Icon + Title row
+    // Icon + Title row — top left
     var edgeTitleRow = document.createElement("div");
-    edgeTitleRow.style.cssText = "position:absolute;left:101px;top:50px;display:flex;align-items:flex-start;gap:18px;z-index:2;";
+    edgeTitleRow.style.cssText = "position:absolute;left:101px;top:45px;display:flex;align-items:flex-start;gap:18px;z-index:2;";
     var edgeIcon = document.createElement("img");
     edgeIcon.src = "images/edge-icon.svg";
-    edgeIcon.style.cssText = "width:86px;height:83px;margin-top:6px;flex-shrink:0;";
+    edgeIcon.style.cssText = "width:86px;height:83px;margin-top:8px;flex-shrink:0;";
     var edgeTitle = document.createElement("div");
     edgeTitle.style.cssText = "color:white;font-family:'PP Formula',sans-serif;font-size:96px;font-weight:400;line-height:1;";
     edgeTitle.textContent = "Edge";
@@ -1138,34 +1138,31 @@
     edgeTitleRow.appendChild(edgeTitle);
     edgeSection.appendChild(edgeTitleRow);
 
-    // Headline
+    // Headline — right side, over the glass rings
     var edgeHeadline = document.createElement("div");
-    edgeHeadline.style.cssText = "position:absolute;left:101px;top:195px;width:660px;color:white;font-family:'PP Formula',sans-serif;font-size:42px;font-weight:400;line-height:1.2;z-index:2;";
-    edgeHeadline.innerHTML = "Most investors provide capital.<br>Most advisors provide guidance.<br>We provide execution.";
+    edgeHeadline.style.cssText = "position:absolute;left:490px;top:90px;width:760px;color:white;font-family:'PP Formula',sans-serif;font-size:54px;font-weight:400;line-height:1.15;z-index:2;";
+    edgeHeadline.textContent = "Most investors provide capital. Most advisors provide guidance. We provide execution.";
     edgeSection.appendChild(edgeHeadline);
 
-    // Body text — left column
+    // Body text — left column, bottom area
     var edgeParaLeft = document.createElement("div");
-    edgeParaLeft.style.cssText = "position:absolute;left:101px;bottom:120px;width:370px;color:white;font-family:Poppins,sans-serif;font-size:15px;font-weight:300;line-height:1.75;z-index:2;";
-    edgeParaLeft.innerHTML = "We are embedded in the market. We know what investors look for, what exchanges require, and what communities respond to. Our network, built over years in the Web3 space, becomes your competitive advantage from day one.";
+    edgeParaLeft.style.cssText = "position:absolute;left:101px;top:650px;width:350px;color:white;font-family:Poppins,sans-serif;font-size:14px;font-weight:300;line-height:1.75;z-index:2;";
+    edgeParaLeft.textContent = "We are embedded in the market. We know what investors look for, what exchanges require, and what communities respond to. Our network, built over years in the Web3 space, becomes your competitive advantage from day one.";
     edgeSection.appendChild(edgeParaLeft);
 
-    // Body text — right column
+    // Body text — right column, bottom area
     var edgeParaRight = document.createElement("div");
-    edgeParaRight.style.cssText = "position:absolute;left:510px;bottom:120px;width:370px;color:white;font-family:Poppins,sans-serif;font-size:15px;font-weight:300;line-height:1.75;z-index:2;";
-    edgeParaRight.innerHTML = "Incubat3 companies don’t just launch — they lead. With real-time market intelligence and a team that has navigated multiple market cycles, we give our portfolio the edge that capital alone cannot buy.";
+    edgeParaRight.style.cssText = "position:absolute;left:490px;top:650px;width:350px;color:white;font-family:Poppins,sans-serif;font-size:14px;font-weight:300;line-height:1.75;z-index:2;";
+    edgeParaRight.textContent = "Incubat3 companies don't just launch — they lead. With real-time market intelligence and a team that has navigated multiple market cycles, we give our portfolio the edge that capital alone cannot buy.";
     edgeSection.appendChild(edgeParaRight);
 
-    // Find Out More button
+    // Find Out More button — bottom left
     var edgeBtn = document.createElement("div");
-    edgeBtn.style.cssText = "position:absolute;left:101px;bottom:50px;display:flex;align-items:center;gap:12px;background:#2563EB;padding:12px 24px;cursor:pointer;z-index:2;";
+    edgeBtn.style.cssText = "position:absolute;left:101px;bottom:55px;display:flex;align-items:center;gap:12px;background:#2563EB;padding:12px 28px;cursor:pointer;z-index:2;";
     var edgeBtnText = document.createElement("span");
     edgeBtnText.style.cssText = "color:white;font-family:Poppins,sans-serif;font-size:14px;font-weight:500;letter-spacing:0.02em;";
     edgeBtnText.textContent = "Find Out More";
-    var edgeBtnArrow = document.createElement("span");
-    edgeBtnArrow.innerHTML = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M7 17L17 7M17 7H7M17 7V17" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>';
     edgeBtn.appendChild(edgeBtnText);
-    edgeBtn.appendChild(edgeBtnArrow);
     edgeSection.appendChild(edgeBtn);
 
     page.appendChild(edgeSection);
