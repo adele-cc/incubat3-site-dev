@@ -1090,7 +1090,7 @@
        EDGE SECTION
        top: 4680, height: 950px
        ========================================= */
-    var edgeTop = 4680;
+    var edgeTop = 4760;
     var edgeSection = document.createElement("div");
     edgeSection.style.cssText = "position:absolute;left:0;top:"+edgeTop+"px;width:1512px;height:950px;overflow:hidden;background:#000;z-index:3;";
 
@@ -1116,7 +1116,7 @@
 
     // Title row — icon + "Edge" on left, subtitle on right, same row
     var edgeTitleRow = document.createElement("div");
-    edgeTitleRow.style.cssText = "position:absolute;left:101px;top:50px;width:1310px;display:flex;align-items:flex-start;gap:48px;z-index:2;";
+    edgeTitleRow.style.cssText = "position:absolute;left:101px;top:50px;width:1310px;display:flex;align-items:flex-start;gap:100px;z-index:2;";
 
     // Left: icon + Edge title
     var edgeTitleLeft = document.createElement("div");
@@ -1133,7 +1133,7 @@
     // Right: subtitle (48px, PP Formula, next to title)
     var edgeSubtitle = document.createElement("div");
     edgeSubtitle.style.cssText = "color:#fff;font-family:'PP Formula',sans-serif;font-size:48px;font-weight:400;line-height:normal;padding-top:8px;";
-    edgeSubtitle.textContent = "Most investors provide capital. Most advisors provide guidance. We provide execution.";
+    edgeSubtitle.style.maxWidth = "820px"; edgeSubtitle.innerHTML = "Most investors provide capital.<br>Most advisors provide guidance.<br>We provide execution.";
 
     edgeTitleRow.appendChild(edgeTitleLeft);
     edgeTitleRow.appendChild(edgeSubtitle);
@@ -1168,7 +1168,7 @@
     edgeBtnText.textContent = "Find Out More";
     var edgeBtnIcon = document.createElement("img");
     edgeBtnIcon.src = "images/edge-btn-icon.svg";
-    edgeBtnIcon.style.cssText = "width:20px;height:20px;";
+    edgeBtnIcon.style.cssText = "width:34px;height:34px;";
     edgeBtn.appendChild(edgeBtnText);
     edgeBtn.appendChild(edgeBtnIcon);
     edgeParaSection.appendChild(edgeBtn);
@@ -1180,7 +1180,7 @@
     /* =========================================
        MOVE BUILD SECTION HIGHER (shift up ~275px)
        ========================================= */
-    var buildOffset = 2775;
+    var buildOffset = 2855;
     // Build title
     page.querySelectorAll('.HeroTitle').forEach(function(el){
       var t = parseFloat(el.style.top);
@@ -1222,10 +1222,10 @@
        CONSISTENT SECTION SPACING (600px between each)
        Build=2850, Raise=3450, Launch=4050, Trade=4650, Reward=5250
        ========================================= */
-    var raiseTop = 6920;
-    var launchTop = 7670;
-    var tradeTop = 8620;
-    var rewardTop = 9420;
+    var raiseTop = 7000;
+    var launchTop = 7750;
+    var tradeTop = 8700;
+    var rewardTop = 9500;
 
     /* --- RAISE (original title at 3752) --- */
     if(raiseSection){
@@ -1543,12 +1543,12 @@
        ========================================= */
     var sectionTops = {
       hero: 0,
-      edge: 4680,
-      build: 5900,
-      raise: 6370,
-      launch: 7120,
-      trade: 8070,
-      reward: 8870
+      edge: 4760,
+      build: 5980,
+      raise: 6450,
+      launch: 7200,
+      trade: 8150,
+      reward: 8950
     };
     var sectionOrder = ['hero','edge','build','raise','launch','trade','reward'];
 
