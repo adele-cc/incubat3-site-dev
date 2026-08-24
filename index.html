@@ -1182,17 +1182,19 @@
        ANALYZE SECTION
        top: 5710 (edge 4760+950), height: 971px
        ========================================= */
-    var analyzeTop = 5790;
+    var analyzeTop = 5710;
     var analyzeSection = document.createElement("div");
     analyzeSection.style.cssText = "position:absolute;left:0;top:"+analyzeTop+"px;width:1512px;height:971px;overflow:hidden;background:#000;z-index:3;";
 
     // Background video — full width, blurred, screen blend (creates soft glow haze)
     var analyzeBgVid = document.createElement("video");
     analyzeBgVid.src = "videos/analyze-rings.mp4";
-    analyzeBgVid.autoplay = true;
+    analyzeBgVid.autoplay = false;
     analyzeBgVid.muted = true;
-    analyzeBgVid.loop = true;
+    analyzeBgVid.loop = false;
     analyzeBgVid.playsInline = true;
+    analyzeBgVid.preload = "metadata";
+    analyzeBgVid.addEventListener("loadeddata", function(){ analyzeBgVid.currentTime = 0; analyzeBgVid.pause(); });
     analyzeBgVid.style.cssText = "position:absolute;left:0;top:0;width:1512px;height:971px;object-fit:cover;mix-blend-mode:screen;filter:blur(32px);z-index:0;pointer-events:none;";
     analyzeSection.appendChild(analyzeBgVid);
 
@@ -1627,7 +1629,7 @@
     var sectionTops = {
       hero: 0,
       edge: 4760,
-      analyze: 5790,
+      analyze: 5710,
       build: 6880,
       raise: 7350,
       launch: 8100,
