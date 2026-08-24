@@ -1177,16 +1177,12 @@
 
     page.appendChild(edgeSection);
 
-    // Post-edge fade — ensures smooth transition out of Edge section (z-index:4, above edgeSection's z-index:3)
-    var postEdgeFade = document.createElement("div");
-    postEdgeFade.style.cssText = "position:absolute;left:0;top:5510px;width:1512px;height:300px;background:linear-gradient(to bottom,transparent 0%,#000 100%);pointer-events:none;z-index:4;";
-    page.appendChild(postEdgeFade);
 
     /* =========================================
        ANALYZE SECTION
        top: 5710 (edge 4760+950), height: 971px
        ========================================= */
-    var analyzeTop = 5710;
+    var analyzeTop = 5790;
     var analyzeSection = document.createElement("div");
     analyzeSection.style.cssText = "position:absolute;left:0;top:"+analyzeTop+"px;width:1512px;height:971px;overflow:hidden;background:#000;z-index:3;";
 
@@ -1247,7 +1243,7 @@
 
     // Button — centered, 198x50px, blue #00F, border-radius 20px
     var analyzeBtn = document.createElement("div");
-    analyzeBtn.style.cssText = "position:absolute;left:0;right:0;bottom:75px;display:flex;justify-content:center;z-index:2;";
+    analyzeBtn.style.cssText = "position:absolute;left:0;right:0;top:540px;display:flex;justify-content:center;z-index:2;";
     var analyzeBtnInner = document.createElement("div");
     analyzeBtnInner.style.cssText = "width:198px;height:50px;padding-left:16px;display:flex;justify-content:center;align-items:center;gap:10px;border-radius:20px;background:#00F;cursor:pointer;";
     var analyzeBtnText = document.createElement("span");
@@ -1263,10 +1259,6 @@
 
     page.appendChild(analyzeSection);
 
-    // Post-analyze fade — smooth transition into Build section
-    var postAnalyzeFade = document.createElement("div");
-    postAnalyzeFade.style.cssText = "position:absolute;left:0;top:6481px;width:1512px;height:300px;background:linear-gradient(to bottom,transparent 0%,#000 100%);pointer-events:none;z-index:4;";
-    page.appendChild(postAnalyzeFade);
 
     /* =========================================
        MOVE BUILD SECTION HIGHER (shift up ~275px)
@@ -1635,7 +1627,7 @@
     var sectionTops = {
       hero: 0,
       edge: 4760,
-      analyze: 5710,
+      analyze: 5790,
       build: 6880,
       raise: 7350,
       launch: 8100,
