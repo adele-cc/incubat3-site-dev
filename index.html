@@ -1088,82 +1088,86 @@
 
     /* =========================================
        EDGE SECTION
-       top: 4680 (mission 3730 + 950)
-       height: 950px
+       top: 4680, height: 950px
        ========================================= */
     var edgeTop = 4680;
     var edgeSection = document.createElement("div");
     edgeSection.style.cssText = "position:absolute;left:0;top:"+edgeTop+"px;width:1512px;height:950px;overflow:hidden;background:#000;z-index:3;";
 
-    // Background video — glass rings, fills right side full height
+    // Background video — full width, full height
     var edgeBgVid = document.createElement("video");
     edgeBgVid.src = "videos/edge-rings.mp4";
     edgeBgVid.autoplay = true;
     edgeBgVid.muted = true;
     edgeBgVid.loop = true;
     edgeBgVid.playsInline = true;
-    edgeBgVid.style.cssText = "position:absolute;right:0;top:0;width:950px;height:950px;object-fit:cover;z-index:0;pointer-events:none;";
+    edgeBgVid.style.cssText = "position:absolute;left:0;top:0;width:1512px;height:950px;object-fit:cover;z-index:0;pointer-events:none;";
     edgeSection.appendChild(edgeBgVid);
 
-    // Left gradient — solid black fading to transparent, covers ~40% of width
-    var edgeGradLeft = document.createElement("div");
-    edgeGradLeft.style.cssText = "position:absolute;top:0;left:0;bottom:0;width:750px;background:linear-gradient(to right,#000 0%,#000 30%,rgba(0,0,0,0.9) 55%,rgba(0,0,0,0.4) 80%,transparent 100%);pointer-events:none;z-index:1;";
-    edgeSection.appendChild(edgeGradLeft);
-
-    // Top gradient — black hold at very top, fades to transparent
+    // Rectangle 49 — top gradient: black at top fading to transparent (586px)
     var edgeGradTop = document.createElement("div");
-    edgeGradTop.style.cssText = "position:absolute;top:0;left:0;right:0;height:220px;background:linear-gradient(to bottom,#000 0%,#000 20%,rgba(0,0,0,0.6) 60%,transparent 100%);pointer-events:none;z-index:1;";
+    edgeGradTop.style.cssText = "position:absolute;top:0;left:0;right:0;height:586px;background:linear-gradient(180deg,#000 0%,rgba(0,0,0,0) 100%);pointer-events:none;z-index:1;";
     edgeSection.appendChild(edgeGradTop);
 
-    // Bottom gradient — fade to black at bottom
+    // Rectangle 48 — bottom gradient: transparent fading to black (586px)
     var edgeGradBottom = document.createElement("div");
-    edgeGradBottom.style.cssText = "position:absolute;bottom:0;left:0;right:0;height:220px;background:linear-gradient(to top,#000 0%,rgba(0,0,0,0.7) 45%,transparent 100%);pointer-events:none;z-index:1;";
+    edgeGradBottom.style.cssText = "position:absolute;bottom:0;left:0;right:0;height:586px;background:linear-gradient(180deg,rgba(0,0,0,0) 0%,#000 100%);pointer-events:none;z-index:1;";
     edgeSection.appendChild(edgeGradBottom);
 
-    // Right gradient — fade to black on right edge
-    var edgeGradRight = document.createElement("div");
-    edgeGradRight.style.cssText = "position:absolute;top:0;right:0;bottom:0;width:180px;background:linear-gradient(to right,transparent 0%,rgba(0,0,0,0.5) 60%,#000 100%);pointer-events:none;z-index:1;";
-    edgeSection.appendChild(edgeGradRight);
-
-    // Icon + Title row — top left
+    // Title row — icon + "Edge" on left, subtitle on right, same row
     var edgeTitleRow = document.createElement("div");
-    edgeTitleRow.style.cssText = "position:absolute;left:101px;top:45px;display:flex;align-items:flex-start;gap:18px;z-index:2;";
+    edgeTitleRow.style.cssText = "position:absolute;left:101px;top:50px;width:1310px;display:flex;align-items:flex-start;gap:48px;z-index:2;";
+
+    // Left: icon + Edge title
+    var edgeTitleLeft = document.createElement("div");
+    edgeTitleLeft.style.cssText = "display:flex;align-items:flex-start;gap:18px;flex-shrink:0;";
     var edgeIcon = document.createElement("img");
     edgeIcon.src = "images/edge-icon.svg";
-    edgeIcon.style.cssText = "width:86px;height:83px;margin-top:8px;flex-shrink:0;";
-    var edgeTitle = document.createElement("div");
-    edgeTitle.style.cssText = "color:white;font-family:'PP Formula',sans-serif;font-size:96px;font-weight:400;line-height:1;";
-    edgeTitle.textContent = "Edge";
-    edgeTitleRow.appendChild(edgeIcon);
-    edgeTitleRow.appendChild(edgeTitle);
+    edgeIcon.style.cssText = "width:86px;height:83px;margin-top:12px;flex-shrink:0;";
+    var edgeTitleText = document.createElement("div");
+    edgeTitleText.style.cssText = "color:#fff;font-family:'PP Formula',sans-serif;font-size:96px;font-weight:400;line-height:normal;white-space:nowrap;";
+    edgeTitleText.textContent = "Edge";
+    edgeTitleLeft.appendChild(edgeIcon);
+    edgeTitleLeft.appendChild(edgeTitleText);
+
+    // Right: subtitle (48px, PP Formula, next to title)
+    var edgeSubtitle = document.createElement("div");
+    edgeSubtitle.style.cssText = "color:#fff;font-family:'PP Formula',sans-serif;font-size:48px;font-weight:400;line-height:normal;padding-top:8px;";
+    edgeSubtitle.textContent = "Most investors provide capital. Most advisors provide guidance. We provide execution.";
+
+    edgeTitleRow.appendChild(edgeTitleLeft);
+    edgeTitleRow.appendChild(edgeSubtitle);
     edgeSection.appendChild(edgeTitleRow);
 
-    // Headline — right side, over the glass rings
-    var edgeHeadline = document.createElement("div");
-    edgeHeadline.style.cssText = "position:absolute;left:490px;top:90px;width:760px;color:white;font-family:'PP Formula',sans-serif;font-size:54px;font-weight:400;line-height:1.15;z-index:2;";
-    edgeHeadline.textContent = "Most investors provide capital. Most advisors provide guidance. We provide execution.";
-    edgeSection.appendChild(edgeHeadline);
+    // Paragraph section — body text + button, bottom left (703px wide, flex column, gap 48px)
+    var edgeParaSection = document.createElement("div");
+    edgeParaSection.style.cssText = "position:absolute;left:101px;bottom:60px;width:703px;display:flex;flex-direction:column;align-items:flex-start;gap:48px;z-index:2;";
 
-    // Body text — left column, bottom area
-    var edgeParaLeft = document.createElement("div");
-    edgeParaLeft.style.cssText = "position:absolute;left:101px;top:650px;width:350px;color:white;font-family:Poppins,sans-serif;font-size:14px;font-weight:300;line-height:1.75;z-index:2;";
-    edgeParaLeft.textContent = "We are embedded in the market. We know what investors look for, what exchanges require, and what communities respond to. Our network, built over years in the Web3 space, becomes your competitive advantage from day one.";
-    edgeSection.appendChild(edgeParaLeft);
+    // Body text (580px wide, 16px Poppins light)
+    var edgeBody = document.createElement("div");
+    edgeBody.style.cssText = "width:580px;color:#fff;font-family:Poppins,sans-serif;font-size:16px;font-weight:300;line-height:normal;";
+    edgeBody.style.whiteSpace = "pre-line";
+    edgeBody.textContent = "We don't invest from the sidelines. We take ownership. We become operators.
 
-    // Body text — right column, bottom area
-    var edgeParaRight = document.createElement("div");
-    edgeParaRight.style.cssText = "position:absolute;left:490px;top:650px;width:350px;color:white;font-family:Poppins,sans-serif;font-size:14px;font-weight:300;line-height:1.75;z-index:2;";
-    edgeParaRight.textContent = "Incubat3 companies don't just launch — they lead. With real-time market intelligence and a team that has navigated multiple market cycles, we give our portfolio the edge that capital alone cannot buy.";
-    edgeSection.appendChild(edgeParaRight);
+Every company we partner with gains immediate access to the full Incubat3 partner network - including development, marketing, fundraising, token strategy, business development, community growth and one of the industry's strongest networks of operators and advisors.
 
-    // Find Out More button — bottom left
+Instead of spending years assembling a team, companies inherit one on day one.";
+    edgeParaSection.appendChild(edgeBody);
+
+    // Button (198x50px, blue #00F, border-radius 20px)
     var edgeBtn = document.createElement("div");
-    edgeBtn.style.cssText = "position:absolute;left:101px;bottom:55px;display:flex;align-items:center;gap:12px;background:#2563EB;padding:12px 28px;cursor:pointer;z-index:2;";
+    edgeBtn.style.cssText = "width:198px;height:50px;padding-left:16px;display:flex;justify-content:center;align-items:center;gap:10px;border-radius:20px;background:#00F;cursor:pointer;flex-shrink:0;";
     var edgeBtnText = document.createElement("span");
-    edgeBtnText.style.cssText = "color:white;font-family:Poppins,sans-serif;font-size:14px;font-weight:500;letter-spacing:0.02em;";
+    edgeBtnText.style.cssText = "color:#fff;font-family:Poppins,sans-serif;font-size:14px;font-weight:500;letter-spacing:0.02em;";
     edgeBtnText.textContent = "Find Out More";
+    var edgeBtnIcon = document.createElement("img");
+    edgeBtnIcon.src = "images/edge-btn-icon.svg";
+    edgeBtnIcon.style.cssText = "width:20px;height:20px;";
     edgeBtn.appendChild(edgeBtnText);
-    edgeSection.appendChild(edgeBtn);
+    edgeBtn.appendChild(edgeBtnIcon);
+    edgeParaSection.appendChild(edgeBtn);
+
+    edgeSection.appendChild(edgeParaSection);
 
     page.appendChild(edgeSection);
 
