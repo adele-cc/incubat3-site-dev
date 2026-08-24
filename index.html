@@ -1146,12 +1146,18 @@
     // Body text (580px wide, 16px Poppins light)
     var edgeBody = document.createElement("div");
     edgeBody.style.cssText = "width:580px;color:#fff;font-family:Poppins,sans-serif;font-size:16px;font-weight:300;line-height:normal;";
-    edgeBody.style.whiteSpace = "pre-line";
-    edgeBody.textContent = "We don't invest from the sidelines. We take ownership. We become operators.
-
-Every company we partner with gains immediate access to the full Incubat3 partner network - including development, marketing, fundraising, token strategy, business development, community growth and one of the industry's strongest networks of operators and advisors.
-
-Instead of spending years assembling a team, companies inherit one on day one.";
+    var edgeP1 = document.createElement("div");
+    edgeP1.style.cssText = "width:580px;color:#fff;font-family:Poppins,sans-serif;font-size:16px;font-weight:300;line-height:normal;margin-bottom:16px;";
+    edgeP1.textContent = "We don’t invest from the sidelines. We take ownership. We become operators.";
+    edgeBody.appendChild(edgeP1);
+    var edgeP2 = document.createElement("div");
+    edgeP2.style.cssText = "width:580px;color:#fff;font-family:Poppins,sans-serif;font-size:16px;font-weight:300;line-height:normal;margin-bottom:16px;";
+    edgeP2.textContent = "Every company we partner with gains immediate access to the full Incubat3 partner network - including development, marketing, fundraising, token strategy, business development, community growth and one of the industry’s strongest networks of operators and advisors.";
+    edgeBody.appendChild(edgeP2);
+    var edgeP3 = document.createElement("div");
+    edgeP3.style.cssText = "width:580px;color:#fff;font-family:Poppins,sans-serif;font-size:16px;font-weight:300;line-height:normal;";
+    edgeP3.textContent = "Instead of spending years assembling a team, companies inherit one on day one.";
+    edgeBody.appendChild(edgeP3);
     edgeParaSection.appendChild(edgeBody);
 
     // Button (198x50px, blue #00F, border-radius 20px)
