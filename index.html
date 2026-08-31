@@ -1262,366 +1262,218 @@
     page.appendChild(analyzeSection);
 
 
-    /* =========================================
-       MOVE BUILD SECTION HIGHER (shift up ~275px)
-       ========================================= */
-    var buildOffset = 3755;
-    // Build title
-    page.querySelectorAll('.HeroTitle').forEach(function(el){
+        /* Hide all original Figma elements for Build/Raise/Launch/Trade/Reward/Arc */
+    /* Build elements (original top ~3125-3502) */
+    page.querySelectorAll(".HeroTitle").forEach(function(el){
       var t = parseFloat(el.style.top);
-      if(t === 3125) el.style.top = (t + buildOffset) + 'px';
+      if(t >= 3100 && t <= 3300) el.style.display = "none";
     });
-    // Build tagline
-    page.querySelectorAll('.HeroTitle').forEach(function(el){
+    page.querySelectorAll(".FeatureDescription").forEach(function(el){
       var t = parseFloat(el.style.top);
-      if(Math.abs(t - 3275) < 1) el.style.top = (t + buildOffset) + 'px';
+      if(Math.abs(t - 3280) < 5) el.style.display = "none";
     });
-    // Build description - align with incubat3 paragraph (left:766)
-    page.querySelectorAll('.FeatureDescription').forEach(function(el){
-      var t = parseFloat(el.style.top);
-      if(Math.abs(t - 3280) < 1){
-        el.style.top = (t + buildOffset) + 'px';
-        el.style.left = '766px';
-        el.style.width = '658px';
-      }
-    });
-    // Build button (Apply to Build) - align with description
-    page.querySelectorAll('.Button').forEach(function(btn){
+    page.querySelectorAll(".Button").forEach(function(btn){
       var t = parseFloat(btn.style.top);
-      if(Math.abs(t - 3502) < 1){
-        btn.style.top = (t + buildOffset) + 'px';
-        btn.style.left = '766px';
-      }
+      if(Math.abs(t - 3502) < 5) btn.style.display = "none";
     });
-    // Build icon paths (38-41)
-    page.querySelectorAll('.Path38, .Path39, .Path40, .Path41').forEach(function(el){
+    page.querySelectorAll(".Path38,.Path39,.Path40,.Path41").forEach(function(el){
       var t = parseFloat(el.style.top);
-      if(t > 3100 && t < 3200) el.style.top = (t + buildOffset) + 'px';
+      if(t > 3100 && t < 3200) el.style.display = "none";
     });
-    // Rotating glass rings background (belongs to Build section)
-    page.querySelectorAll('.RotatingGlassRingsWithIridescentEdgesOnBlac20251209083625Utc1').forEach(function(el){
-      el.style.top = (3360 + buildOffset) + 'px';
+    page.querySelectorAll(".RotatingGlassRingsWithIridescentEdgesOnBlac20251209083625Utc1").forEach(function(el){
+      el.style.display = "none";
     });
-
-    /* =========================================
-       CONSISTENT SECTION SPACING (600px between each)
-       Build=2850, Raise=3450, Launch=4050, Trade=4650, Reward=5250
-       ========================================= */
-    var raiseTop = 7900;
-    var launchTop = 8650;
-    var tradeTop = 9600;
-    var rewardTop = 10400;
-
-    /* --- RAISE (original title at 3752) --- */
-    if(raiseSection){
-      raiseSection.style.top = raiseTop + 'px';
-    }
-    // Raise tagline - aligned with paragraph
-    page.querySelectorAll('.HeroTitle').forEach(function(el){
-      if(el.textContent.indexOf('Raising money') !== -1){
-        el.innerHTML = 'Raising money<br>is easy.<br>Undoing a bad<br>launch is<br>impossible.';
-        el.style.textAlign = 'left';
-        el.style.left = '766px';
-        el.style.width = '658px';
-        el.style.height = 'auto';
-        el.style.top = (raiseTop + 140) + 'px';
-      }
+    /* Raise section */
+    if(raiseSection) raiseSection.style.display = "none";
+    page.querySelectorAll(".HeroTitle").forEach(function(el){
+      if(el.textContent.indexOf("Raising money") !== -1) el.style.display = "none";
     });
-    // Raise bg image
-    document.querySelectorAll('img.RotatingGlassRingsWithIridescentEdgesOnBlac20251209083625Utc1').forEach(function(img){
-      var topVal = parseInt(img.style.top) || 0;
-      if(topVal > 3000 && topVal < 5000){
-        img.style.top = (raiseTop - 90) + 'px';
-      }
+    /* Launch elements */
+    var frame196 = document.querySelector(".Frame196");
+    if(frame196) frame196.style.display = "none";
+    document.querySelectorAll("img[data-layer]").forEach(function(img){
+      var t = parseInt(img.style.top) || 0;
+      if(t > 4000 && t < 5500) img.style.display = "none";
     });
-
-    /* --- ROTATING CIRCLES VIDEO (Build -> Raise) --- */
-    var circlesVid = document.createElement('div');
-    circlesVid.className = 'injected-video';
-    circlesVid.style.cssText = 'width:1600px;height:1200px;left:-44px;top:5720px;position:absolute;overflow:hidden;z-index:0;-webkit-mask-image:linear-gradient(180deg, transparent 0%, black 55%, black 75%, transparent 100%);mask-image:linear-gradient(180deg, transparent 0%, black 55%, black 75%, transparent 100%)';
-    circlesVid.innerHTML = '<video autoplay muted loop playsinline style="width:100%;height:100%;object-fit:cover;mix-blend-mode:screen;filter:blur(18px);transform:scale(1.1)"><source src="videos/rotating-circles.mp4" type="video/mp4"></video>';
-    page.insertBefore(circlesVid, page.firstChild);
-
-    /* --- RAISE BUTTONS --- */
-    if(raiseSection){
-      var raiseBtns = raiseSection.querySelectorAll('.Button');
-      if(raiseBtns.length >= 2){
-        var btnWrap = document.createElement('div');
-        btnWrap.className = 'raise-buttons';
-        raiseBtns[0].parentNode.insertBefore(btnWrap, raiseBtns[0]);
-        btnWrap.appendChild(raiseBtns[0]);
-        btnWrap.appendChild(raiseBtns[1]);
-      }
-    }
-
-    /* --- LAUNCH (original title at 4481) --- */
-    var launchOffset = launchTop - 4481;
-    // Launch title
-    page.querySelectorAll('.HeroTitle').forEach(function(el){
+    page.querySelectorAll("video").forEach(function(vid){
+      var src = vid.querySelector("source");
+      if(src && src.getAttribute("src") && (src.getAttribute("src").indexOf("launch.mp4") !== -1 || src.getAttribute("src").indexOf("arc.mp4") !== -1 || src.getAttribute("src").indexOf("reward3.mp4") !== -1)) vid.style.display = "none";
+    });
+    /* Trade elements */
+    page.querySelectorAll(".HeroTitle,.HeroSubtitle,.FeatureDescription").forEach(function(el){
       var t = parseFloat(el.style.top);
-      if(Math.abs(t - 4481) < 1) el.style.top = launchTop + 'px';
+      if(t > 5000 && t < 8000) el.style.display = "none";
     });
-    // Launch icon paths
-    page.querySelectorAll('.Path38, .Path39, .Path40, .Path41').forEach(function(el){
-      var t = parseFloat(el.style.top);
-      if(t > 4400 && t < 4550) el.style.top = (t + launchOffset) + 'px';
-    });
-    // Frame196 - keep on RIGHT (video asset is on left)
-    var frame196 = document.querySelector('.Frame196');
-    if(frame196){
-      // Clean tagline text
-      var launchTagline = frame196.querySelector('.HeroTitle');
-      if(launchTagline){
-        launchTagline.textContent = 'You only get one launch. We don\u2019t leave anything to chance.';
-        launchTagline.style.height = 'auto';
-      }
-      // Tighten spacing inside Frame196
-      frame196.style.top = (launchTop + 115) + 'px';
-      frame196.style.left = '766px';
-      frame196.style.width = '658px';
-      frame196.style.gap = '24px';
-      var frame183 = frame196.querySelector('.Frame183');
-      if(frame183){
-        frame183.style.gap = '24px';
-        var launchBtn = frame183.querySelector('.Button');
-        if(launchBtn) launchBtn.style.marginTop = '16px';
-      }
-    }
-    // Launch bg image/video - shift
-    document.querySelectorAll('img[data-layer="hf_20260209_124932_e3c63433-3c34-4008-8644-36bc8894e5b8 1"]').forEach(function(img){
-      var topVal = parseInt(img.style.top) || 0;
-      if(topVal > 4000 && topVal < 5000) img.style.top = (topVal + launchOffset) + 'px';
-    });
-    page.querySelectorAll('video').forEach(function(vid){
-      var src = vid.querySelector('source');
-      if(src && src.getAttribute('src') && src.getAttribute('src').indexOf('launch.mp4') !== -1){
-        var topVal = parseInt(vid.style.top) || 0;
-        if(topVal > 4000 && topVal < 5000) vid.style.top = (topVal + launchOffset) + 'px';
-      }
-    });
-
-    /* --- TRADE (original title at 5454) --- */
-    var tradeOffset = tradeTop - 5454;
-    // Trade title
-    page.querySelectorAll('.HeroTitle').forEach(function(el){
-      var t = parseFloat(el.style.top);
-      if(Math.abs(t - 5454) < 1) el.style.top = tradeTop + 'px';
-    });
-    // Trade icon paths
-    page.querySelectorAll('.Path38, .Path39, .Path40, .Path41').forEach(function(el){
-      var t = parseFloat(el.style.top);
-      if(t > 5400 && t < 5550) el.style.top = (t + tradeOffset) + 'px';
-    });
-    // Trade tagline
-    page.querySelectorAll('.HeroSubtitle').forEach(function(el){
-      var t = parseFloat(el.style.top);
-      if(Math.abs(t - 5651) < 1) el.style.top = (t + tradeOffset) + 'px';
-    });
-    // Trade description
-    page.querySelectorAll('.FeatureDescription').forEach(function(el){
-      var t = parseFloat(el.style.top);
-      if(Math.abs(t - 5979) < 1) el.style.top = (t + tradeOffset) + 'px';
-    });
-    // Trade buttons
-    page.querySelectorAll('.Button').forEach(function(btn){
+    page.querySelectorAll(".Button").forEach(function(btn){
       var t = parseFloat(btn.style.top);
-      if(Math.abs(t - 6067) < 2) btn.style.top = (t + tradeOffset) + 'px';
+      if(t > 5000) btn.style.display = "none";
     });
-    /* =========================================
-       TRADE BACKGROUND
-       trade.png (orig top:5403, 1414x1018)
-       Shift with Trade offset. Bottom should overlap into Reward area.
-       ========================================= */
-    page.querySelectorAll('img[src="images/trade2.png"]').forEach(function(img){
-      var topVal = parseInt(img.style.top) || 0;
-      if(Math.abs(topVal - 5403) < 5) img.style.top = (topVal + tradeOffset) + 'px';
-      img.style.filter = 'blur(32px)';
-      img.style.mixBlendMode = 'screen';
-      img.style.transform = 'scale(1.1)';
-      img.style.boxShadow = 'none';
-      img.style.pointerEvents = 'none';
+    page.querySelectorAll("img").forEach(function(img){
+      var t = parseInt(img.style.top) || 0;
+      if(t > 5000) img.style.display = "none";
     });
-    // Original trade image (hidden by replaceWithImage, shift to match)
-    document.querySelectorAll('img[data-layer="hf_20260120_132655_7066c7fe-f1a6-4eef-a54b-93884b82e48d 1"]').forEach(function(img){
-      var topVal = parseInt(img.style.top) || 0;
-      if(Math.abs(topVal - 5403) < 5) img.style.top = (topVal + tradeOffset) + 'px';
-    });
-
-    /* =========================================
-       HIDE Rectangle48 gradients in Trade / Reward / Arc area
-       ========================================= */
-    page.querySelectorAll('.Rectangle48').forEach(function(el){
+    page.querySelectorAll(".Path38,.Path39,.Path40,.Path41").forEach(function(el){
       var t = parseFloat(el.style.top);
-      if(t > 4000){
-        el.style.display = 'none';
-      }
+      if(t > 5000) el.style.display = "none";
     });
-
-    /* =========================================
-       REWARD (original title at 6318)
-       ========================================= */
-    var rewardOffset = rewardTop - 6318;
-    // Reward title
-    page.querySelectorAll('.HeroTitle').forEach(function(el){
+    page.querySelectorAll(".Rectangle48").forEach(function(el){
       var t = parseFloat(el.style.top);
-      if(Math.abs(t - 6318) < 1) el.style.top = rewardTop + 'px';
+      if(t > 4000) el.style.display = "none";
     });
-    // Reward icon paths
-    page.querySelectorAll('.Path38, .Path40').forEach(function(el){
-      var t = parseFloat(el.style.top);
-      if(t > 6300 && t < 6400) el.style.top = (t + rewardOffset) + 'px';
-    });
-    // Reward tagline (orig top:6471)
-    page.querySelectorAll('.HeroSubtitle').forEach(function(el){
-      var t = parseFloat(el.style.top);
-      if(Math.abs(t - 6471) < 1){
-        el.innerHTML = 'Incubat3 turns<br>on-chain &amp; social<br>reputation into<br>lasting advantage.';
-        el.style.top = (t + rewardOffset) + 'px';
-        el.style.width = '720px';
-        el.style.height = 'auto';
-      }
-    });
-    // Reward description (orig top:6476)
-    page.querySelectorAll('.FeatureDescription').forEach(function(el){
-      var t = parseFloat(el.style.top);
-      if(Math.abs(t - 6476) < 1) el.style.top = (t + rewardOffset) + 'px';
-    });
-    // Reward buttons (orig top:6704)
-    page.querySelectorAll('.Button').forEach(function(btn){
-      var t = parseFloat(btn.style.top);
-      if(Math.abs(t - 6704) < 2) btn.style.top = (t + rewardOffset) + 'px';
-    });
-
-    /* =========================================
-       REWARD BACKGROUND
-       reward3.mp4 (orig top:6071, replaces RotatingGlassRing)
-       Bring up so it overlaps with bottom of trade.png
-       ========================================= */
-    page.querySelectorAll('video').forEach(function(vid){
-      var src = vid.querySelector('source');
-      if(src && src.getAttribute('src') && src.getAttribute('src').indexOf('reward3.mp4') !== -1){
-        vid.style.top = '5350px';
-        vid.style.filter = 'blur(18px)';
-        vid.style.mixBlendMode = 'screen';
-        vid.style.transform = 'scale(1.1)';
-        vid.style.boxShadow = 'none';
-        vid.style.pointerEvents = 'none';
-      }
-    });
-    // Original reward image (hidden by replaceWithVideo)
-    document.querySelectorAll('img.RotatingGlassRingWithIridescentReflectionsOn20251209083624Utc1').forEach(function(img){
-      var topVal = parseInt(img.style.top) || 0;
-      if(topVal > 5000 && topVal < 9000) img.style.top = (topVal + rewardOffset) + 'px';
-    });
-
-    /* =========================================
-       RAISE BACKGROUND - fade bottom edge smoothly
-       ========================================= */
-    document.querySelectorAll('img.RotatingGlassRingsWithIridescentEdgesOnBlac20251209083625Utc1').forEach(function(img){
-      var topVal = parseInt(img.style.top) || 0;
-      if(topVal < 5000){
-        img.style.clipPath = 'none';
-        img.style.boxShadow = 'none';
-        img.style.webkitMaskImage = 'linear-gradient(180deg, black 0%, black 70%, transparent 100%)';
-        img.style.maskImage = 'linear-gradient(180deg, black 0%, black 70%, transparent 100%)';
-      }
-    });
-
-    /* =========================================
-       MOVE ARC + THREE-ICON SECTION higher (close gap with Reward)
-       arc.mp4 orig top:6791 | "Powered by AI..." orig top:7739
-       Three icons area: tops 8109-8696
-       ========================================= */
-    var arcOffset = -350;
-    // ARC replaced video
-    page.querySelectorAll('video').forEach(function(vid){
-      var src = vid.querySelector('source');
-      if(src && src.getAttribute('src') && src.getAttribute('src').indexOf('arc.mp4') !== -1){
-        var topVal = parseInt(vid.style.top) || 0;
-        if(topVal > 6000) vid.style.top = (topVal + arcOffset) + 'px';
-        vid.style.boxShadow = 'none';
-        vid.style.filter = 'none';
-        vid.style.background = 'black';
-      }
-    });
-    // Original arc image (hidden)
-    document.querySelectorAll('img[data-layer="hf_20260209_134720_aedf89f9-bd47-46d4-81f9-082db010cf20 1"]').forEach(function(img){
-      var topVal = parseInt(img.style.top) || 0;
-      if(topVal > 6000) img.style.top = (topVal + arcOffset) + 'px';
-    });
-    // "Powered by AI & Reputation Analysis" heading (7739) — less offset to add gap after arc video
-    page.querySelectorAll('.HeroSubtitle').forEach(function(el){
-      var t = parseFloat(el.style.top);
-      if(Math.abs(t - 7739) < 1) el.style.top = (t + arcOffset + 160) + 'px';
-    });
-    // Three-icon section: Evenly space the 3 columns
-    // Col1=60, Col2=530, Col3=1000 (gap ~50px between each)
-    var iconsExtraGap = 80;
-    page.querySelectorAll('.HeroSubtitle, .FeatureDescription').forEach(function(el){
-      var t = parseFloat(el.style.top);
-      if(t > 8000 && t < 9000){
-        el.style.top = (t + arcOffset + iconsExtraGap) + 'px';
-        var l = parseFloat(el.style.left);
-        if(l > 800){
-          el.style.left = '1000px';
-          if(el.classList.contains('FeatureDescription')) el.style.width = '380px';
-          if(el.classList.contains('HeroSubtitle')) el.style.width = '380px';
-        } else if(l > 400){
-          el.style.left = '530px';
-          if(el.classList.contains('FeatureDescription')) el.style.width = '400px';
-          if(el.classList.contains('HeroSubtitle')) el.style.width = '400px';
-        } else {
-          el.style.left = '60px';
-          if(el.classList.contains('FeatureDescription')) el.style.width = '420px';
-        }
-      }
-    });
-    // Three-icon section: ALL images (icons at 8109, 8116, 8152)
-    page.querySelectorAll('img').forEach(function(img){
-      var topVal = parseInt(img.style.top) || 0;
-      if(topVal > 8000 && topVal < 8500){
-        img.style.top = (topVal + arcOffset + iconsExtraGap) + 'px';
-        var l = parseFloat(img.style.left);
-        if(l > 800){
-          img.style.left = '1000px';
-          img.style.width = '380px';
-          img.style.height = 'auto';
-        } else if(l > 400){
-          img.style.left = '530px';
-        }
-      }
-    });
-
-    /* =========================================
-       CLOSE GAP: Shift footer/final section up
-       ========================================= */
-    var footerOffset = -126;
+    /* Hide everything else on the page above ~9500px (footer etc) */
     Array.from(page.children).forEach(function(el){
-      var t = parseFloat(el.style.top);
-      if(t > 9000){
-        el.style.top = (t + footerOffset) + 'px';
-      }
+      var t = parseFloat(el.style.top) || 0;
+      if(t > 8900) el.style.display = "none";
     });
 
     /* =========================================
-       COMING SOON TOOLTIP - JS fallback for buttons where CSS ::after may not fire
+       BUILD SECTION  top:6681px  height:1176px
        ========================================= */
-    page.querySelectorAll('.Button').forEach(function(btn){
-      var text = btn.querySelector('.ButtonText');
-      if(!text) return;
-      var label = text.textContent.trim();
-      if(label === 'For Founders' || label === 'For Traders' || label === 'For Investors'){
-        var tip = document.createElement('span');
-        tip.textContent = 'Coming Soon';
-        tip.style.cssText = 'position:absolute;bottom:calc(100% + 12px);left:50%;transform:translateX(-50%) translateY(4px);background:rgba(255,255,255,.08);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);border:1px solid rgba(255,255,255,.15);color:rgba(255,255,255,.85);font-family:Poppins,sans-serif;font-size:11px;font-weight:400;letter-spacing:.5px;padding:8px 18px;border-radius:20px;white-space:nowrap;opacity:0;pointer-events:none;transition:opacity .35s ease,transform .35s ease;z-index:10';
-        btn.appendChild(tip);
-        btn.addEventListener('mouseenter', function(){ tip.style.opacity='1'; tip.style.transform='translateX(-50%) translateY(0)'; });
-        btn.addEventListener('mouseleave', function(){ tip.style.opacity='0'; tip.style.transform='translateX(-50%) translateY(4px)'; });
-      }
-    });
+    var buildSecTop = 6681;
+    var buildSection = document.createElement("div");
+    buildSection.style.cssText = "position:absolute;left:0;top:"+buildSecTop+"px;width:1512px;height:1176px;overflow:hidden;background:#000;z-index:3;";
 
-    /* Adjust page height after all repositioning */
-    page.style.height = '13000px';
+    var buildBgVid = document.createElement("video");
+    buildBgVid.src = "videos/build-glass.mp4";
+    buildBgVid.autoplay = true;
+    buildBgVid.muted = true;
+    buildBgVid.loop = true;
+    buildBgVid.playsInline = true;
+    buildBgVid.style.cssText = "position:absolute;left:0;top:0;width:1512px;height:1176px;object-fit:cover;mix-blend-mode:screen;filter:blur(16px);z-index:0;pointer-events:none;";
+    buildSection.appendChild(buildBgVid);
+
+    var buildGradTop = document.createElement("div");
+    buildGradTop.style.cssText = "position:absolute;top:0;left:0;right:0;height:586px;background:linear-gradient(180deg,#000 0%,rgba(0,0,0,0) 100%);pointer-events:none;z-index:1;";
+    buildSection.appendChild(buildGradTop);
+
+    var buildGradBottom = document.createElement("div");
+    buildGradBottom.style.cssText = "position:absolute;bottom:0;left:0;right:0;height:586px;background:linear-gradient(180deg,rgba(0,0,0,0) 0%,#000 100%);pointer-events:none;z-index:1;";
+    buildSection.appendChild(buildGradBottom);
+
+    var buildTitleRow = document.createElement("div");
+    buildTitleRow.style.cssText = "position:absolute;left:101px;top:60px;display:flex;align-items:flex-start;gap:18px;z-index:2;";
+    var buildIcon = document.createElement("img");
+    buildIcon.src = "images/build-icon.svg";
+    buildIcon.style.cssText = "width:85px;height:88px;margin-top:10px;flex-shrink:0;";
+    var buildTitleText = document.createElement("div");
+    buildTitleText.style.cssText = "color:#fff;font-family:'PP Formula',sans-serif;font-size:96px;font-weight:400;line-height:normal;";
+    buildTitleText.textContent = "Build";
+    buildTitleRow.appendChild(buildIcon);
+    buildTitleRow.appendChild(buildTitleText);
+    buildSection.appendChild(buildTitleRow);
+
+    var buildPara = document.createElement("div");
+    buildPara.style.cssText = "position:absolute;left:101px;top:210px;width:767px;color:#fff;font-family:Poppins,sans-serif;font-size:16px;font-weight:300;line-height:normal;z-index:2;";
+    var buildP1 = document.createElement("div");
+    buildP1.style.marginBottom = "20px";
+    buildP1.textContent = "Every company has different challenges. Some need stronger technology. Others need a clearer strategy, a sustainable token model or a go-to-market plan that can support long-term growth.";
+    var buildP2 = document.createElement("div");
+    buildP2.style.marginBottom = "20px";
+    buildP2.textContent = "Working alongside founders, we rebuild what's needed, strengthen what already works and create the operational foundations for successful market entry.";
+    var buildP3 = document.createElement("div");
+    buildP3.textContent = "The goal isn't simply to launch. It's to build a business designed to scale.";
+    buildPara.appendChild(buildP1);
+    buildPara.appendChild(buildP2);
+    buildPara.appendChild(buildP3);
+    buildSection.appendChild(buildPara);
+
+    var buildSubtitle = document.createElement("div");
+    buildSubtitle.style.cssText = "position:absolute;right:101px;bottom:130px;width:726px;text-align:right;color:#fff;font-family:'PP Formula',sans-serif;font-size:48px;font-weight:400;line-height:normal;z-index:2;";
+    buildSubtitle.innerHTML = "We build the foundation.<br>Scale follows by design.";
+    buildSection.appendChild(buildSubtitle);
+
+    var buildBtn = document.createElement("div");
+    buildBtn.style.cssText = "position:absolute;left:101px;bottom:110px;z-index:2;";
+    var buildBtnInner = document.createElement("div");
+    buildBtnInner.style.cssText = "width:198px;height:50px;padding-left:16px;display:flex;justify-content:center;align-items:center;gap:10px;border-radius:20px;background:#00F;cursor:pointer;";
+    var buildBtnText = document.createElement("span");
+    buildBtnText.style.cssText = "color:#fff;font-family:Poppins,sans-serif;font-size:14px;font-weight:500;letter-spacing:0.02em;";
+    buildBtnText.textContent = "Apply to build";
+    var buildBtnIcon = document.createElement("img");
+    buildBtnIcon.src = "images/edge-btn-icon.svg";
+    buildBtnIcon.style.cssText = "width:34px;height:34px;";
+    buildBtnInner.appendChild(buildBtnText);
+    buildBtnInner.appendChild(buildBtnIcon);
+    buildBtn.appendChild(buildBtnInner);
+    buildSection.appendChild(buildBtn);
+
+    page.appendChild(buildSection);
+
+    /* =========================================
+       LAUNCH SECTION  top:7857px  height:920px
+       ========================================= */
+    var launchSecTop = 7857;
+    var launchSection = document.createElement("div");
+    launchSection.style.cssText = "position:absolute;left:0;top:"+launchSecTop+"px;width:1512px;height:920px;overflow:hidden;background:#000;z-index:3;";
+
+    var launchGradTop = document.createElement("div");
+    launchGradTop.style.cssText = "position:absolute;top:0;left:0;right:0;height:400px;background:linear-gradient(180deg,#000 0%,rgba(0,0,0,0) 100%);pointer-events:none;z-index:1;";
+    launchSection.appendChild(launchGradTop);
+
+    var launchGradBottom = document.createElement("div");
+    launchGradBottom.style.cssText = "position:absolute;bottom:0;left:0;right:0;height:400px;background:linear-gradient(180deg,rgba(0,0,0,0) 0%,#000 100%);pointer-events:none;z-index:1;";
+    launchSection.appendChild(launchGradBottom);
+
+    var launchTitleRow = document.createElement("div");
+    launchTitleRow.style.cssText = "position:absolute;left:101px;top:55px;display:flex;align-items:flex-start;gap:18px;z-index:2;";
+    var launchIcon = document.createElement("img");
+    launchIcon.src = "images/launch-icon.svg";
+    launchIcon.style.cssText = "width:89px;height:94px;margin-top:10px;flex-shrink:0;";
+    var launchTitleText = document.createElement("div");
+    launchTitleText.style.cssText = "color:#fff;font-family:'PP Formula',sans-serif;font-size:96px;font-weight:400;line-height:normal;";
+    launchTitleText.textContent = "Launch";
+    launchTitleRow.appendChild(launchIcon);
+    launchTitleRow.appendChild(launchTitleText);
+    launchSection.appendChild(launchTitleRow);
+
+    var launchVid = document.createElement("video");
+    launchVid.src = "videos/launch-crystal.mp4";
+    launchVid.autoplay = true;
+    launchVid.muted = true;
+    launchVid.loop = true;
+    launchVid.playsInline = true;
+    launchVid.style.cssText = "position:absolute;left:60px;top:160px;width:650px;height:700px;object-fit:cover;mix-blend-mode:screen;z-index:1;pointer-events:none;";
+    launchSection.appendChild(launchVid);
+
+    var launchSubtitle = document.createElement("div");
+    launchSubtitle.style.cssText = "position:absolute;left:800px;top:180px;width:612px;color:#fff;font-family:'PP Formula',sans-serif;font-size:64px;font-weight:400;line-height:normal;z-index:2;";
+    launchSubtitle.innerHTML = "You only get one<br>launch. We don't<br>leave anything<br>to chance.";
+    launchSection.appendChild(launchSubtitle);
+
+    var launchPara = document.createElement("div");
+    launchPara.style.cssText = "position:absolute;left:800px;top:600px;width:595px;color:#fff;font-family:Poppins,sans-serif;font-size:16px;font-weight:300;line-height:normal;z-index:2;";
+    var launchP1 = document.createElement("div");
+    launchP1.style.marginBottom = "20px";
+    launchP1.textContent = "A successful token launch is the result of every decision made before it.";
+    var launchP2 = document.createElement("div");
+    launchP2.style.marginBottom = "20px";
+    launchP2.textContent = "Our team coordinates exchange listings, community activation, KOL campaigns, PR and go-to-market execution to ensure every company we work with reaches market with momentum.";
+    var launchP3 = document.createElement("div");
+    launchP3.textContent = "That's the Incubat3 commitment.";
+    launchPara.appendChild(launchP1);
+    launchPara.appendChild(launchP2);
+    launchPara.appendChild(launchP3);
+    launchSection.appendChild(launchPara);
+
+    var launchBtn = document.createElement("div");
+    launchBtn.style.cssText = "position:absolute;left:800px;bottom:80px;z-index:2;";
+    var launchBtnInner = document.createElement("div");
+    launchBtnInner.style.cssText = "width:214px;height:50px;padding-left:16px;display:flex;justify-content:center;align-items:center;gap:10px;border-radius:20px;background:#00F;cursor:pointer;";
+    var launchBtnText = document.createElement("span");
+    launchBtnText.style.cssText = "color:#fff;font-family:Poppins,sans-serif;font-size:14px;font-weight:500;letter-spacing:0.02em;";
+    launchBtnText.textContent = "Find out more";
+    var launchBtnIcon = document.createElement("img");
+    launchBtnIcon.src = "images/edge-btn-icon.svg";
+    launchBtnIcon.style.cssText = "width:34px;height:34px;";
+    launchBtnInner.appendChild(launchBtnText);
+    launchBtnInner.appendChild(launchBtnIcon);
+    launchBtn.appendChild(launchBtnInner);
+    launchSection.appendChild(launchBtn);
+
+    page.appendChild(launchSection);
+
+    /* Page height */
+    page.style.height = '9500px';
 
     /* =========================================
        SCROLLER - click navigation + active state
@@ -1630,13 +1482,10 @@
       hero: 0,
       edge: 4760,
       analyze: 5710,
-      build: 6880,
-      raise: 7350,
-      launch: 8100,
-      trade: 9050,
-      reward: 9850
+      build: 6681,
+      launch: 7857
     };
-    var sectionOrder = ['hero','edge','analyze','build','raise','launch','trade','reward'];
+    var sectionOrder = ['hero','edge','analyze','build','launch'];
 
     function getScale(){
       return Math.min(1, window.innerWidth / 1512);
