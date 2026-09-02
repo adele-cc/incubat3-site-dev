@@ -1472,8 +1472,88 @@
 
     page.appendChild(launchSection);
 
+    /* =========================================
+       PARTNERS SECTION PART 1
+       top: 8491px, height: 1950px
+       ========================================= */
+    var p1Top = 8491;
+    var p1Sec = document.createElement("div");
+    p1Sec.style.cssText = "position:absolute;left:0;top:"+p1Top+"px;width:1512px;height:1950px;overflow:hidden;background:#000;z-index:3;";
+
+    var p1GradT = document.createElement("div");
+    p1GradT.style.cssText = "position:absolute;top:0;left:0;right:0;height:150px;background:linear-gradient(180deg,#000 0%,rgba(0,0,0,0) 100%);pointer-events:none;z-index:2;";
+    p1Sec.appendChild(p1GradT);
+
+    var p1GradB = document.createElement("div");
+    p1GradB.style.cssText = "position:absolute;bottom:0;left:0;right:0;height:400px;background:linear-gradient(180deg,rgba(0,0,0,0) 0%,#000 100%);pointer-events:none;z-index:2;";
+    p1Sec.appendChild(p1GradB);
+
+    /* Title */
+    var p1TitleRow = document.createElement("div");
+    p1TitleRow.style.cssText = "position:absolute;left:101px;top:70px;display:flex;align-items:flex-start;gap:18px;z-index:3;";
+    var p1Icon = document.createElement("img");
+    p1Icon.src = "images/partners-icon.svg";
+    p1Icon.style.cssText = "width:78px;height:80px;margin-top:10px;flex-shrink:0;";
+    var p1TitleText = document.createElement("div");
+    p1TitleText.style.cssText = "color:#fff;font-family:'PP Formula',sans-serif;font-size:96px;font-weight:400;line-height:normal;";
+    p1TitleText.textContent = "Partners";
+    p1TitleRow.appendChild(p1Icon);
+    p1TitleRow.appendChild(p1TitleText);
+    p1Sec.appendChild(p1TitleRow);
+
+    /* Subtitle left */
+    var p1Sub = document.createElement("div");
+    p1Sub.style.cssText = "position:absolute;left:101px;top:240px;width:650px;color:#fff;font-family:'PP Formula',sans-serif;font-size:64px;font-weight:400;line-height:normal;z-index:3;";
+    p1Sub.innerHTML = "One Network.<br>Every Capability.";
+    p1Sec.appendChild(p1Sub);
+
+    /* Paragraph right */
+    var p1Para = document.createElement("div");
+    p1Para.style.cssText = "position:absolute;left:870px;top:240px;width:540px;color:#fff;font-family:Poppins,sans-serif;font-size:16px;font-weight:300;line-height:normal;z-index:3;";
+    var p1T1 = document.createElement("div"); p1T1.style.marginBottom = "20px";
+    p1T1.textContent = "Incubat3 brings together specialist partners across every stage of the Web3 lifecycle.";
+    var p1T2 = document.createElement("div"); p1T2.style.marginBottom = "20px";
+    p1T2.textContent = "From product development and fundraising to marketing, exchange strategy, community growth and AI infrastructure, each partner contributes a distinct area of expertise. Together, they form the execution network behind every company we work with.";
+    var p1T3 = document.createElement("div");
+    p1T3.textContent = "Supported by senior advisors across DeFi, gaming, RWA, exchanges, venture capital, infrastructure, tokenomics, ecosystem growth, and more.";
+    p1Para.appendChild(p1T1); p1Para.appendChild(p1T2); p1Para.appendChild(p1T3);
+    p1Sec.appendChild(p1Para);
+
+    /* Video */
+    var p1Vid = document.createElement("video");
+    p1Vid.src = "videos/partners.mp4";
+    p1Vid.autoplay = true; p1Vid.muted = true; p1Vid.loop = true; p1Vid.playsInline = true;
+    p1Vid.style.cssText = "position:absolute;left:116px;top:570px;width:1280px;height:1054px;object-fit:cover;mix-blend-mode:screen;z-index:1;pointer-events:none;";
+    p1Sec.appendChild(p1Vid);
+
+    /* Video bottom fade */
+    var p1VidFade = document.createElement("div");
+    p1VidFade.style.cssText = "position:absolute;left:116px;top:819px;width:1280px;height:805px;background:linear-gradient(180deg,rgba(0,0,0,0) 0%,#000 100%);pointer-events:none;z-index:2;";
+    p1Sec.appendChild(p1VidFade);
+
+    /* Logo rows */
+    var p1Logos = document.createElement("div");
+    p1Logos.style.cssText = "position:absolute;left:153px;top:1660px;width:1206px;z-index:3;";
+
+    var p1R1 = document.createElement("div");
+    p1R1.style.cssText = "display:flex;justify-content:space-between;align-items:center;width:1206px;margin-bottom:50px;";
+    [["images/logo-dverse.png",30,""],["images/logo-inferno.png",36,""],["images/logo-ethereal.png",36,""],["images/logo-codecraft.png",38,""],["images/logo-nucleus.png",36,"mix-blend-mode:screen;"]].forEach(function(l){
+      var img = document.createElement("img"); img.src=l[0]; img.style.cssText="height:"+l[1]+"px;width:auto;"+l[2]; p1R1.appendChild(img);
+    });
+    p1Logos.appendChild(p1R1);
+
+    var p1R2 = document.createElement("div");
+    p1R2.style.cssText = "display:flex;justify-content:center;align-items:center;gap:200px;width:1206px;";
+    [["images/logo-icm3.png",44],["images/logo-arc.png",36],["images/logo-welcome3.png",65]].forEach(function(l){
+      var img = document.createElement("img"); img.src=l[0]; img.style.cssText="height:"+l[1]+"px;width:auto;"; p1R2.appendChild(img);
+    });
+    p1Logos.appendChild(p1R2);
+
+    p1Sec.appendChild(p1Logos);
+    page.appendChild(p1Sec);
+
     /* Page height */
-    page.style.height = '9500px';
+    page.style.height = '10800px';
 
     /* =========================================
        SCROLLER - click navigation + active state
@@ -1483,9 +1563,10 @@
       edge: 4760,
       analyze: 5710,
       build: 6581,
-      launch: 7511
+      launch: 7511,
+      partners: 8491
     };
-    var sectionOrder = ['hero','edge','analyze','build','launch'];
+    var sectionOrder = ['hero','edge','analyze','build','launch','partners'];
 
     function getScale(){
       return Math.min(1, window.innerWidth / 1512);
