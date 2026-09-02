@@ -1329,9 +1329,9 @@
     /* =========================================
        BUILD SECTION  top:6681px  height:1176px
        ========================================= */
-    var buildSecTop = 6681;
+    var buildSecTop = 6581;
     var buildSection = document.createElement("div");
-    buildSection.style.cssText = "position:absolute;left:0;top:"+buildSecTop+"px;width:1512px;height:1176px;overflow:hidden;background:#000;z-index:3;";
+    buildSection.style.cssText = "position:absolute;left:0;top:"+buildSecTop+"px;width:1512px;height:850px;overflow:hidden;background:#000;z-index:3;";
 
     var buildBgVid = document.createElement("video");
     buildBgVid.src = "videos/build-glass.mp4";
@@ -1339,15 +1339,15 @@
     buildBgVid.muted = true;
     buildBgVid.loop = true;
     buildBgVid.playsInline = true;
-    buildBgVid.style.cssText = "position:absolute;left:0;top:0;width:1512px;height:1176px;object-fit:cover;mix-blend-mode:screen;filter:blur(16px);z-index:0;pointer-events:none;";
+    buildBgVid.style.cssText = "position:absolute;left:0;top:0;width:1512px;height:850px;object-fit:cover;mix-blend-mode:screen;filter:blur(16px);z-index:0;pointer-events:none;";
     buildSection.appendChild(buildBgVid);
 
     var buildGradTop = document.createElement("div");
-    buildGradTop.style.cssText = "position:absolute;top:0;left:0;right:0;height:586px;background:linear-gradient(180deg,#000 0%,rgba(0,0,0,0) 100%);pointer-events:none;z-index:1;";
+    buildGradTop.style.cssText = "position:absolute;top:0;left:0;right:0;height:150px;background:linear-gradient(180deg,#000 0%,rgba(0,0,0,0) 100%);pointer-events:none;z-index:1;";
     buildSection.appendChild(buildGradTop);
 
     var buildGradBottom = document.createElement("div");
-    buildGradBottom.style.cssText = "position:absolute;bottom:0;left:0;right:0;height:586px;background:linear-gradient(180deg,rgba(0,0,0,0) 0%,#000 100%);pointer-events:none;z-index:1;";
+    buildGradBottom.style.cssText = "position:absolute;bottom:0;left:0;right:0;height:350px;background:linear-gradient(180deg,rgba(0,0,0,0) 0%,#000 100%);pointer-events:none;z-index:1;";
     buildSection.appendChild(buildGradBottom);
 
     var buildTitleRow = document.createElement("div");
@@ -1402,7 +1402,7 @@
     /* =========================================
        LAUNCH SECTION  top:7857px  height:920px
        ========================================= */
-    var launchSecTop = 7937;
+    var launchSecTop = 7511;
     var launchSection = document.createElement("div");
     launchSection.style.cssText = "position:absolute;left:0;top:"+launchSecTop+"px;width:1512px;height:920px;overflow:hidden;background:#000;z-index:3;";
 
@@ -1482,8 +1482,8 @@
       hero: 0,
       edge: 4760,
       analyze: 5710,
-      build: 6681,
-      launch: 7937
+      build: 6581,
+      launch: 7511
     };
     var sectionOrder = ['hero','edge','analyze','build','launch'];
 
