@@ -1302,7 +1302,7 @@
     /* Trade elements */
     page.querySelectorAll(".HeroTitle,.HeroSubtitle,.FeatureDescription").forEach(function(el){
       var t = parseFloat(el.style.top);
-      if(t > 5000 && t < 8000) el.style.display = "none";
+      if(t > 5000 && t < 10000) el.style.display = "none";
     });
     page.querySelectorAll(".Button").forEach(function(btn){
       var t = parseFloat(btn.style.top);
@@ -1323,7 +1323,7 @@
     /* Hide everything else on the page above ~9500px (footer etc) */
     Array.from(page.children).forEach(function(el){
       var t = parseFloat(el.style.top) || 0;
-      if(t > 8900) el.style.display = "none";
+      if(t > 6500) el.style.display = "none";
     });
 
     /* =========================================
@@ -1383,7 +1383,7 @@
     buildSection.appendChild(buildSubtitle);
 
     var buildBtn = document.createElement("div");
-    buildBtn.style.cssText = "position:absolute;left:101px;bottom:110px;z-index:2;";
+    buildBtn.style.cssText = "position:absolute;left:101px;top:430px;z-index:2;";
     var buildBtnInner = document.createElement("div");
     buildBtnInner.style.cssText = "width:198px;height:50px;padding-left:16px;display:flex;justify-content:center;align-items:center;gap:10px;border-radius:20px;background:#00F;cursor:pointer;";
     var buildBtnText = document.createElement("span");
@@ -1402,7 +1402,7 @@
     /* =========================================
        LAUNCH SECTION  top:7857px  height:920px
        ========================================= */
-    var launchSecTop = 7857;
+    var launchSecTop = 7937;
     var launchSection = document.createElement("div");
     launchSection.style.cssText = "position:absolute;left:0;top:"+launchSecTop+"px;width:1512px;height:920px;overflow:hidden;background:#000;z-index:3;";
 
@@ -1483,7 +1483,7 @@
       edge: 4760,
       analyze: 5710,
       build: 6681,
-      launch: 7857
+      launch: 7937
     };
     var sectionOrder = ['hero','edge','analyze','build','launch'];
 
